@@ -3,9 +3,6 @@
 // Load environment variables from .env file
 require("dotenv").config();
 
-// Import Faker library for generating fake data
-const { faker } = require("@faker-js/faker");
-
 // Import database client
 const database = require("./database/client");
 
@@ -17,20 +14,17 @@ const seed = async () => {
 
     /* ************************************************************************* */
 
-    // Generating Seed Data
-
-    // Optional: Truncate tables (remove existing data)
-    await database.query("truncate item");
-
-    // Insert fake data into the 'item' table
-    for (let i = 0; i < 10; i += 1) {
-      queries.push(
-        database.query("insert into item(title) values (?)", [
-          faker.lorem.word(),
-        ])
-      );
+    // Generating CATEGORIES columns
+    const categories = [
+      "INSERT INTO `categories` (name) VALUES ('mer')",
+      "INSERT INTO `categories` (name) VALUES ('animaux')",
+      "INSERT INTO `categories` (name) VALUES ('légendes')",
+      "INSERT INTO `categories` (name) VALUES ('climat')",
+      "INSERT INTO `categories` (name) VALUES ('géographie')",
+    ];
+    for (let i = 0; i < categories.length; i += 1) {
+      queries.push(database.query(categories[i]));
     }
-
     /* ************************************************************************* */
 
     // Wait for all the insertion queries to complete
