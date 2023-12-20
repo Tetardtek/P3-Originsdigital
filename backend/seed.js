@@ -54,7 +54,12 @@ const seed = async () => {
       ("https://www.youtube.com/watch?v=n7-9hIcxm6s", "5 Catastrophes naturelles qui pourraient vraiment nous arriver", "Dignes de certains films catastrophes, voici un #top5 des catastrophes naturelles qui pourraient vraiment se produire : éruptions solaires, supervolcans, mégatsunami 🌊🌊🌊... 🤓", 4, false),
       ("https://www.youtube.com/watch?v=SnhpVGLErEQ", "C’est pas sorcier -INONDATIONS : sorciers prennent l’eau", "En France, environ deux millions de personnes sont exposées à un risque d’inondation.", 4, false),
       ("https://www.youtube.com/watch?v=YEmPmCEqEqE", "ORAGES : Les sorciers ont le coup de foudre", "Chaque année en France, les orages font  d’importants dégâts et environ une dizaine de personnes sont victimes de la foudre.", 4, false),
-      ("https://www.youtube.com/watch?v=4ZN_6cKyO-Q", "La mer attaque la terre", "Les communes du littoral français sont de plus en plus menacées par l’érosion marine.", 4, false)`
+      ("https://www.youtube.com/watch?v=4ZN_6cKyO-Q", "La mer attaque la terre", "Les communes du littoral français sont de plus en plus menacées par l’érosion marine.", 4, false),
+      ("https://www.youtube.com/watch?v=e1i4KGI5Ag0", "La Camargue", "Fred, Jamy et Sabine sont partis à la découverte de la Camargue.", 5, false),
+      ("https://www.youtube.com/watch?v=Sg4zYbaFYwE", "L’ascension du Mont-Blanc", "Fred et Jamy prennent la direction de Chamonix pour faire l’ascension du Mont-Blanc.", 5, false),
+      ("https://www.youtube.com/watch?v=8PMYjn838FA", "La Réunion; dans les entrailles du volcan", "Comment l’île de la Réunion est-elle sortie de l’Océan Indien il y a 3 millions d’années ?", 5, false),
+      ("https://www.youtube.com/watch?v=7VYel9qtZ1w", "Le mystère des grottes de l’Ardèche", "Les grottes sont intimement liées à l’histoire de nos rivières", 5, false),
+      ("https://www.youtube.com/watch?v=HmGe2B8YQj0", "L’Islande : une île qui souffle le chaud et le froid", "L’Islande se situe à quelques encablures du cercle polaire. Reykjavik est la capitale la plus au nord de la planète.", 5, false)`
       )
     );
     /* ************************************************************************* */
