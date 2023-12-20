@@ -46,10 +46,10 @@ const seed = async () => {
       ("https://www.youtube.com/watch?v=b40htkjiAoI", "Comment se forment les marées ? 🌊", "Envie de connaître les marées « sur le bout du Gois » ? C’est pas la mer à boire ! Allez venez : direction la Vendée... sur l’île de Noirmoutier pour comprendre Comment se forment les marées ? 🌊", 1, false),
       ("https://www.youtube.com/watch?v=E1S1_Wqqkhk", "Triangle des Bermudes : mystère et disparition", "Le triangle des Bermudes : mythe ou réalité ? Jamy vous embarque pour un voyage aux frontières du paranormal et de la science : nous allons tenter de résoudre ce mystère !", 1, false),
       ("https://www.youtube.com/watch?v=LBb3HWtEL64", "Les animaux les plus DANGEREUX du monde", "Prenez votre courage à deux mains, nous partons à l’aventure en terre hostile ! Nous vous présentons notre #TOP5 des animaux les plus dangereux de la monde !", 2, false),
-("https://www.youtube.com/watch?v=bPT3rFalapc", "5 animaux quasi immortels | TOP 5", "Résistance jusqu’à -273°C, longévité accrue, régénération... Les animaux quasi immortels, ça existe ? Eh oui ! Voici un #TOP5 des animaux qui résistent à tout ! On vous présente le tardigrade, le ratel, la méduse ou Turritopsis Nutricula, la praire d’Islande, la planaire.", 2, false),
-("https://www.youtube.com/watch?v=NeBKbJ-4TOA", "5 animaux avec des SUPER-POUVOIRS 🦸 | TOP 5", "Un poisson cracheur de feu ? 🔥🐟 Une pieuvre caméléon ? 🐙 Un lézard qui marche sur l’eau ? 🦎 Les animaux avec des super-pouvoirs, ça existe ? Eh oui ! Voici mon #TOP5 des animaux avec des super-pouvoirs.", 2, false),
-("https://www.youtube.com/watch?v=71isRf1N2wo", "Le moustique est-il utile ?", "Exterminer les moustiques et plus largement les insectes, bonne idée ? Il est temps de changer notre regard sur les insectes ! Aujourd’hui dans #chezjamy on s’attaque aux rôles clés des insectes dans l’équilibre de notre biodiversité !", 2, false),
-("https://www.youtube.com/watch?v=Pript1xTdl0", " 7 réponses sur les animaux • FAQ #DisJamy", "Vous m’avez posé de nombreuses questions sur les animaux 🐴  Comme je suis à cheval sur le lien qui nous unit... je les ai réunies ici 🤓", 2, false),
+      ("https://www.youtube.com/watch?v=bPT3rFalapc", "5 animaux quasi immortels | TOP 5", "Résistance jusqu’à -273°C, longévité accrue, régénération... Les animaux quasi immortels, ça existe ? Eh oui ! Voici un #TOP5 des animaux qui résistent à tout ! On vous présente le tardigrade, le ratel, la méduse ou Turritopsis Nutricula, la praire d’Islande, la planaire.", 2, false),
+      ("https://www.youtube.com/watch?v=NeBKbJ-4TOA", "5 animaux avec des SUPER-POUVOIRS 🦸 | TOP 5", "Un poisson cracheur de feu ? 🔥🐟 Une pieuvre caméléon ? 🐙 Un lézard qui marche sur l’eau ? 🦎 Les animaux avec des super-pouvoirs, ça existe ? Eh oui ! Voici mon #TOP5 des animaux avec des super-pouvoirs.", 2, false),
+      ("https://www.youtube.com/watch?v=71isRf1N2wo", "Le moustique est-il utile ?", "Exterminer les moustiques et plus largement les insectes, bonne idée ? Il est temps de changer notre regard sur les insectes ! Aujourd’hui dans #chezjamy on s’attaque aux rôles clés des insectes dans l’équilibre de notre biodiversité !", 2, false),
+      ("https://www.youtube.com/watch?v=Pript1xTdl0", " 7 réponses sur les animaux • FAQ #DisJamy", "Vous m’avez posé de nombreuses questions sur les animaux 🐴  Comme je suis à cheval sur le lien qui nous unit... je les ai réunies ici 🤓", 2, false),
       ("https://www.youtube.com/watch?v=uS_FdlQTzDY", "3 MONSTRES DE LÉGENDE : mythes ou histoires vraies ?", "Le monstre du Loch Ness, le Yéti ou encore le Kraken... Des créatures devenues populaires grâce aux mystères qui les entourent. Découvrons ensemble la vérité qui se cache derrière ses mythes 🔎😉", 3, false),
       ("https://www.youtube.com/watch?v=HqsP6U9FouY", "Comment estimer l’âge des DINOSAURES ? 🦕", "🦴 OSerez-vous me suivre parmi ces dinosaures dans #ChezJamy ? J’ai eu la chance de rentrer au Muséum national d’Histoire naturelle 🤓 Voici donc comment estimer l’âge des dinosaures.", 3, false),
       ("https://www.youtube.com/watch?v=Q9yIutVqMwk", "Île de Pâques : le mystère des statues géantes enfin résolu ?", "Comment sont-elles arrivées là ? Qui les a taillées ? Comment ont-elles été transportées ? Aujourd’hui Jamy perce le mystère ! ", 3, false),
@@ -67,6 +67,20 @@ const seed = async () => {
       ("https://www.youtube.com/watch?v=HmGe2B8YQj0", "L’Islande : une île qui souffle le chaud et le froid", "L’Islande se situe à quelques encablures du cercle polaire. Reykjavik est la capitale la plus au nord de la planète.", 5, false)`
       )
     );
+
+    // Generating USERS columns
+    queries.push(
+      database.query(
+        `INSERT INTO users (firstname, lastname, pseudoname, mail, birthdate, logdate, password, roles_id) VALUES
+      ('Admin', 'istrator', 'Administrator', 'administrator@email.com', '2000-01-01', '2000-01-02', 'admin', 3),
+      ('Mode', 'rator', 'Moderator', 'moderator@email.com', '2010-01-01', '2010-01-02', 'rator', 2),
+      ('Use', 'R', 'User', 'user@email.com', '2015-01-01', '2015-01-02', 'user', 1),
+      ('Ex', 'ample', 'Example', 'example@email.com', '1997-10-25', '2010-12-22', 'example', 3),
+      ('Antoine', 'Dupont', 'Antoine21', 'antoine.dupont@email.com', '1999-01-02', '2007-09-20', 'example', 2),
+      ('Elise', 'Lefevre', 'ProConnect', 'elise.lefevre@email.com', '1986-05-29', '2004-03-12', 'example', 1)`
+      )
+    );
+
     /* ************************************************************************* */
 
     // Wait for all the insertion queries to complete
