@@ -77,7 +77,17 @@ const seed = async () => {
       ('Use', 'R', 'User', 'user@email.com', '2015-01-01', '2015-01-02', 'user', 1),
       ('Ex', 'ample', 'Example', 'example@email.com', '1997-10-25', '2010-12-22', 'example', 3),
       ('Antoine', 'Dupont', 'Antoine21', 'antoine.dupont@email.com', '1999-01-02', '2007-09-20', 'example', 2),
-      ('Elise', 'Lefevre', 'ProConnect', 'elise.lefevre@email.com', '1986-05-29', '2004-03-12', 'example', 1)`
+      ('Elise', 'Lefevre', 'ProConnect', 'elise.lefevre@email.com', '1986-05-29', '2004-03-12', 'example', 1), 
+      ('Cal', 'Y', 'CalY', 'calY@email.com', '1988-12-23', '2022-12-20', 'patate', 3),
+      ('Ann', 'Once', 'AnnOnce', 'annonce@email.com', '2000-12-20', '2010-12-19', 'hello', 2),
+      ('Jura', 'Script', 'JuraScript', 'jurascript@email.com', '2010-12-15', '2020-12-9', 'dino', 1),
+      ('Ad', 'Visor', 'Advisor', 'advisor@email.com', '1987-11-10', '2015-03-25', 'example', 3),
+      ('Lenny', 'Pitch', 'LennyP', 'lenny.pitch@email.com', '1996-05-19', '2012-05-19', 'example', 2),
+      ('Choco', 'Latine', 'Chocolatine', 'choco.latine@email.com', '1994-03-02', '2000-01-18', 'example', 1),
+      ('Lapi', 'Nou', 'Lapinou', 'lapi.nou@email.com', '2021-12-24', '2022-12-24', 'lapin', 1),
+      ('Tortue', 'Ninja', 'Tortueninja', 'tortue.ninja@email.com', '1995-04-02', '2000-05-20', 'tortue', 1),
+      ('Cali', 'mero', 'Calimero', 'cali.mero@email.com', '1988-12-23', '2022-01-18', 'example', 1),
+      ('Cali', 'nours', 'Calinours', 'cali.nours@email.com', '1994-03-02', '2000-01-12', 'calinours', 1)`
       )
     );
 
