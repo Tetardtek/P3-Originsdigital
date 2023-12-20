@@ -74,7 +74,10 @@ const seed = async () => {
         `INSERT INTO users (firstname, lastname, pseudoname, mail, birthdate, logdate, password, roles_id) VALUES
       ('Admin', 'istrator', 'Administrator', 'administrator@email.com', '2000-01-01', '2000-01-02', 'admin', 3),
       ('Mode', 'rator', 'Moderator', 'moderator@email.com', '2010-01-01', '2010-01-02', 'rator', 2),
-      ('Use', 'R', 'User', 'user@email.com', '2015-01-01', '2015-01-02', 'user', 1)`
+      ('Use', 'R', 'User', 'user@email.com', '2015-01-01', '2015-01-02', 'user', 1),
+      ('Ex', 'ample', 'Example', 'example@email.com', '1997-10-25', '2010-12-22', 'example', 3),
+      ('Antoine', 'Dupont', 'Antoine21', 'antoine.dupont@email.com', '1999-01-02', '2007-09-20', 'example', 2),
+      ('Elise', 'Lefevre', 'ProConnect', 'elise.lefevre@email.com', '1986-05-29', '2004-03-12', 'example', 1)`
       )
     );
 
