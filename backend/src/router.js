@@ -16,6 +16,8 @@ router.get("/users", userControllers.browse);
 router.get("/users/:id", userControllers.read);
 router.get("/users/:id/field", userControllers.read);
 
+router.put("/users/:id", userControllers.edit);
+
 // Route to add a new user
 router.post("/users", userControllers.add);
 
