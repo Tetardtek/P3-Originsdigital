@@ -64,11 +64,10 @@ class UserManager extends AbstractManager {
   // }
 
   // The D of CRUD - Delete operation
-  // TODO: Implement the delete operation to remove an user by its ID
-
-  // async delete(id) {
-  //   ...
-  // }
+  async delete(id) {
+    // Execute the SQL DELETE query to remove the user with the specified ID
+    await this.database.query(`delete from ${this.table} where id = ?`, [id]);
+  }
 }
 
 module.exports = UserManager;
