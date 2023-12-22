@@ -17,15 +17,21 @@ const browse = async (req, res, next) => {
 // The R of BREAD - Read operation
 const read = async (req, res, next) => {
   try {
-    // Fetch a specific user from the database based on the provided ID
-    const user = await tables.users.read(req.params.id);
+    const { id } = req.params;
+    const { field } = req.query;
 
-    // If the user is not found, respond with HTTP 404 (Not Found)
-    // Otherwise, respond with the user in JSON format
-    if (user == null) {
-      res.sendStatus(404);
-    } else {
+    // Fetch a specific user from the database based on the provided ID
+    const user = await tables.users.read(id);
+
+    // If the field parameter is present, respond with the specific field
+    if (field && user && user[field]) {
+      res.json({ [field]: user[field] });
+    } else if (user) {
+      // If the user is not found, respond with HTTP 404 (Not Found)
+      // Otherwise, respond with the user in JSON format
       res.json(user);
+    } else {
+      res.sendStatus(404);
     }
   } catch (err) {
     // Pass any errors to the error-handling middleware
