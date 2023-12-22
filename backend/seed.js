@@ -25,6 +25,7 @@ const seed = async () => {
       ('géographie')`
       )
     );
+    await Promise.all(queries);
 
     // Generating ROLES columns
     queries.push(
