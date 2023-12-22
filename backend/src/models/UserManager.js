@@ -20,15 +20,31 @@ class UserManager extends AbstractManager {
   }
 
   // The Rs of CRUD - Read operations
+  async read(id, field) {
+    // Si un champ spécifique est demandé, exécutez une requête SQL SELECT pour récupérer uniquement ce champ
+    if (field) {
+      const [rows] = await this.database.query(
+        `SELECT ?? FROM ${this.table} WHERE id = ?`,
+        [field, id]
+      );
 
-  async read(id) {
-    // Execute the SQL SELECT query to retrieve a specific user by its ID
+      if (rows.length === 0) {
+        return null; // Utilisateur non trouvé
+      }
+
+      return rows[0][field];
+    }
+
+    // Sinon, exécutez la requête SQL SELECT pour récupérer l'utilisateur complet
     const [rows] = await this.database.query(
-      `select * from ${this.table} where id = ?`,
+      `SELECT * FROM ${this.table} WHERE id = ?`,
       [id]
     );
 
-    // Return the first row of the result, which represents the user
+    if (rows.length === 0) {
+      return null; // Utilisateur non trouvé
+    }
+
     return rows[0];
   }
 
