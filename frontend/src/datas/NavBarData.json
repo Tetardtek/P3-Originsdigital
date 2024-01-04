@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "linkname": "Home",
+        "linkurl": "/"
+      },
+      {
+        "id": 2,
+        "linkname": "Videos",
+        "linkurl": "/videos"
+      },
+      {
+        "id": 3,
+        "linkname": "Playlists",
+        "linkurl": "/playlists"
+      },
+      {
+        "id": 4,
+        "linkname": "Connexions",
+        "linkurl": "/login"
+      },
+      {
+        "id": 5,
+        "linkname": "Admin",
+        "linkurl": "/admin"
+      }
+  ]
