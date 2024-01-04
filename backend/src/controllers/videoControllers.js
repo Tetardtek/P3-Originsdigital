@@ -49,13 +49,20 @@ const edit = async (req, res) => {
       return res.status(400).json({ message: "Empty body" });
     }
 
-    const { link, title, description, is_free: isFree } = req.body;
+    const {
+      link,
+      title,
+      description,
+      categories_id: categoriesId,
+      is_free: isFree,
+    } = req.body;
 
     // Edit video information directly using videoManager
     const affectedRows = await tables.videos.edit(videoId, {
       link,
       title,
       description,
+      categories_id: categoriesId,
       is_free: isFree,
     });
 
