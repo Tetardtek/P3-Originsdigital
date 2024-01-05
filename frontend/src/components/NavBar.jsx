@@ -5,18 +5,25 @@ import "../styles/Navbar.scss";
 
 function NavBar() {
   const [showMenu, setShowMenu] = useState(false);
+  const [isBurgerOpen, setIsBurgerOpen] = useState(false);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
+    setIsBurgerOpen(!isBurgerOpen);
   };
 
   const closeMenu = () => {
     setShowMenu(false);
+    setIsBurgerOpen(false);
   };
 
   return (
     <nav>
-      <button className="burger-menu" type="button" onClick={toggleMenu}>
+      <button
+        className={`burger-menu ${isBurgerOpen ? "open" : ""}`}
+        type="button"
+        onClick={toggleMenu}
+      >
         &#9776;
       </button>
       <ul className={`nav-links ${showMenu ? "show-menu" : ""}`}>

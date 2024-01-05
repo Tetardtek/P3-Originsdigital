@@ -1,16 +1,22 @@
+@import "variables";
+
 nav {
-  background-color: #333;
-  padding: 10px;
+  background-color: $color;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 10vh;
+  padding: 0 20px;
 
-  .burger-menu {
+  .burger-menu,
+  .cross-menu {
     display: block;
     cursor: pointer;
     font-size: 2rem;
-    border-radius: 0.8rem;
-    padding: 0;
+    border: none;
+    background: none;
+    color: white;
+    transition: transform 0.3s ease;
   }
 
   ul {
@@ -18,17 +24,24 @@ nav {
     margin: 0;
     padding: 0;
     display: flex;
+    justify-content: space-around;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    width: 100%;
 
     li {
-      margin-right: 20px;
+      margin: 0 10px;
+      text-align: center;
 
       a {
         text-decoration: none;
         color: white;
         font-weight: bold;
+        font-size: 1.2rem;
 
         &:hover {
-          color: #ffd700;
+          color: $color1;
           text-decoration: underline;
         }
       }
@@ -39,12 +52,59 @@ nav {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 60px;
+    border-radius: 0.5rem;
+    top: 10vh;
     left: 0;
-    width: 100%;
-    background-color: #333;
+    background-color: $color4;
+    width: 15%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1;
-    padding: 10px;
-    width: max-content;
+    opacity: 1;
+    height: 60%;
+  }
+
+  .burger-menu.open {
+    transform: rotate(45deg);
+  }
+
+  .cross-menu.open {
+    display: block;
+    transform: rotate(45deg);
+  }
+
+  ul.show-menu {
+    opacity: 1;
+  }
+
+  .burger-menu.open + ul.show-menu {
+    opacity: 1;
+  }
+  @media screen and (max-width: 768px) {
+    .burger-menu {
+      display: block;
+    }
+
+    .cross-menu {
+      display: none;
+    }
+
+    ul {
+      flex-direction: column;
+      position: absolute;
+      top: 10vh;
+      left: 0;
+      width: 6rem !important;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    ul.show-menu {
+      opacity: 1;
+    }
+
+    .burger-menu.open + ul.show-menu {
+      opacity: 1;
+    }
   }
 }

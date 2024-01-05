@@ -16,12 +16,12 @@
   },
   {
     "id": 4,
-    "linkname": "Catégories",
+    "linkname": "Categories",
     "linkurl": "/category"
   },
   {
     "id": 5,
-    "linkname": "Utilisateurs",
+    "linkname": "Users",
     "linkurl": "/users"
   }
-  ]
+]

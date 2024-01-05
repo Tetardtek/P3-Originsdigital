@@ -1,22 +1,29 @@
 import React, { useState } from "react";
 import { NavLink as Link } from "react-router-dom";
 import navbardataadmin from "../../datas/admin/NavBarDataAdmin.json";
-import "../../styles/NavbarAdmin.scss";
+import "../../styles/Navbar.scss";
 
 function NavBarAdmin() {
   const [showMenu, setShowMenu] = useState(false);
+  const [isBurgerOpen, setIsBurgerOpen] = useState(false);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
+    setIsBurgerOpen(!isBurgerOpen);
   };
 
   const closeMenu = () => {
     setShowMenu(false);
+    setIsBurgerOpen(false);
   };
 
   return (
     <nav>
-      <button className="burger-menu" type="button" onClick={toggleMenu}>
+      <button
+        className={`burger-menu ${isBurgerOpen ? "open" : ""}`}
+        type="button"
+        onClick={toggleMenu}
+      >
         &#9776;
       </button>
       <ul className={`nav-links ${showMenu ? "show-menu" : ""}`}>
