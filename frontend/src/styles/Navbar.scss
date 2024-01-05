@@ -1,12 +1,37 @@
 @import "variables";
 
 nav {
-  background-color: $color;
+  background-color: $color4;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between !important;
   align-items: center;
   height: 10vh;
-  padding: 0 20px;
+  width: 100%;
+
+  .left-section {
+    display: flex;
+    align-items: center;
+  }
+  .logo-container {
+    width: 5rem;
+  }
+  .logo {
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: auto;
+  }
+
+  .title {
+    text-align: center;
+    color: $color1;
+    flex-grow: 1;
+  }
+
+  .right-section {
+    display: flex;
+    align-items: center;
+  }
 
   .burger-menu,
   .cross-menu {
@@ -15,52 +40,57 @@ nav {
     font-size: 2rem;
     border: none;
     background: none;
-    color: white;
+    color: $color1;
     transition: transform 0.3s ease;
   }
 
   ul {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 10vh;
+    right: 0;
+    width: 6rem !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     opacity: 0;
     transition: opacity 0.3s ease;
-    width: 100%;
+  }
 
-    li {
-      margin: 0 10px;
-      text-align: center;
+  li {
+    margin: 0 10px;
+    text-align: center;
 
-      a {
-        text-decoration: none;
-        color: white;
-        font-weight: bold;
-        font-size: 1.2rem;
+    a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
 
-        &:hover {
-          color: $color1;
-          text-decoration: underline;
-        }
+      &:hover {
+        color: $color1;
       }
     }
   }
-
+  ul.show-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
   .show-menu {
     display: flex;
     flex-direction: column;
     position: absolute;
     border-radius: 0.5rem;
-    top: 10vh;
-    left: 0;
     background-color: $color4;
-    width: 15%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1;
     opacity: 1;
     height: 60%;
+    margin: 0;
+    padding: 0;
+    width: 10rem !important;
   }
 
   .burger-menu.open {
@@ -79,6 +109,7 @@ nav {
   .burger-menu.open + ul.show-menu {
     opacity: 1;
   }
+
   @media screen and (max-width: 768px) {
     .burger-menu {
       display: block;
@@ -89,14 +120,19 @@ nav {
     }
 
     ul {
+      display: none;
       flex-direction: column;
       position: absolute;
       top: 10vh;
-      left: 0;
+      right: 0;
       width: 6rem !important;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
       opacity: 0;
       transition: opacity 0.3s ease;
+    }
+
+    .show-menu ul {
+      display: flex;
     }
 
     ul.show-menu {
