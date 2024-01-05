@@ -1,22 +1,16 @@
 const AbstractManager = require("./AbstractManager");
 
-class VideoManager extends AbstractManager {
+class PlaylistManager extends AbstractManager {
   constructor() {
-    super({ table: "videos" });
+    super({ table: "playlists" });
   }
 
   // The C of CRUD - Create operation
-  async create(video) {
-    const {
-      link,
-      title,
-      description,
-      categories_id: categoriesId,
-      is_free: isFree,
-    } = video;
+  async create(playlist) {
+    const { link, title, description, categories_id: categoriesId } = playlist;
     const [result] = await this.database.query(
-      `insert into ${this.table} (link, title, description, categories_id, is_free) values (?, ?, ?, ?, ?)`,
-      [link, title, description, categoriesId, isFree]
+      `insert into ${this.table} (link, title, description, categories_id) values (?, ?, ?, ?)`,
+      [link, title, description, categoriesId]
     );
     return result.insertId;
   }
@@ -51,17 +45,11 @@ class VideoManager extends AbstractManager {
   }
 
   // The U of CRUD - Update operation
-  async edit(id, video) {
-    const {
-      link,
-      title,
-      description,
-      categories_id: categoriesId,
-      is_free: isFree,
-    } = video;
+  async edit(id, playlist) {
+    const { link, title, description, categories_id: categoriesId } = playlist;
     const [result] = await this.database.query(
-      `UPDATE ${this.table} SET link = ?, title = ?, description = ?, categories_id = ?, is_free = ? WHERE id = ?`,
-      [link, title, description, categoriesId, isFree, id]
+      `UPDATE ${this.table} SET link = ?, title = ?, description = ?, categoriesId = ? WHERE id = ?`,
+      [link, title, description, categoriesId, id]
     );
     return result.affectedRows;
   }
@@ -72,4 +60,4 @@ class VideoManager extends AbstractManager {
   }
 }
 
-module.exports = VideoManager;
+module.exports = PlaylistManager;
