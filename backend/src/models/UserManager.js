@@ -9,10 +9,28 @@ class UserManager extends AbstractManager {
 
   // The C of CRUD - Create operation
   async create(user) {
-    // Execute the SQL INSERT query to add a new user to the "user" table
+    const {
+      firstname,
+      lastname,
+      pseudoname,
+      mail,
+      birthdate,
+      logdate,
+      password,
+      roles_id: rolesId,
+    } = user;
     const [result] = await this.database.query(
-      `insert into ${this.table} (title) values (?)`,
-      [user.title]
+      `insert into ${this.table} (firstname, lastname, pseudoname, mail, birthdate, logdate, password, roles_id) values (?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        firstname,
+        lastname,
+        pseudoname,
+        mail,
+        birthdate,
+        logdate,
+        password,
+        rolesId,
+      ]
     );
 
     // Return the ID of the newly inserted user
@@ -21,7 +39,7 @@ class UserManager extends AbstractManager {
 
   // The Rs of CRUD - Read operations
   async read(id, field) {
-    // Si un champ spécifique est demandé, exécutez une requête SQL SELECT pour récupérer uniquement ce champ
+    // If the field parameter is specified, execute the SQL SELECT query
     if (field) {
       const [rows] = await this.database.query(
         `SELECT ?? FROM ${this.table} WHERE id = ?`,
@@ -29,20 +47,20 @@ class UserManager extends AbstractManager {
       );
 
       if (rows.length === 0) {
-        return null; // Utilisateur non trouvé
+        return null;
       }
 
       return rows[0][field];
     }
 
-    // Sinon, exécutez la requête SQL SELECT pour récupérer l'utilisateur complet
+    // If the field parameter is not specified, execute the SQL SELECT query
     const [rows] = await this.database.query(
       `SELECT * FROM ${this.table} WHERE id = ?`,
       [id]
     );
 
     if (rows.length === 0) {
-      return null; // Utilisateur non trouvé
+      return null;
     }
 
     return rows[0];
@@ -51,8 +69,6 @@ class UserManager extends AbstractManager {
   async readAll() {
     // Execute the SQL SELECT query to retrieve all users from the "user" table
     const [rows] = await this.database.query(`select * from ${this.table}`);
-
-    // Return the array of users
     return rows;
   }
 
