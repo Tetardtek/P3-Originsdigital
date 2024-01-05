@@ -46,7 +46,6 @@ router.delete("/videos/:id", videoControllers.destroy);
 router.delete("/playlists/:id", playlistControllers.destroy);
 router.delete("/categories/:id", categorieControllers.destroy);
 
-
 /* ************************************************************************* */
 
 module.exports = router;
