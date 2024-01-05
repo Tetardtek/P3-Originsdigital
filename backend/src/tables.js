@@ -6,11 +6,13 @@
 const UserManager = require("./models/UserManager");
 const VideoManager = require("./models/VideoManager");
 const PlaylistManager = require("./models/PlaylistManager");
+const CategorieManager = require("./models/CategorieManager");
 
 const managers = [
   UserManager,
   VideoManager,
   PlaylistManager,
+  CategorieManager,
   // Add other managers here
 ];
 

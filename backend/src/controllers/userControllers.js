@@ -46,9 +46,7 @@ const edit = async (req, res) => {
   try {
     // Check if req.body is defined
     if (!req.body) {
-      return res
-        .status(400)
-        .json({ message: "Le corps de la requête est vide." });
+      return res.status(400).json({ message: "Empty body" });
     }
 
     const { firstname, lastname, mail, password } = req.body;
@@ -62,17 +60,15 @@ const edit = async (req, res) => {
     });
 
     if (affectedRows === 0) {
-      return res.status(500).json({ message: "La mise à jour a échoué" });
+      return res.status(500).json({ message: "Update fail" });
     }
 
     // Fetch and return the updated user
     const editedUser = await tables.users.read(userId);
-    return res.json({ message: "Mise à jour réussie", user: editedUser });
+    return res.json({ message: "Updated", user: editedUser });
   } catch (error) {
-    console.error("Erreur lors de la mise à jour de l'utilisateur", error);
-    return res
-      .status(500)
-      .json({ message: "Erreur lors de la mise à jour de l'utilisateur" });
+    console.error("Error updating user", error);
+    return res.status(500).json({ message: "Error updating user" });
   }
 };
 
@@ -107,7 +103,6 @@ const destroy = async (req, res, next) => {
   }
 };
 
-// Ready to export the controller functions
 module.exports = {
   browse,
   read,
