@@ -5,12 +5,14 @@
 // Import the manager modules responsible for handling data operations on the tables
 const UserManager = require("./models/UserManager");
 const VideoManager = require("./models/VideoManager");
+const CommentManager = require("./models/CommentManager");
 const PlaylistManager = require("./models/PlaylistManager");
 const CategorieManager = require("./models/CategorieManager");
 
 const managers = [
   UserManager,
   VideoManager,
+  CommentManager,
   PlaylistManager,
   CategorieManager,
   // Add other managers here
