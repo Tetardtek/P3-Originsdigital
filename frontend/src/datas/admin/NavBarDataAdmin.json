@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "linkname": "Home",
+    "linkurl": "/"
+  },
+  {
+    "id": 2,
+    "linkname": "Dashboard",
+    "linkurl": "/admin"
+  },
+  {
+    "id": 3,
+    "linkname": "All videos",
+    "linkurl": "/content"
+  },
+  {
+    "id": 4,
+    "linkname": "Catégories",
+    "linkurl": "/category"
+  },
+  {
+    "id": 5,
+    "linkname": "Utilisateurs",
+    "linkurl": "/users"
+  }
+  ]
