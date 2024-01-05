@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink as Link } from "react-router-dom";
 import navbardataadmin from "../../datas/admin/NavBarDataAdmin.json";
 import "../../styles/Navbar.scss";
+import logo from "../../assets/images/logo.png";
 
 function NavBarAdmin() {
   const [showMenu, setShowMenu] = useState(false);
@@ -19,6 +20,10 @@ function NavBarAdmin() {
 
   return (
     <nav>
+      <div className="logo-container">
+        <img src={logo} alt="Your Logo" className="logo" />
+      </div>
+      <h1 className="title">Origin's Digital</h1>
       <button
         className={`burger-menu ${isBurgerOpen ? "open" : ""}`}
         type="button"
