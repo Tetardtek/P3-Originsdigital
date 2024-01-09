@@ -4,13 +4,13 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "./App";
-import Dashboard from "./pages/admin/dashboard";
-import Content from "./pages/admin/content";
-import Category from "./pages/admin/category";
-import Users from "./pages/admin/users";
-import Videos from "./pages/videos";
-import PLaylists from "./pages/playlists";
-import LogIn from "./pages/login";
+import Dashboard from "./pages/admin/Dashboard";
+import Content from "./pages/admin/Content";
+import Category from "./pages/admin/Category";
+import Users from "./pages/admin/Users";
+import Videos from "./pages/Videos";
+import PLaylists from "./pages/Playlists";
+import LogIn from "./pages/Login";
 
 const router = createBrowserRouter([
   {
