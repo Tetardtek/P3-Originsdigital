@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NavBarAdmin from "../../components/admin/NavBarAdmin";
-import "../../styles/admin/content.sass";
+import "../../styles/admin/content.scss";
 
 export default function Content() {
   const [videos, setVideos] = useState([]);
@@ -35,7 +35,7 @@ export default function Content() {
       <NavBarAdmin />
       <main>
         <div className="videos">
-          <h1>Origin's Digital videos Panel</h1>
+          <h1>Videos Panel</h1>
           <div className="videos-card">
             {videos.map((video) => (
               <div key={video.id}>
