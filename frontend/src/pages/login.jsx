@@ -1,12 +1,72 @@
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import { useAuth } from "../context/AuthContext";
 
-export default function LogIn() {
+export default function Login() {
+  const [credentials, setCredentials] = useState({
+    mail: "",
+    password: "",
+  });
+
+  const { login, loginStatus } = useAuth();
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const status = await login(credentials);
+
+      if (status === "Login successful") {
+        // eslint-disable-next-line no-restricted-syntax
+        console.log("Received Token:", localStorage.getItem("token"));
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+  };
+
   return (
     <>
       <NavBar />
-      <main>
-        <h1>Origin's Digital LogInPage</h1>
-      </main>
+      <div className="auth-form">
+        <h2>Login</h2>
+        <form onSubmit={handleLogin}>
+          <label>
+            Email:
+            <input
+              type="email"
+              name="mail"
+              value={credentials.mail}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label>
+            Password:
+            <input
+              type="password"
+              name="password"
+              value={credentials.password}
+              onChange={handleInputChange}
+            />
+          </label>
+          <button type="submit">Login</button>
+        </form>
+        <p>
+          Don't have an account? <Link to="/register">Signup here</Link>
+        </p>
+        {loginStatus && <p>{loginStatus}</p>}
+      </div>
     </>
   );
 }

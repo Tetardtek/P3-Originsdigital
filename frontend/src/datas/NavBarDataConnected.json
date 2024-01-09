@@ -16,17 +16,8 @@
   },
   {
     "id": 4,
-    "linkname": "LogIn",
-    "linkurl": "/login"
-  },
-  {
-    "id": 5,
-    "linkname": "Admin",
-    "linkurl": "/admin"
-  },
-  {
-    "id": 6,
-    "linkname": "Register",
-    "linkurl": "/register"
+    "linkname": "Logout",
+    "linkurl": "/",
+    "action": "logout"
   }
 ]

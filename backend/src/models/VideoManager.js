@@ -15,7 +15,7 @@ class VideoManager extends AbstractManager {
       is_free: isFree,
     } = video;
     const [result] = await this.database.query(
-      `insert into ${this.table} (link, title, description, categories_id, is_free) values (?, ?, ?, ?, ?)`,
+      `INSERT INTO ${this.table} (link, title, description, categories_id, is_free) VALUES (?, ?, ?, ?, ?)`,
       [link, title, description, categoriesId, isFree]
     );
     return result.insertId;
@@ -46,7 +46,7 @@ class VideoManager extends AbstractManager {
   }
 
   async readAll() {
-    const [rows] = await this.database.query(`select * from ${this.table}`);
+    const [rows] = await this.database.query(`SELECT * FROM ${this.table}`);
     return rows;
   }
 
@@ -68,7 +68,7 @@ class VideoManager extends AbstractManager {
 
   // The D of CRUD - Delete operation
   async delete(id) {
-    await this.database.query(`delete from ${this.table} where id = ?`, [id]);
+    await this.database.query(`DELETE FROM ${this.table} WHERE id = ?`, [id]);
   }
 }
 

@@ -12,9 +12,11 @@ const videoControllers = require("./controllers/videoControllers");
 const commentControllers = require("./controllers/commentControllers");
 const playlistControllers = require("./controllers/playlistControllers");
 const categorieControllers = require("./controllers/categorieControllers");
+const verifyToken = require("./middlewares/verifyToken");
 
 // Route to get a list of users/videos/categories/playlists/comments
-router.get("/users", userControllers.browse);
+
+router.get("/users", verifyToken, userControllers.browse);
 router.get("/videos", videoControllers.browse);
 router.get("/comments", commentControllers.browse);
 router.get("/playlists", playlistControllers.browse);
@@ -45,6 +47,7 @@ router.post("/videos", videoControllers.add);
 router.post("/comments", commentControllers.add);
 router.post("/playlists", playlistControllers.add);
 router.post("/categories", categorieControllers.add);
+router.post("/login", userControllers.login);
 
 // Route to delete an user/video/categorie/playlist/comments by ID
 router.delete("/users/:id", userControllers.destroy);
