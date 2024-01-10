@@ -1,7 +1,7 @@
 import NavBar from "./components/NavBar";
-import "./App.css";
+import "./App.scss";
 
-function App() {
+export default function App() {
   return (
     <>
       <NavBar />
@@ -13,5 +13,3 @@ function App() {
     </>
   );
 }
-
-export default App;

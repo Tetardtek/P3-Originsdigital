@@ -36,52 +36,89 @@ export default function AddVideo() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Title of video :
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title of video"
-        />
-      </label>
-      <label>
-        Link of video :
-        <input
-          type="text"
-          value={link}
-          onChange={(e) => setLink(e.target.value)}
-          placeholder="Link of video"
-        />
-      </label>
-      <label>
-        Description of video :
-        <input
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description of video"
-        />
-      </label>
-      <label>
-        Category of video :
-        <input
-          type="text"
-          value={categoriesId}
-          onChange={(e) => setCategoriesId(e.target.value)}
-          placeholder="Categories of video"
-        />
-      </label>
-      <label>
-        Video is free :
-        <input
-          type="checkbox"
-          checked={isFree}
-          onChange={(e) => setIsFree(e.target.checked)}
-        />
-      </label>
-      <input type="submit" value="Submit" />
-    </form>
+    <div className="container-add-video">
+      <div className="add-video-form">
+        <h2>Add Video</h2>
+        <form onSubmit={handleSubmit}>
+          <ul>
+            <li>
+              <label>
+                Title of video :
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Title of video"
+                />
+              </label>
+            </li>
+            <li>
+              <label>
+                Link of video :
+                <input
+                  type="text"
+                  value={link}
+                  onChange={(e) => setLink(e.target.value)}
+                  placeholder="https://www.youtube.com/watch?v="
+                />
+              </label>
+            </li>
+            <li>
+              <label>
+                Description of video :
+                <input
+                  type="text"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Description of video"
+                />
+              </label>
+            </li>
+            <li>
+              <label>
+                Category of video :
+                <select
+                  value={categoriesId}
+                  onChange={(e) => setCategoriesId(e.target.value)}
+                >
+                  <option value="">Select a category</option>
+                  <option value="1">Mer</option>
+                  <option value="2">Animaux</option>
+                  <option value="3">Légendes</option>
+                  <option value="4">Climat</option>
+                  <option value="5">Géographie</option>
+                </select>
+              </label>
+            </li>
+            <li>
+              <label>
+                Video is free :
+                <input
+                  type="checkbox"
+                  checked={isFree}
+                  onChange={(e) => setIsFree(e.target.checked)}
+                />
+              </label>
+            </li>
+            <input type="submit" value="Submit" />
+          </ul>
+        </form>
+      </div>
+      <div className="video-preview">
+        <div className="videos-card">
+          <h3>{title}</h3>
+          <a href={link} target="_blank" rel="noopener noreferrer">
+            <img
+              src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg"
+              alt="Logo YouTube"
+              height="30"
+            />
+          </a>{" "}
+          <p>{description}</p>
+          <br />
+        </div>
+      </div>
+      <p>Is Free : {isFree ? "Yes" : "No"}</p>
+    </div>
   );
 }

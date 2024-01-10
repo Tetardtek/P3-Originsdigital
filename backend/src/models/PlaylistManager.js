@@ -9,7 +9,7 @@ class PlaylistManager extends AbstractManager {
   async create(playlist) {
     const { link, title, description, categories_id: categoriesId } = playlist;
     const [result] = await this.database.query(
-      `insert into ${this.table} (link, title, description, categories_id) values (?, ?, ?, ?)`,
+      `INSERT INTO ${this.table} (link, title, description, categories_id) values (?, ?, ?, ?)`,
       [link, title, description, categoriesId]
     );
     return result.insertId;
@@ -56,7 +56,7 @@ class PlaylistManager extends AbstractManager {
 
   // The D of CRUD - Delete operation
   async delete(id) {
-    await this.database.query(`delete from ${this.table} where id = ?`, [id]);
+    await this.database.query(`DELETE FROM ${this.table} WHERE id = ?`, [id]);
   }
 }
 
