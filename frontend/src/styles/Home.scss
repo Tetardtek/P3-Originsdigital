@@ -1,8 +1,5 @@
 @import "../styles/variables.scss";
-
 .home {
-  background-color: $color4;
-
   h1 {
     display: flex;
     text-align: center;
@@ -20,16 +17,15 @@
   align-items: center;
   flex-wrap: wrap;
   align-content: stretch;
-  width: 100%;
 }
 
 .videos-card-home {
   background-color: $color2;
   display: flex;
+  justify-content: center;
   border: 1px solid;
   border-radius: 5px;
   padding: 1rem;
-  margin: 0.5rem;
   width: 100%;
 
   img {
@@ -47,6 +43,22 @@
     border-radius: 5px;
     padding: 1rem;
     margin: 0.5rem;
+  }
+
+  .active,
+  .inactive {
+    width: 28%;
+
+    @media screen and (max-width: 961px) {
+      &:nth-of-type(1) {
+        display: none;
+      }
+    }
+    @media screen and (max-width: 450px) {
+      &:nth-of-type(3) {
+        display: none;
+      }
+    }
   }
 }
 
@@ -68,33 +80,36 @@
   flex-wrap: wrap;
   align-content: stretch;
 
-  .section4-home {
+  .section3-home {
     background-color: $color2;
-    width: 100%;
+    display: flex;
+    justify-content: center;
     border: 1px solid;
     border-radius: 5px;
     padding: 1rem;
-    margin: 0.5rem;
+    width: 100%;
 
     .article-ctn {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      justify-content: center;
+      margin: 1rem;
+      padding: 1rem;
+      gap: 2rem;
 
       article {
         background-color: $color3;
         border: 1px solid;
         border-radius: 5px;
-        width: calc(50% - 1rem);
-        margin-bottom: 1rem;
+        width: 100%;
 
         h2 {
-          margin-bottom: 0.5rem;
           text-align: center;
         }
 
         div {
           text-align: center;
+          padding: 1rem;
         }
       }
     }

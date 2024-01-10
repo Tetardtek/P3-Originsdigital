@@ -29,37 +29,11 @@ export default function MainHome() {
             <button type="button" className="carousel" onClick={prevSlide}>
               Prev
             </button>
-            {visibleVideos.map((video, index) => (
+            {visibleVideos.map((video) => (
               <div
                 key={video.id}
-                className={index === currentIndex ? "active" : "inactive"}
+                className={video.id === currentIndex ? "active" : "inactive"}
               >
-                <h3>{video.title}</h3>
-                <a href={video.link} target="_blank" rel="noopener noreferrer">
-                  <img
-                    src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg"
-                    alt="Logo YouTube"
-                    height="30"
-                  />
-                </a>{" "}
-                <p>{video.description}</p>
-              </div>
-            ))}
-            <button type="button" className="carousel" onClick={nextSlide}>
-              Next
-            </button>
-          </div>
-        </div>
-      </section>
-      <h1>Trends over the last fortnight</h1>
-      <section className="section3-home">
-        <div className="videos-home">
-          <div className="videos-card-home">
-            <button type="button" className="carousel" onClick={prevSlide}>
-              Prev
-            </button>
-            {visibleVideos.map((video) => (
-              <div key={video.id}>
                 <h3>{video.title}</h3>
                 <a href={video.link} target="_blank" rel="noopener noreferrer">
                   <img

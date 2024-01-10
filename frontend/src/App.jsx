@@ -6,7 +6,6 @@ export default function App() {
   return (
     <>
       <NavBar />
-      <h1>Origin's Digital</h1>
       <div>
         <Home />
       </div>

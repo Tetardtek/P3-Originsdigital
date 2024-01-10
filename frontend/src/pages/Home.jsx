@@ -6,15 +6,9 @@ import "../styles/Home.scss";
 export default function Home() {
   return (
     <div className="home">
-      <div>
-        <HeadHome />
-      </div>
-      <div>
-        <MainHome />
-      </div>
-      <div>
-        <PartnersHome />
-      </div>
+      <HeadHome />
+      <MainHome />
+      <PartnersHome />
     </div>
   );
 }
