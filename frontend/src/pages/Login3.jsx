@@ -27,8 +27,6 @@ export default function Login() {
       const status = await login(credentials);
 
       if (status === "Login successful") {
-        // eslint-disable-next-line no-restricted-syntax
-        console.log("Received Token:", localStorage.getItem("token"));
         navigate("/");
       }
     } catch (error) {
