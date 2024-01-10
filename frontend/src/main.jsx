@@ -9,7 +9,7 @@ import Category from "./pages/admin/Category";
 import Users from "./pages/admin/Users";
 import Videos from "./pages/Videos";
 import Playlists from "./pages/Playlists";
-import LogIn from "./pages/Login";
+import LogIn from "./pages/Login2";
 import Register from "./pages/Signup";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
