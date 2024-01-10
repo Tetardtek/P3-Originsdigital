@@ -9,11 +9,9 @@ class CategorieManager extends AbstractManager {
   async create(categorie) {
     const { name } = categorie;
     const [result] = await this.database.query(
-      `INSER INTO ${this.table} (name) VALUES (?)`,
+      `INSERT INTO ${this.table} (name) VALUES (?)`,
       [name]
     );
-
-    // Return the ID of the newly inserted categorie
     return result.insertId;
   }
 
