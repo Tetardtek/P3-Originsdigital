@@ -8,14 +8,19 @@ import Dashboard from "./pages/admin/Dashboard";
 import Content from "./pages/admin/Content";
 import Category from "./pages/admin/Category";
 import Users from "./pages/admin/Users";
-import Videos from "./pages/Videos";
-import PLaylists from "./pages/Playlists";
-import LogIn from "./pages/Login";
+import Videos from "./pages/videos";
+import PLaylists from "./pages/playlists";
+import LogIn from "./pages/login";
+import Home from "./pages/Home";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/home",
+    element: <Home />,
   },
   {
     path: "/admin",
