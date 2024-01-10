@@ -3,12 +3,12 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import App from "./App";
-import Dashboard from "./pages/admin/Dashboard";
-import Content from "./pages/admin/Content";
-import Category from "./pages/admin/Category";
-import Users from "./pages/admin/Users";
-import Videos from "./pages/Videos";
-import Playlists from "./pages/Playlists";
+import Dashboard from "./pages/admin/Dashboard2";
+import Content from "./pages/admin/Content2";
+import Category from "./pages/admin/Category2";
+import Users from "./pages/admin/Users2";
+import Videos from "./pages/Videos2";
+import Playlists from "./pages/Playlists2";
 import LogIn from "./pages/Login2";
 import Register from "./pages/Signup";
 
