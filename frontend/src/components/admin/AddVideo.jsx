@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function AddVideo() {
+  const [categories, setCategories] = useState([]);
   const [link, setLink] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [categoriesId, setCategoriesId] = useState("");
   const [isFree, setIsFree] = useState(false);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/categories/`
+      );
+      const data = await response.json();
+      setCategories(data);
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -82,11 +95,11 @@ export default function AddVideo() {
                   onChange={(e) => setCategoriesId(e.target.value)}
                 >
                   <option value="">Select a category</option>
-                  <option value="1">Mer</option>
-                  <option value="2">Animaux</option>
-                  <option value="3">Légendes</option>
-                  <option value="4">Climat</option>
-                  <option value="5">Géographie</option>
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
                 </select>
               </label>
             </li>
