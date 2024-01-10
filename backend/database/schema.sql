@@ -42,7 +42,7 @@ pseudoname VARCHAR(30)  NOT NULL,
 mail VARCHAR(90),
 birthdate DATE NOT NULL,
 logdate DATE NOT NULL,
-password VARCHAR(20),
+password VARCHAR(200),
 roles_id INT,
 PRIMARY KEY (`id`),
 FOREIGN KEY (roles_id) REFERENCES roles(id)

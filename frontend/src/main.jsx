@@ -1,56 +1,35 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
 import App from "./App";
-import Dashboard from "./pages/admin/dashboard";
-import Content from "./pages/admin/content";
-import Category from "./pages/admin/category";
-import Users from "./pages/admin/users";
-import Videos from "./pages/videos";
-import PLaylists from "./pages/playlists";
-import LogIn from "./pages/login";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: "/admin",
-    element: <Dashboard />,
-  },
-  {
-    path: "/content",
-    element: <Content />,
-  },
-  {
-    path: "/category",
-    element: <Category />,
-  },
-  {
-    path: "/users",
-    element: <Users />,
-  },
-  {
-    path: "/videos",
-    element: <Videos />,
-  },
-  {
-    path: "/playlists",
-    element: <PLaylists />,
-  },
-  {
-    path: "/login",
-    element: <LogIn />,
-  },
-]);
+import Dashboard from "./pages/admin/Dashboard3";
+import Content from "./pages/admin/Content3";
+import Category from "./pages/admin/Category3";
+import Users from "./pages/admin/Users3";
+import Videos from "./pages/Videos3";
+import Playlist from "./pages/Playlist3";
+import LogIn from "./pages/Login3";
+import Register from "./pages/Signup3";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/admin" element={<Dashboard />} />
+          <Route path="/content" element={<Content />} />
+          <Route path="/category" element={<Category />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/videos" element={<Videos />} />
+          <Route path="/playlist" element={<Playlist />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<App />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
   </React.StrictMode>
 );

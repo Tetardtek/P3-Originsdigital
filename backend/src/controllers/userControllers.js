@@ -1,15 +1,43 @@
-// Import access to database tables
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 const tables = require("../tables");
 
+const secretKey = process.env.APP_SECRET;
+
+const saltRounds = 10;
+
+const login = async (req, res) => {
+  const { mail, password } = req.body;
+  try {
+    const user = await tables.users.getByMail(mail);
+    if (!user) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ message: "Incorrect password" });
+    }
+
+    const token = jwt.sign({ user: user.id }, secretKey);
+
+    return res.status(200).json({
+      message: "Login successful",
+      user: { ...user, pseudoname: user.pseudoname },
+      token,
+    });
+  } catch (error) {
+    console.error("Error logging in user", error);
+    return res.status(500).json({ message: "Error logging in user" });
+  }
+};
 // The B of BREAD - Browse (Read All) operation
 const browse = async (req, res, next) => {
   try {
-    // Fetch all users from the database
     const users = await tables.users.readAll();
-    // Respond with the users in JSON format
     res.json(users);
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };
@@ -20,21 +48,16 @@ const read = async (req, res, next) => {
     const { id } = req.params;
     const { field } = req.query;
 
-    // Fetch a specific user from the database based on the provided ID
     const user = await tables.users.read(id);
 
-    // If the field parameter is present, respond with the specific field
     if (field && user && user[field]) {
       res.json({ [field]: user[field] });
     } else if (user) {
-      // If the user is not found, respond with HTTP 404 (Not Found)
-      // Otherwise, respond with the user in JSON format
       res.json(user);
     } else {
       res.sendStatus(404);
     }
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };
@@ -44,14 +67,12 @@ const edit = async (req, res) => {
   const userId = req.params.id;
 
   try {
-    // Check if req.body is defined
     if (!req.body) {
       return res.status(400).json({ message: "Empty body" });
     }
 
     const { firstname, lastname, mail, password } = req.body;
 
-    // Edit user information directly using UserManager
     const affectedRows = await tables.users.edit(userId, {
       firstname,
       lastname,
@@ -63,7 +84,6 @@ const edit = async (req, res) => {
       return res.status(500).json({ message: "Update fail" });
     }
 
-    // Fetch and return the updated user
     const editedUser = await tables.users.read(userId);
     return res.json({ message: "Updated", user: editedUser });
   } catch (error) {
@@ -73,18 +93,30 @@ const edit = async (req, res) => {
 };
 
 // The A of BREAD - Add (Create) operation
-const add = async (req, res, next) => {
-  // Extract the user data from the request body
-  const user = req.body;
 
+const add = async (req, res, next) => {
   try {
-    // Insert the user into the database
+    const { firstname, lastname, pseudoname, mail, birthdate, password } =
+      req.body;
+
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const user = {
+      firstname,
+      lastname,
+      pseudoname,
+      mail,
+      birthdate,
+      password: hashedPassword,
+      logdate: new Date(),
+    };
+
     const insertId = await tables.users.create(user);
 
-    // Respond with HTTP 201 (Created) and the ID of the newly inserted user
-    res.status(201).json({ insertId });
+    const token = jwt.sign({ user: user.id }, secretKey);
+
+    res.status(201).json({ insertId, token });
   } catch (err) {
-    // Pass any errors to the error-handling middleware
+    console.error(err);
     next(err);
   }
 };
@@ -92,13 +124,10 @@ const add = async (req, res, next) => {
 // The D of BREAD - Destroy (Delete) operation
 const destroy = async (req, res, next) => {
   try {
-    // Delete the user from the database
     await tables.users.delete(req.params.id);
 
-    // Respond with HTTP 204 (No Content)
     res.sendStatus(204);
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };
@@ -109,4 +138,5 @@ module.exports = {
   edit,
   add,
   destroy,
+  login,
 };
