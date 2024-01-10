@@ -1,5 +1,6 @@
 import NavBar from "./components/NavBar";
 import "./App.scss";
+import Home from "./pages/Home";
 
 export default function App() {
   return (
@@ -7,8 +8,7 @@ export default function App() {
       <NavBar />
       <h1>Origin's Digital</h1>
       <div>
-        <h2>Welcome to Origin's Digital Website</h2>
-        <p>We are in construction</p>
+        <Home />
       </div>
     </>
   );
