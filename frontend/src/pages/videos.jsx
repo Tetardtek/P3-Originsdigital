@@ -7,7 +7,7 @@ export default function Content() {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/content/`)
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/videos/`)
       .then((response) => response.json())
       .then((data) => setVideos(data));
   }, []);
