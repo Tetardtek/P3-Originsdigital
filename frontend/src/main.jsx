@@ -11,6 +11,7 @@ import Videos from "./pages/Videos";
 import Playlists from "./pages/Playlists";
 import LogIn from "./pages/Login";
 import Register from "./pages/Signup";
+import Settings from "./pages/Settings";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -27,6 +28,7 @@ root.render(
           <Route path="/playlists" element={<Playlists />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/" element={<App />} />
         </Routes>
       </AuthProvider>

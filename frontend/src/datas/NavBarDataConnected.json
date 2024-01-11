@@ -19,5 +19,10 @@
     "linkname": "Logout",
     "linkurl": "/",
     "action": "logout"
+  },
+  {
+    "id": 5,
+    "linkname": "Settings",
+    "linkurl": "/settings"
   }
 ]
