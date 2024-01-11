@@ -1,8 +1,8 @@
-import AddCategory from "../../components/admin/AddCategory";
 import NavBarAdmin from "../../components/admin/NavBarAdmin";
+import AddCategory from "../../components/admin/category/AddCategory";
+import CategoryList from "../../components/admin/category/CategoryList";
+import ManageCategory from "../../components/admin/category/ManageCategory";
 import "../../styles/admin/Category.scss";
-import CategoryList from "../../components/admin/CategoryList";
-import ManageCategory from "../../components/admin/ManageCategory";
 
 export default function Category() {
   return (

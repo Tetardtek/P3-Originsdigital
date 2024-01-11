@@ -2,7 +2,7 @@ import React from "react";
 import NavBarAdmin from "../../components/admin/NavBarAdmin";
 import AddVideo from "../../components/admin/AddVideo";
 import "../../styles/admin/Dashboard.scss";
-import AddCategory from "../../components/admin/AddCategory";
+import AddCategory from "../../components/admin/category/AddCategory";
 
 export default function Dashboard() {
   return (

@@ -1,10 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
 import App from "./App";
+import { AuthProvider } from "./context/AuthContext";
 import Dashboard from "./pages/admin/Dashboard";
 import Content from "./pages/admin/Content";
+import Playlist from "./pages/admin/Playlist";
 import Category from "./pages/admin/Category";
 import Users from "./pages/admin/Users";
 import Videos from "./pages/Videos";
@@ -21,6 +22,7 @@ root.render(
         <Routes>
           <Route path="/admin" element={<Dashboard />} />
           <Route path="/content" element={<Content />} />
+          <Route path="/playlist" element={<Playlist />} />
           <Route path="/category" element={<Category />} />
           <Route path="/users" element={<Users />} />
           <Route path="/videos" element={<Videos />} />
