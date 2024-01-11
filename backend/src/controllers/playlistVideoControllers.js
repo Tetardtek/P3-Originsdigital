@@ -4,7 +4,7 @@ const tables = require("../tables");
 // The B of BREAD - Browse (Read All) operation
 const browse = async (req, res, next) => {
   try {
-    const playlists = await tables.playlists.readAll();
+    const playlists = await tables.playlists_videos.readAll();
     res.json(playlists);
   } catch (err) {
     next(err);
@@ -17,7 +17,7 @@ const read = async (req, res, next) => {
     const { id } = req.params;
     const { field } = req.query;
 
-    const playlist = await tables.playlists.read(id);
+    const playlist = await tables.playlists_videos.read(id);
 
     if (field && playlist && playlist[field]) {
       res.json({ [field]: playlist[field] });
@@ -42,7 +42,7 @@ const edit = async (req, res) => {
 
     const { title, link, description } = req.body;
 
-    const affectedRows = await tables.playlists.edit(playlistId, {
+    const affectedRows = await tables.playlists_videos.edit(playlistId, {
       title,
       link,
       description,
@@ -52,7 +52,7 @@ const edit = async (req, res) => {
       return res.status(500).json({ message: "Update fail" });
     }
 
-    const editedplaylist = await tables.playlists.read(playlistId);
+    const editedplaylist = await tables.playlists_videos.read(playlistId);
     return res.json({ message: "Success Update", playlist: editedplaylist });
   } catch (error) {
     console.error("Error on playlist update", error);
@@ -65,7 +65,7 @@ const add = async (req, res, next) => {
   const playlist = req.body;
 
   try {
-    const insertId = await tables.playlists.create(playlist);
+    const insertId = await tables.playlists_videos.create(playlist);
 
     res.status(201).json({ insertId });
   } catch (err) {
@@ -76,7 +76,7 @@ const add = async (req, res, next) => {
 // The D of BREAD - Destroy (Delete) operation
 const destroy = async (req, res, next) => {
   try {
-    await tables.playlists.delete(req.params.id);
+    await tables.playlists_videos.delete(req.params.id);
 
     res.sendStatus(204);
   } catch (err) {

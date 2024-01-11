@@ -1,16 +1,16 @@
 const AbstractManager = require("./AbstractManager");
 
-class PlaylistManager extends AbstractManager {
+class PlaylistVideoManager extends AbstractManager {
   constructor() {
-    super({ table: "playlists" });
+    super({ table: "playlists_videos" });
   }
 
   // The C of CRUD - Create operation
   async create(playlist) {
-    const { title, link, description } = playlist;
+    const { playlists_id: playlistId, videos_id: videosId } = playlist;
     const [result] = await this.database.query(
-      `INSERT INTO ${this.table} (title, link, description) values (?, ?, ?)`,
-      [title, link, description]
+      `INSERT INTO ${this.table} (playlists_id, videos_id) values (?, ?)`,
+      [playlistId, videosId]
     );
     return result.insertId;
   }
@@ -46,10 +46,10 @@ class PlaylistManager extends AbstractManager {
 
   // The U of CRUD - Update operation
   async edit(id, playlist) {
-    const { title, link, description } = playlist;
+    const { playlists_id: playlistId, videos_id: videosId } = playlist;
     const [result] = await this.database.query(
-      `UPDATE ${this.table} SET title = ?, link = ?, description = ? WHERE id = ?`,
-      [title, link, description, id]
+      `UPDATE ${this.table} SET playlists_id = ?, videos_id = ? WHERE id = ?`,
+      [playlistId, videosId, id]
     );
     return result.affectedRows;
   }
@@ -60,4 +60,4 @@ class PlaylistManager extends AbstractManager {
   }
 }
 
-module.exports = PlaylistManager;
+module.exports = PlaylistVideoManager;
