@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NavBarAdmin from "../../components/admin/NavBarAdmin";
-import "../../styles/admin/content.scss";
+import "../../styles/admin/Content.scss";
 
 export default function Content() {
   const [videos, setVideos] = useState([]);
