@@ -63,32 +63,82 @@ const read = async (req, res, next) => {
 };
 
 // The E of BREAD - Edit (Update) operation
+
 const edit = async (req, res) => {
   const userId = req.params.id;
 
   try {
     if (!req.body) {
+      console.error("Empty body");
       return res.status(400).json({ message: "Empty body" });
     }
 
-    const { firstname, lastname, mail, password } = req.body;
-
-    const affectedRows = await tables.users.edit(userId, {
+    const {
+      currentPassword,
       firstname,
       lastname,
       mail,
-      password,
-    });
+      newPassword,
+      pseudoname,
+    } = req.body;
+
+    const user = await tables.users.read(userId);
+
+    if (!user) {
+      console.error("User not found");
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (newPassword !== undefined && newPassword.trim() !== "") {
+      const passwordMatch =
+        currentPassword &&
+        user.password &&
+        (await bcrypt.compare(currentPassword.trim(), user.password.trim()));
+
+      if (!passwordMatch) {
+        console.error("Incorrect current password");
+        return res.status(401).json({ message: "Incorrect current password" });
+      }
+    }
+
+    const updatedFields = {};
+
+    if (firstname !== undefined) {
+      updatedFields.firstname = firstname;
+    }
+
+    if (lastname !== undefined) {
+      updatedFields.lastname = lastname;
+    }
+
+    if (pseudoname !== undefined) {
+      updatedFields.pseudoname = pseudoname;
+    }
+
+    if (mail !== undefined) {
+      updatedFields.mail = mail;
+    }
+
+    if (newPassword !== undefined && newPassword.trim() !== "") {
+      updatedFields.password = await bcrypt.hash(
+        newPassword.trim(),
+        saltRounds
+      );
+    }
+
+    const affectedRows = await tables.users.edit(userId, updatedFields);
 
     if (affectedRows === 0) {
+      console.error("Update fail");
       return res.status(500).json({ message: "Update fail" });
     }
 
     const editedUser = await tables.users.read(userId);
+
     return res.json({ message: "Updated", user: editedUser });
   } catch (error) {
-    console.error("Error updating user", error);
-    return res.status(500).json({ message: "Error updating user" });
+    console.error("Error updating user:", error);
+    return res.status(500).json({ message: "Error updating user", error });
   }
 };
 
