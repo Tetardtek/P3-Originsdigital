@@ -78,6 +78,50 @@ const seed = async () => {
       )
     );
 
+    // Generating PLAYLISTS columns
+    queries.push(
+      database.query(
+        `INSERT INTO playlists (title, link, description) VALUES
+        ('Mer', 'Link', 'Les vidéos de Jamy sur la mer'),
+        ('Animaux', 'Link', 'Les vidéos de Jamy sur les animaux'),
+        ('Légendes', 'Link', 'Les vidéos de Jamy sur les légendes'),
+        ('Climat', 'Link', 'Les vidéos de Jamy sur le climat'),
+        ('Géographie', 'Link', 'Les vidéos de Jamy sur la géographie')`
+      )
+    );
+
+    // Generating PLAYLISTS_VIDEOS columns
+    queries.push(
+      database.query(
+        `INSERT INTO playlists_videos (playlists_id, videos_id) VALUES
+        (1, 1),
+        (1, 2),
+        (1, 3),
+        (1, 4),
+        (1, 5),
+        (2, 6),
+        (2, 7),
+        (2, 8),
+        (2, 9),
+        (2, 10),
+        (3, 11),
+        (3, 12),
+        (3, 13),
+        (3, 14),
+        (3, 15),
+        (4, 16),
+        (4, 17),
+        (4, 18),
+        (4, 19),
+        (4, 20),
+        (5, 21),
+        (5, 22),
+        (5, 23),
+        (5, 24),
+        (5, 25)`
+      )
+    );
+
     /* ************************************************************************* */
 
     // Wait for all the insertion queries to complete

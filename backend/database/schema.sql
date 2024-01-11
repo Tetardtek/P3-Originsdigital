@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS contents;
+DROP TABLE IF EXISTS playlists_videos;
 DROP TABLE IF EXISTS videos;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS playlists;
@@ -26,12 +27,10 @@ PRIMARY KEY (`id`)
 
 CREATE TABLE playlists (
 id INT NOT NULL AUTO_INCREMENT,
-link VARCHAR(250) NOT NULL,
 title VARCHAR(100) NOT NULL,
+link VARCHAR(250) NOT NULL,
 description VARCHAR(300) NOT NULL,
-categories_id INT NOT NULL,
-PRIMARY KEY (`id`),
-FOREIGN KEY (categories_id) REFERENCES categories(id)
+PRIMARY KEY (`id`)
 );
 
 CREATE TABLE users (
@@ -57,6 +56,15 @@ categories_id INT NOT NULL,
 is_free BOOLEAN DEFAULT false,
 PRIMARY KEY (`id`),
 FOREIGN KEY (categories_id) REFERENCES categories(id)
+);
+
+CREATE TABLE playlists_videos (
+id INT NOT NULL AUTO_INCREMENT,
+playlists_id INT NOT NULL,
+videos_id INT NOT NULL,
+PRIMARY KEY (`id`),
+FOREIGN KEY (playlists_id) REFERENCES playlists(id),
+FOREIGN KEY (videos_id) REFERENCES videos(id)
 );
 
 CREATE TABLE contents (
