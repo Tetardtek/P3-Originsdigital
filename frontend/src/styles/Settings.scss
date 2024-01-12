@@ -1,38 +1,67 @@
 @import "./variables.scss";
 
+.big-setting-container {
+  background-color: $color3;
+  width: 100vw;
+}
+
 .settings-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
   background-color: $color1;
-  padding: 20px;
-  border: 1px solid;
-  border-radius: 5px;
+  padding: 50px;
+  max-width: 400px;
+  box-sizing: border-box;
+  margin: auto !important;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
 
   .settings-list-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 400px;
 
-    .settings-label {
-      width: 100%;
+    label {
       margin-bottom: 10px;
-    }
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
 
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 15px;
-      box-sizing: border-box;
+      input {
+        padding: 10px;
+        font-size: 16px;
+      }
     }
 
     button {
-      margin-top: 15px;
+      padding: 12px;
+      background-color: $color4;
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+      border: none;
+      border-radius: 4px;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: darken($color4, 10%);
+      }
     }
+  }
+
+  .error-input,
+  .error-message {
+    border: 1px solid red;
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 4px;
+  }
+
+  p {
+    margin-top: 10px;
+    color: red;
   }
 }
