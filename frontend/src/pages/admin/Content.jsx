@@ -4,19 +4,6 @@ import "../../styles/admin/Content.scss";
 
 export default function Content() {
   const [videos, setVideos] = useState([]);
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/categories/`
-      );
-      const data = await response.json();
-      setCategories(data);
-    };
-
-    fetchCategories();
-  }, []);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BACKEND_URL}/api/videos/`)
@@ -60,13 +47,6 @@ export default function Content() {
                     height="30"
                   />
                 </a>{" "}
-                <p>
-                  {
-                    categories.find(
-                      (category) => category.id === video.categories_id
-                    )?.name
-                  }
-                </p>
                 <p>{video.description}</p>
                 <br />
                 <button type="button" onClick={() => deleteVideos(video.id)}>

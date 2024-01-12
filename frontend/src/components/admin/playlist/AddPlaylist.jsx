@@ -9,7 +9,7 @@ export default function AddPlaylist() {
   useEffect(() => {
     const fetchPlaylists = async () => {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/playlists/`
+        `${import.meta.env.VITE_BACKEND_URL}/api/playlists_videos/`
       );
       const data = await response.json();
       setPlaylist(data);
@@ -21,7 +21,7 @@ export default function AddPlaylist() {
   const handleSubmit = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/playlists/`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/playlists_videos/`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -46,7 +46,7 @@ export default function AddPlaylist() {
   const deletePlaylist = async (id) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/playlists/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/playlists_videos/${id}`,
         {
           method: "DELETE",
         }
