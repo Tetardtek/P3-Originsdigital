@@ -143,11 +143,15 @@ const edit = async (req, res) => {
 };
 
 // The A of BREAD - Add (Create) operation
-
 const add = async (req, res, next) => {
   try {
     const { firstname, lastname, pseudoname, mail, birthdate, password } =
       req.body;
+
+    const existingUser = await tables.users.getByMail(mail);
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already registered." });
+    }
 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     const user = {
@@ -169,6 +173,8 @@ const add = async (req, res, next) => {
     console.error(err);
     next(err);
   }
+
+  return null;
 };
 
 // The D of BREAD - Destroy (Delete) operation

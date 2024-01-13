@@ -1,4 +1,3 @@
-// Signup.jsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
@@ -14,6 +13,7 @@ function Signup() {
     password: "",
   });
 
+  const [error, setError] = useState("");
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await fetch(
+      const signupResponse = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/users`,
         {
           method: "POST",
@@ -40,8 +40,8 @@ function Signup() {
         }
       );
 
-      if (response.ok) {
-        const data = await response.json();
+      if (signupResponse.ok) {
+        const data = await signupResponse.json();
         const { token } = data;
 
         localStorage.setItem("token", token);
@@ -50,10 +50,20 @@ function Signup() {
 
         navigate("/");
       } else {
-        console.error("Error during signup:", response.statusText);
+        const responseData = await signupResponse.json();
+        if (
+          signupResponse.status === 400 &&
+          responseData.message === "Email already registered."
+        ) {
+          setError("Email already registered");
+        } else {
+          console.error("Error during signup:", signupResponse.statusText);
+          setError("Error during signup");
+        }
       }
-    } catch (error) {
-      console.error("Error during signup:", error);
+    } catch (catchedError) {
+      console.error("Error during signup:", catchedError);
+      setError("An unexpected error occurred");
     }
   };
 
@@ -62,6 +72,7 @@ function Signup() {
       <NavBar />
       <div className="auth-form">
         <h2>Signup</h2>
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <form onSubmit={handleSignup}>
           <label>
             First Name:
