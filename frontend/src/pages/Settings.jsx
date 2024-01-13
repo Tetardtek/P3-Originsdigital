@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import NavBar from "../components/NavBar";
+import Popup from "../components/Popup";
 import "../styles/Settings.scss";
 
 function Settings() {
-  const { user, editUser } = useContext(AuthContext);
+  const { user, editUser, logout } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     currentPassword: "",
     newPassword: "",
@@ -16,6 +17,8 @@ function Settings() {
   });
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(null);
+  const [showConfirmation] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     setFormData({
@@ -107,6 +110,32 @@ function Settings() {
     }
   }
 
+  const handleDeleteAccount = async () => {
+    try {
+      await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/users/${user.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      localStorage.removeItem("token");
+
+      logout();
+
+      setShowPopup(true);
+    } catch (error) {
+      console.error("Erreur lors de la suppression du compte :", error);
+      setErrors({
+        general: "Une erreur s'est produite lors de la suppression du compte",
+      });
+    }
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <>
       <NavBar />
@@ -119,7 +148,7 @@ function Settings() {
                 errors.firstname ? "error-input" : ""
               }`}
             >
-              First Name:
+              Firstname:
               <input
                 type="text"
                 name="firstname"
@@ -136,7 +165,7 @@ function Settings() {
                 errors.lastname ? "error-input" : ""
               }`}
             >
-              Last Name:
+              Lastname:
               <input
                 type="text"
                 name="lastname"
@@ -153,7 +182,7 @@ function Settings() {
                 errors.pseudoname ? "error-input" : ""
               }`}
             >
-              Pseudoname:
+              Nickname:
               <input
                 type="text"
                 name="pseudoname"
@@ -217,10 +246,33 @@ function Settings() {
             )}
 
             <button type="submit">Save Changes</button>
+            <button
+              type="button"
+              className="delete-button"
+              onClick={handleDeleteAccount}
+            >
+              Delete account
+            </button>
           </form>
 
-          {errors.general && <p className="error-message">{errors.general}</p>}
-          {success && <p>{success}</p>}
+          {showConfirmation && (
+            <div className="confirmation-message">
+              <p className="success-message">{success}</p>
+              <button type="button" onClick={() => window.location.reload()}>
+                Retour à l'accueil
+              </button>
+            </div>
+          )}
+          {showPopup && (
+            <Popup
+              onClose={handleClosePopup}
+              onConfirm={() => {
+                window.location.href = "/";
+              }}
+            >
+              <p>Votre compte a bien été supprimé ✔</p>
+            </Popup>
+          )}
         </div>
       </div>
     </>

@@ -50,6 +50,11 @@
         background-color: darken($color4, 10%);
       }
     }
+
+    .delete-button {
+      background-color: red;
+      margin-top: 10px;
+    }
   }
 
   .error-input,
@@ -58,10 +63,11 @@
     margin-top: 5px;
     padding: 5px;
     border-radius: 4px;
+    color: red;
   }
 
-  p {
+  .success-message {
     margin-top: 10px;
-    color: red;
+    color: rgb(0, 255, 0);
   }
 }

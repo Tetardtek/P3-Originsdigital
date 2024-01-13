@@ -123,7 +123,7 @@ function AuthProvider({ children }) {
         const updatedUser = await response.json();
         setUser((prevUser) => ({
           ...prevUser,
-          ...updatedUser.user, // Corrected this line
+          ...updatedUser.user,
         }));
         return "User updated successfully";
       }
