@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { useAuth } from "../context/AuthContext";
+import Popup from "../components/Popup";
 
 function Signup() {
   const [user, setUser] = useState({
@@ -14,6 +15,8 @@ function Signup() {
   });
 
   const [error, setError] = useState("");
+  const [showSignupPopup, setShowSignupPopup] = useState(false);
+
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -48,7 +51,7 @@ function Signup() {
 
         logout();
 
-        navigate("/");
+        setShowSignupPopup(true);
       } else {
         const responseData = await signupResponse.json();
         if (
@@ -72,10 +75,10 @@ function Signup() {
       <NavBar />
       <div className="auth-form">
         <h2>Signup</h2>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <form onSubmit={handleSignup}>
+        {error && <p className="error-message">{error}</p>}
+        <form onSubmit={handleSignup} className="form-container">
           <label>
-            First Name:
+            Firstname:
             <input
               type="text"
               name="firstname"
@@ -84,7 +87,7 @@ function Signup() {
             />
           </label>
           <label>
-            Last Name:
+            Lastname:
             <input
               type="text"
               name="lastname"
@@ -93,7 +96,7 @@ function Signup() {
             />
           </label>
           <label>
-            Pseudo:
+            Nickname:
             <input
               type="text"
               name="pseudoname"
@@ -102,7 +105,7 @@ function Signup() {
             />
           </label>
           <label>
-            Email:
+            Mail:
             <input
               type="email"
               name="mail"
@@ -129,6 +132,14 @@ function Signup() {
             />
           </label>
           <button type="submit">Signup</button>
+          {showSignupPopup && (
+            <Popup
+              onClose={() => setShowSignupPopup(false)}
+              onConfirm={() => navigate("/login")}
+            >
+              <p>Your account has been successfully created</p>
+            </Popup>
+          )}
         </form>
         <p>
           Already have an account? <Link to="/login">Login here</Link>

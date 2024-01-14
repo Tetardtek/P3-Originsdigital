@@ -10,9 +10,12 @@ import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
 
+// ... (autres importations)
+
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [authError, setAuthError] = useState(null); // Changer le nom de la variable
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -42,6 +45,7 @@ function AuthProvider({ children }) {
         }
       } catch (error) {
         console.error("Error decoding token or fetching user data:", error);
+        setAuthError(error); // Utiliser le nouveau nom
       } finally {
         setLoading(false);
       }
@@ -88,14 +92,17 @@ function AuthProvider({ children }) {
           throw new Error("Error fetching user data");
         } catch (error) {
           console.error("Error decoding token or fetching user data:", error);
+          setAuthError(error); // Utiliser le nouveau nom
           throw new Error("Error decoding token or fetching user data");
         }
       } else {
         console.error("Error during login:", loginResponse.statusText);
+        setAuthError(new Error("Login failed")); // Utiliser le nouveau nom
         throw new Error("Login failed");
       }
     } catch (error) {
       console.error("Error during login:", error);
+      setAuthError(error); // Utiliser le nouveau nom
       throw new Error("An error occurred during login");
     }
   };
@@ -129,22 +136,26 @@ function AuthProvider({ children }) {
       }
       if (response.status === 400) {
         console.error("Bad Request:", response.statusText);
+        setAuthError(new Error("Bad Request")); // Utiliser le nouveau nom
         throw new Error("Bad Request");
       } else if (response.status === 401) {
         console.error("Unauthorized:", response.statusText);
+        setAuthError(new Error("Unauthorized")); // Utiliser le nouveau nom
         throw new Error("Unauthorized");
       } else {
         console.error("Error updating user:", response.statusText);
+        setAuthError(new Error(response.statusText)); // Utiliser le nouveau nom
         throw new Error("Error updating user");
       }
     } catch (error) {
       console.error("Error updating user:", error);
+      setAuthError(error); // Utiliser le nouveau nom
       throw new Error("An error occurred during user update");
     }
   };
   const authContextValue = useMemo(() => {
-    return { user, loading, login, logout, editUser };
-  }, [user, loading, login, logout]);
+    return { user, loading, error: authError, login, logout, editUser }; // Utiliser le nouveau nom
+  }, [user, loading, authError, login, logout]);
 
   return (
     <AuthContext.Provider value={authContextValue}>

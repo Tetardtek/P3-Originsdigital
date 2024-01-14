@@ -14,8 +14,8 @@ function Popup({ children, onClose, onConfirm }) {
     <div className="popup-container">
       <div className="popup">
         {children}
-        <button type="submit" onClick={handleClose}>
-          Fermer
+        <button type="button" onClick={handleClose}>
+          Close
         </button>
       </div>
     </div>
@@ -24,11 +24,12 @@ function Popup({ children, onClose, onConfirm }) {
 
 Popup.defaultProps = {
   children: null,
+  onConfirm: () => {},
 };
 
 Popup.propTypes = {
   onClose: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func,
   children: PropTypes.node,
 };
 
