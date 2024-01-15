@@ -12,9 +12,15 @@ function Signup() {
     birthdate: "",
     mail: "",
     password: "",
+    confirmPassword: "",
   });
 
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({
+    password: "",
+    confirmPassword: "",
+    email: "",
+  });
+
   const [showSignupPopup, setShowSignupPopup] = useState(false);
 
   const { logout } = useAuth();
@@ -26,10 +32,41 @@ function Signup() {
       ...prevUser,
       [name]: value,
     }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
   };
 
   const handleSignup = async (e) => {
     e.preventDefault();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (user.password.length < 6) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: "Password must be at least 6 characters long",
+      }));
+      return;
+    }
+
+    if (user.password !== user.confirmPassword) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: "Passwords do not match",
+      }));
+      return;
+    }
+
+    if (!emailRegex.test(user.mail)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "Invalid email address",
+      }));
+      return;
+    }
 
     try {
       const signupResponse = await fetch(
@@ -58,24 +95,32 @@ function Signup() {
           signupResponse.status === 400 &&
           responseData.message === "Email already registered."
         ) {
-          setError("Email already registered");
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            email: "Email already registered",
+          }));
         } else {
           console.error("Error during signup:", signupResponse.statusText);
-          setError("Error during signup");
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            general: "Error during signup",
+          }));
         }
       }
     } catch (catchedError) {
       console.error("Error during signup:", catchedError);
-      setError("An unexpected error occurred");
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        general: "An unexpected error occurred",
+      }));
     }
   };
-
   return (
-    <>
+    <div className="page-container">
       <NavBar />
       <div className="auth-form">
         <h2>Signup</h2>
-        {error && <p className="error-message">{error}</p>}
+        {errors.general && <p className="error-message">{errors.general}</p>}
         <form onSubmit={handleSignup} className="form-container">
           <label>
             Firstname:
@@ -111,6 +156,7 @@ function Signup() {
               name="mail"
               value={user.mail}
               onChange={handleInputChange}
+              className={errors.email && "error-input"}
             />
           </label>
           <label>
@@ -129,6 +175,23 @@ function Signup() {
               name="password"
               value={user.password}
               onChange={handleInputChange}
+              className={errors.password && "error-input"}
+            />
+            {errors.password && (
+              <p className="error-message">{errors.password}</p>
+            )}
+          </label>
+          {errors.confirmPassword && (
+            <p className="error-message">{errors.confirmPassword}</p>
+          )}
+          <label>
+            Confirm Password:
+            <input
+              type="password"
+              name="confirmPassword"
+              value={user.confirmPassword}
+              onChange={handleInputChange}
+              className={errors.confirmPassword && "error-input"}
             />
           </label>
           <button type="submit">Signup</button>
@@ -145,7 +208,7 @@ function Signup() {
           Already have an account? <Link to="/login">Login here</Link>
         </p>
       </div>
-    </>
+    </div>
   );
 }
 

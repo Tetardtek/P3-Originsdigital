@@ -13,9 +13,11 @@ nav {
     display: flex;
     align-items: center;
   }
+
   .logo-container {
     width: 5rem;
   }
+
   .logo {
     max-width: 100%;
     max-height: 100%;
@@ -62,7 +64,8 @@ nav {
     margin: 0 10px;
     text-align: center;
 
-    a {
+    a,
+    button {
       text-decoration: none;
       color: white;
       font-weight: bold;
@@ -72,13 +75,32 @@ nav {
         color: $color1;
       }
     }
+
+    .logout-button {
+      // Votre style spécifique au bouton "Logout"
+      padding: 12px;
+      background-color: $color4;
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+      border: none;
+      border-radius: 4px;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: darken($color4, 10%);
+      }
+    }
   }
+
   ul.show-menu {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
   }
+
   .show-menu {
     display: flex;
     flex-direction: column;
