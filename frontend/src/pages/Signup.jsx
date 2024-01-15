@@ -16,9 +16,13 @@ function Signup() {
   });
 
   const [errors, setErrors] = useState({
+    firstname: "",
+    lastname: "",
+    pseudoname: "",
+    birthdate: "",
+    email: "",
     password: "",
     confirmPassword: "",
-    email: "",
   });
 
   const [showSignupPopup, setShowSignupPopup] = useState(false);
@@ -43,13 +47,34 @@ function Signup() {
     e.preventDefault();
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let hasErrors = false;
+
+    const requiredFields = [
+      "firstname",
+      "lastname",
+      "pseudoname",
+      "birthdate",
+      "mail",
+      "password",
+      "confirmPassword",
+    ];
+
+    requiredFields.forEach((field) => {
+      if (!user[field].trim()) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [field]: "Ce champ est requis",
+        }));
+        hasErrors = true;
+      }
+    });
 
     if (user.password.length < 6) {
       setErrors((prevErrors) => ({
         ...prevErrors,
         password: "Password must be at least 6 characters long",
       }));
-      return;
+      hasErrors = true;
     }
 
     if (user.password !== user.confirmPassword) {
@@ -57,7 +82,7 @@ function Signup() {
         ...prevErrors,
         confirmPassword: "Passwords do not match",
       }));
-      return;
+      hasErrors = true;
     }
 
     if (!emailRegex.test(user.mail)) {
@@ -65,6 +90,10 @@ function Signup() {
         ...prevErrors,
         email: "Invalid email address",
       }));
+      hasErrors = true;
+    }
+
+    if (hasErrors) {
       return;
     }
 
@@ -115,6 +144,7 @@ function Signup() {
       }));
     }
   };
+
   return (
     <div className="page-container">
       <NavBar />
@@ -131,6 +161,10 @@ function Signup() {
               onChange={handleInputChange}
             />
           </label>
+          {errors.firstname && (
+            <p className="error-message">{errors.firstname}</p>
+          )}
+
           <label>
             Lastname:
             <input
@@ -140,6 +174,10 @@ function Signup() {
               onChange={handleInputChange}
             />
           </label>
+          {errors.lastname && (
+            <p className="error-message">{errors.lastname}</p>
+          )}
+
           <label>
             Nickname:
             <input
@@ -149,6 +187,10 @@ function Signup() {
               onChange={handleInputChange}
             />
           </label>
+          {errors.pseudoname && (
+            <p className="error-message">{errors.pseudoname}</p>
+          )}
+
           <label>
             Mail:
             <input
@@ -159,6 +201,8 @@ function Signup() {
               className={errors.email && "error-input"}
             />
           </label>
+          {errors.email && <p className="error-message">{errors.email}</p>}
+
           <label>
             Birthdate:
             <input
@@ -168,6 +212,10 @@ function Signup() {
               onChange={handleInputChange}
             />
           </label>
+          {errors.birthdate && (
+            <p className="error-message">{errors.birthdate}</p>
+          )}
+
           <label>
             Password:
             <input
@@ -181,9 +229,7 @@ function Signup() {
               <p className="error-message">{errors.password}</p>
             )}
           </label>
-          {errors.confirmPassword && (
-            <p className="error-message">{errors.confirmPassword}</p>
-          )}
+
           <label>
             Confirm Password:
             <input
@@ -194,6 +240,10 @@ function Signup() {
               className={errors.confirmPassword && "error-input"}
             />
           </label>
+          {errors.confirmPassword && (
+            <p className="error-message">{errors.confirmPassword}</p>
+          )}
+
           <button type="submit">Signup</button>
           {showSignupPopup && (
             <Popup
