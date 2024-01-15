@@ -10,12 +10,10 @@ import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
 
-// ... (autres importations)
-
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [authError, setAuthError] = useState(null); // Changer le nom de la variable
+  const [authError, setAuthError] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -45,7 +43,7 @@ function AuthProvider({ children }) {
         }
       } catch (error) {
         console.error("Error decoding token or fetching user data:", error);
-        setAuthError(error); // Utiliser le nouveau nom
+        setAuthError(error);
       } finally {
         setLoading(false);
       }
@@ -92,17 +90,17 @@ function AuthProvider({ children }) {
           throw new Error("Error fetching user data");
         } catch (error) {
           console.error("Error decoding token or fetching user data:", error);
-          setAuthError(error); // Utiliser le nouveau nom
+          setAuthError(error);
           throw new Error("Error decoding token or fetching user data");
         }
       } else {
         console.error("Error during login:", loginResponse.statusText);
-        setAuthError(new Error("Login failed")); // Utiliser le nouveau nom
+        setAuthError(new Error("Login failed"));
         throw new Error("Login failed");
       }
     } catch (error) {
       console.error("Error during login:", error);
-      setAuthError(error); // Utiliser le nouveau nom
+      setAuthError(error);
       throw new Error("An error occurred during login");
     }
   };
@@ -136,25 +134,60 @@ function AuthProvider({ children }) {
       }
       if (response.status === 400) {
         console.error("Bad Request:", response.statusText);
-        setAuthError(new Error("Bad Request")); // Utiliser le nouveau nom
+        setAuthError(new Error("Bad Request"));
         throw new Error("Bad Request");
       } else if (response.status === 401) {
         console.error("Unauthorized:", response.statusText);
-        setAuthError(new Error("Unauthorized")); // Utiliser le nouveau nom
+        setAuthError(new Error("Unauthorized"));
         throw new Error("Unauthorized");
       } else {
         console.error("Error updating user:", response.statusText);
-        setAuthError(new Error(response.statusText)); // Utiliser le nouveau nom
+        setAuthError(new Error(response.statusText));
         throw new Error("Error updating user");
       }
     } catch (error) {
       console.error("Error updating user:", error);
-      setAuthError(error); // Utiliser le nouveau nom
+      setAuthError(error);
       throw new Error("An error occurred during user update");
     }
   };
+
+  const sendPasswordResetEmail = async (email) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/forgot-password`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ mail: email }),
+        }
+      );
+
+      if (response.ok) {
+        return "Password reset email sent successfully";
+      }
+      const data = await response.json();
+      throw new Error(data.message || "Error sending password reset email");
+    } catch (error) {
+      console.error("Error sending password reset email:", error);
+      throw new Error(
+        "An error occurred while sending the password reset email"
+      );
+    }
+  };
+
   const authContextValue = useMemo(() => {
-    return { user, loading, error: authError, login, logout, editUser }; // Utiliser le nouveau nom
+    return {
+      user,
+      loading,
+      error: authError,
+      login,
+      logout,
+      editUser,
+      sendPasswordResetEmail,
+    };
   }, [user, loading, authError, login, logout]);
 
   return (

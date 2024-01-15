@@ -12,6 +12,8 @@ import Playlists from "./pages/Playlists";
 import LogIn from "./pages/Login";
 import Register from "./pages/Signup";
 import Settings from "./pages/Settings";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -29,6 +31,9 @@ root.render(
           <Route path="/login" element={<LogIn />} />
           <Route path="/register" element={<Register />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+
           <Route path="/" element={<App />} />
         </Routes>
       </AuthProvider>

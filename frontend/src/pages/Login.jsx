@@ -71,6 +71,9 @@ export default function Login() {
         <p>
           Don't have an account? <Link to="/register">Signup here</Link>
         </p>
+        <p>
+          <Link to="/forgot-password">Forgot your password?</Link>
+        </p>
         {loginStatus && <p className="error-message">{loginStatus}</p>}
         {showLoginPopup && (
           <Popup onClose={handleCloseLoginPopup} confirmButtonText="Close">
