@@ -48,6 +48,8 @@ router.put("/playlists_videos/:id", playlistVideoControllers.edit);
 
 // Route to add a new user/video/categorie/playlist/comment
 router.post("/users", userControllers.add);
+router.post("/forgot-password", userControllers.forgottenPassword);
+router.post("/reset-password/:token", userControllers.resetPassword);
 router.post("/videos", videoControllers.add);
 router.post("/comments", commentControllers.add);
 router.post("/playlists", playlistControllers.add);

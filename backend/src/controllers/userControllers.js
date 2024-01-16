@@ -1,11 +1,97 @@
+require("dotenv").config();
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 const tables = require("../tables");
 
 const secretKey = process.env.APP_SECRET;
-
+const resetTokenSecret = process.env.RESET_TOKEN_SECRET;
 const saltRounds = 10;
+
+const transporter = nodemailer.createTransport({
+  service: "outlook",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+const generateResetToken = (user) => {
+  const resetToken = jwt.sign({ user: user.id }, resetTokenSecret, {
+    expiresIn: "1h",
+  });
+
+  const tokenWithoutDots = resetToken.replace(/\./g, "-");
+
+  return tokenWithoutDots;
+};
+
+const sendPasswordResetEmail = async (user, resetToken) => {
+  const resetLink = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+  const mailOptions = {
+    from: "origin.digital@outlook.com",
+    to: user.mail,
+    subject: "Password reset",
+    text: `Click on the following link to reset your password: ${resetLink}`,
+  };
+
+  await transporter.sendMail(mailOptions);
+};
+
+const forgottenPassword = async (req, res) => {
+  const { mail } = req.body;
+
+  try {
+    const user = await tables.users.getByMail(mail);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const resetToken = generateResetToken(user);
+
+    await sendPasswordResetEmail(user, resetToken);
+
+    return res.status(200).json({ message: "Password reset e-mail sent" });
+  } catch (error) {
+    console.error("Error sending password reset e-mail:", error);
+    return res.status(500).json({
+      message: "Error sending password reset e-mail",
+    });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { password } = req.body;
+
+  const resetToken = decodeURIComponent(req.params.token.replace(/-/g, "."));
+
+  try {
+    const decodedToken = jwt.verify(resetToken, resetTokenSecret);
+
+    const user = await tables.users.read(decodedToken.user);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (!password) {
+      return res.status(400).json({ message: "New password missing" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    await tables.users.edit(user.id, { password: hashedPassword });
+
+    return res.status(200).json({ message: "Password successfully reset" });
+  } catch (error) {
+    console.error("Password reset error:", error);
+    return res.status(500).json({
+      message: "Password reset error",
+      error,
+    });
+  }
+};
 
 const login = async (req, res) => {
   const { mail, password } = req.body;
@@ -143,11 +229,15 @@ const edit = async (req, res) => {
 };
 
 // The A of BREAD - Add (Create) operation
-
 const add = async (req, res, next) => {
   try {
     const { firstname, lastname, pseudoname, mail, birthdate, password } =
       req.body;
+
+    const existingUser = await tables.users.getByMail(mail);
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already registered." });
+    }
 
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     const user = {
@@ -169,6 +259,8 @@ const add = async (req, res, next) => {
     console.error(err);
     next(err);
   }
+
+  return null;
 };
 
 // The D of BREAD - Destroy (Delete) operation
@@ -189,4 +281,6 @@ module.exports = {
   add,
   destroy,
   login,
+  forgottenPassword,
+  resetPassword,
 };

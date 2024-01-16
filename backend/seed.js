@@ -74,8 +74,7 @@ const seed = async () => {
       database.query(
         `INSERT INTO users (firstname, lastname, pseudoname, mail, birthdate, logdate, password, roles_id) VALUES
       ('Admin', 'istrator', 'Administrator', 'administrator@email.com', '2000-01-01', '2000-01-02', '$2b$10$4VWdZ7SANvRr7qn3k6LAEu6eGApGQUvPOqcCCmgzVLKNlSpBL0rGa', 3),
-      ('Mode', 'rator', 'Moderator', 'moderator@email.com', '2010-01-01', '2010-01-02', '$2b$10$c4u.4Q1LzVQBKm.SKX2nPuWEZ/I3jiMUygxr.mMZK4MVJilKYX0rC', 2),
-      ('Maxence', 'Chevée', 'Maxou', 'max.chevee@gmail.com', '1997-10-25', '2021-10-25', '$2a$10$zIzMFGuSx2jMkQafEnCqcOC8uT8o5Ob4ha75AHEK05ommFCEOCiJW', 1)`
+      ('Mode', 'rator', 'Moderator', 'moderator@email.com', '2010-01-01', '2010-01-02', '$2b$10$c4u.4Q1LzVQBKm.SKX2nPuWEZ/I3jiMUygxr.mMZK4MVJilKYX0rC', 2)`
       )
     );
 

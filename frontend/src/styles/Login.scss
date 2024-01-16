@@ -1,24 +1,18 @@
 @import "./variables.scss";
 
-.big-setting-container {
-  background-color: $color1;
-  width: 100vw;
-}
-
-.settings-container {
+.auth-form {
   display: flex;
   flex-direction: column;
-  background-color: $color1;
-  max-width: 400px;
-  box-sizing: border-box;
-  margin: auto !important;
+  align-items: center;
+  margin-top: 50px;
+  height: 100%;
 
   h2 {
     text-align: center;
     margin-bottom: 20px;
   }
 
-  .settings-list-container {
+  .form-container {
     display: flex;
     flex-direction: column;
 
@@ -50,23 +44,12 @@
       }
     }
 
-    .delete-button {
-      background-color: red;
-      margin-top: 10px;
+    .error-message {
+      border: 1px solid red;
+      margin-top: 5px;
+      padding: 5px;
+      border-radius: 4px;
+      color: red;
     }
-  }
-
-  .error-input,
-  .error-message {
-    border: 1px solid red;
-    margin-top: 5px;
-    padding: 5px;
-    border-radius: 4px;
-    color: red;
-  }
-
-  .success-message {
-    margin-top: 10px;
-    color: rgb(0, 255, 0);
   }
 }

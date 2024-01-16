@@ -117,6 +117,17 @@ app.get("*", (req, res) => {
   res.sendFile(`${reactBuildPath}/index.html`);
 });
 
+// const path = require("path");
+
+// app.use("*", (req, res) => {
+//   if (req.originalUrl.includes("assets")) {
+//     res.sendFile(
+//       path.resolve(__dirname, `../../frontend/dist/${req.originalUrl}`)
+//     );
+//   } else {
+//     res.sendFile(path.resolve(__dirname, `../../frontend/dist/index.html`));
+//   }
+// });
 /* ************************************************************************* */
 
 // Middleware for Error Logging (Uncomment to enable)
