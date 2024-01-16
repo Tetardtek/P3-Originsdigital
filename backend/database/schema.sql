@@ -1,11 +1,11 @@
 DROP TABLE IF EXISTS comments;
-DROP TABLE IF EXISTS categories_playlists_videos;
-DROP TABLE IF EXISTS playlists_videos;
+DROP TABLE IF EXISTS playlists_maps;
+DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS playlists;
 DROP TABLE IF EXISTS videos;
-DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS roles;
+
 
 CREATE TABLE roles (
 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -35,6 +35,7 @@ is_free BOOLEAN DEFAULT false NOT NULL
 
 CREATE TABLE playlists (
 id INT AUTO_INCREMENT PRIMARY KEY,
+link VARCHAR(250) NOT NULL,
 title VARCHAR(100) NOT NULL,
 description VARCHAR(300) NOT NULL
 );
@@ -45,20 +46,12 @@ title VARCHAR(50) NOT NULL,
 description VARCHAR(300)
 );
 
-CREATE TABLE playlists_videos (
+CREATE TABLE playlists_maps (
 id INT AUTO_INCREMENT PRIMARY KEY,
 playlists_id INT NOT NULL,
 videos_id INT NOT NULL,
 FOREIGN KEY (playlists_id) REFERENCES playlists(id),
-FOREIGN KEY (videos_id) REFERENCES videos(id)
-);
-
-CREATE TABLE categories_playlists_videos (
-id INT AUTO_INCREMENT PRIMARY KEY,
-playlists_id INT NOT NULL,
-categories_id INT NOT NULL,
-FOREIGN KEY (playlists_id) REFERENCES playlists(id),
-FOREIGN KEY (categories_id) REFERENCES categories(id)
+FOREIGN KEY (videos_id) REFERENCES videos(id) ON DELETE CASCADE
 );
 
 CREATE TABLE comments (
@@ -68,5 +61,5 @@ videos_id INT NOT NULL,
 postDate DATE NOT NULL,
 content VARCHAR(200) NOT NULL,
 FOREIGN KEY (users_id) REFERENCES users(id),
-FOREIGN KEY (videos_id) REFERENCES videos(id)
+FOREIGN KEY (videos_id) REFERENCES videos(id) ON DELETE CASCADE
 );

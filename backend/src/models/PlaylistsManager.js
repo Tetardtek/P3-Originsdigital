@@ -7,10 +7,10 @@ class PlaylistsManager extends AbstractManager {
 
   // The C of CRUD - Create operation
   async create(playlist) {
-    const { title, description } = playlist;
+    const { link, title, description } = playlist;
     const [result] = await this.database.query(
-      `INSERT INTO ${this.table} (title, description) values (?, ?)`,
-      [title, description]
+      `INSERT INTO ${this.table} (link, title, description) values (?, ?, ?)`,
+      [link, title, description]
     );
     return result.insertId;
   }
@@ -46,7 +46,7 @@ class PlaylistsManager extends AbstractManager {
 
   // The U of CRUD - Update operation
   async edit(id, updatedFields) {
-    const allowedFields = ["title", "description"];
+    const allowedFields = ["link", "title", "description"];
 
     const fieldsToUpdate = Object.keys(updatedFields).filter((field) =>
       allowedFields.includes(field)

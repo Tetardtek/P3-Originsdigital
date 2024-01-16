@@ -1,16 +1,16 @@
 const AbstractManager = require("./AbstractManager");
 
-class CategoriesManager extends AbstractManager {
+class PlaylistsMapManager extends AbstractManager {
   constructor() {
-    super({ table: "categories" });
+    super({ table: "playlists_maps" });
   }
 
   // The C of CRUD - Create operation
-  async create(category) {
-    const { title, description } = category;
+  async create(playlistsMap) {
+    const { playlists_id: playlistsId, videos_id: videosId } = playlistsMap;
     const [result] = await this.database.query(
-      `INSERT INTO ${this.table} (title, description) VALUES (?, ?)`,
-      [title, description]
+      `INSERT INTO ${this.table} (playlists_id, videos_id) VALUES (?, ?)`,
+      [playlistsId, videosId]
     );
     return result.insertId;
   }
@@ -29,28 +29,24 @@ class CategoriesManager extends AbstractManager {
 
       return rows[0][field];
     }
-
     const [rows] = await this.database.query(
       `SELECT * FROM ${this.table} WHERE id = ?`,
       [id]
     );
-
     if (rows.length === 0) {
       return null;
     }
-
     return rows[0];
   }
 
   async readAll() {
-    const [rows] = await this.database.query(`SELECT * FROM ${this.table}`);
-
+    const [rows] = await this.database.query(`select * from ${this.table}`);
     return rows;
   }
 
   // The U of CRUD - Update operation
   async edit(id, updatedFields) {
-    const allowedFields = ["title", "description"];
+    const allowedFields = ["playlists_id", "videos_id"];
 
     const fieldsToUpdate = Object.keys(updatedFields).filter((field) =>
       allowedFields.includes(field)
@@ -79,4 +75,4 @@ class CategoriesManager extends AbstractManager {
   }
 }
 
-module.exports = CategoriesManager;
+module.exports = PlaylistsMapManager;

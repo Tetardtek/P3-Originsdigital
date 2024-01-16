@@ -6,13 +6,12 @@ const router = express.Router();
 // Define Your API Routes Here
 /* ************************************************************************* */
 
-// Import userControllers module for handling item-related operations
+// Import Controllers
 const userControllers = require("./controllers/userControllers");
 const verifyToken = require("./middlewares/verifyToken");
 const videosControllers = require("./controllers/videosControllers");
 const playlistsControllers = require("./controllers/playlistsControllers");
-const categoriesControllers = require("./controllers/categoriesControllers");
-const playlistsVideosControllers = require("./controllers/playlistsVideosControllers");
+const playlistsMapControllers = require("./controllers/playlistsMapControllers");
 const commentControllers = require("./controllers/commentControllers");
 
 // USERS MANAGEMENT
@@ -40,21 +39,13 @@ router.put("/playlists/:id", playlistsControllers.edit);
 router.post("/playlists", playlistsControllers.add);
 router.delete("/playlists/:id", playlistsControllers.destroy);
 
-// CATEGORY MANAGEMENT
-router.get("/categories", categoriesControllers.browse);
-router.get("/categories/:id", categoriesControllers.read);
-router.get("/categories/:id/field", categoriesControllers.read);
-router.put("/categories/:id", categoriesControllers.edit);
-router.post("/categories", categoriesControllers.add);
-router.delete("/categories/:id", categoriesControllers.destroy);
-
-// PLAYLISTVIDEOS MANAGEMENT
-router.get("/playlists_videos", playlistsVideosControllers.browse);
-router.get("/playlists_videos/:id", playlistsVideosControllers.read);
-router.get("/playlists_videos/:id/field", playlistsVideosControllers.read);
-router.put("/playlists_videos/:id", playlistsVideosControllers.edit);
-router.post("/playlists_videos", playlistsVideosControllers.add);
-router.delete("/playlists_videos/:id", playlistsVideosControllers.destroy);
+// PLAYLISTMAP MANAGEMENT
+router.get("/playlists_maps", playlistsMapControllers.browse);
+router.get("/playlists_maps/:id", playlistsMapControllers.read);
+router.get("/playlists_maps/:id/field", playlistsMapControllers.read);
+router.put("/playlists_maps/:id", playlistsMapControllers.edit);
+router.post("/playlists_maps", playlistsMapControllers.add);
+router.delete("/playlists_maps/:id", playlistsMapControllers.destroy);
 
 // COMMENTS MANAGEMENT
 router.get("/comments", commentControllers.browse);

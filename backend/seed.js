@@ -67,18 +67,18 @@ const insertVideos = async () => {
 
 const insertPlaylists = async () => {
   return database.query(`
-  INSERT INTO playlists (title, description) VALUES
-  ('Mer', 'Les vidéos de Jamy sur la mer'),
-  ('Animaux', 'Les vidéos de Jamy sur les animaux'),
-  ('Légendes', 'Les vidéos de Jamy sur les légendes'),
-  ('Climat', 'Les vidéos de Jamy sur le climat'),
-  ('Géographie', 'Les vidéos de Jamy sur la géographie')
+  INSERT INTO playlists (link, title, description) VALUES
+  ('link', 'Mer', 'Les vidéos de Jamy sur la mer'),
+  ('link', 'Animaux', 'Les vidéos de Jamy sur les animaux'),
+  ('link', 'Légendes', 'Les vidéos de Jamy sur les légendes'),
+  ('link', 'Climat', 'Les vidéos de Jamy sur le climat'),
+  ('link', 'Géographie', 'Les vidéos de Jamy sur la géographie')
   `);
 };
 
-const insertPlaylistsVideos = async () => {
+const insertPlaylistsMaps = async () => {
   return database.query(`
-  INSERT INTO playlists_videos (playlists_id, videos_id) VALUES
+  INSERT INTO playlists_maps (playlists_id, videos_id) VALUES
   (1, 1),
   (1, 2),
   (1, 3),
@@ -104,17 +104,6 @@ const insertPlaylistsVideos = async () => {
   (5, 23),
   (5, 24),
   (5, 25)
-  `);
-};
-
-const insertCategoriesPlaylists = async () => {
-  return database.query(`
-  INSERT INTO categories_playlists_videos (categories_id, playlists_id) VALUES
-  (1, 1),
-  (2, 2),
-  (3, 3),
-  (4, 4),
-  (5, 5)
   `);
 };
 
@@ -151,33 +140,25 @@ const insertComments = async () => {
 
 const seed = async () => {
   try {
-    // Utilisation de transactions
     await database.query("START TRANSACTION");
-
-    // Appels aux fonctions d'insertion
 
     await insertRoles();
     await insertUsers();
     await insertCategories();
     await insertVideos();
     await insertPlaylists();
-    await insertPlaylistsVideos();
-    await insertCategoriesPlaylists();
+    await insertPlaylistsMaps();
     await insertComments();
 
-    // Commit de la transaction
     await database.query("COMMIT");
 
-    // Fermeture de la connexion à la base de données
     database.end();
 
     console.info(`${database.databaseName} filled from ${__filename} 🌱`);
   } catch (err) {
-    // Rollback en cas d'erreur
     await database.query("ROLLBACK");
     console.error("Error filling the database:", err.message);
   }
 };
 
-// Exécution de la fonction seed
 seed();
