@@ -34,7 +34,7 @@ function NavBarAdmin() {
       <ul className={`nav-links ${showMenu ? "show-menu" : ""}`}>
         {showMenu &&
           navbardataadmin.map((item) => (
-            <li key={item.id}>
+            <li key={item.linkname}>
               <Link to={item.linkurl} onClick={closeMenu}>
                 {item.linkname}
               </Link>

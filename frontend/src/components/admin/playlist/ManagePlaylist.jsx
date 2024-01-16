@@ -1,55 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
+import { VideoContext } from "../../../context/VideoContext";
 
 export default function ManagePlaylist() {
-  const [playlists, setPlaylists] = useState([]);
-  const [playlistVideos, setPlaylistVideos] = useState([]);
-  const [videos, setVideos] = useState([]);
-
-  useEffect(() => {
-    const fetchPlaylist = async () => {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/playlists/`
-      );
-      const data = await response.json();
-      setPlaylists(data);
-    };
-    fetchPlaylist();
-  }, []);
-
-  useEffect(() => {
-    const fetchPlaylistVideos = async () => {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/playlists_videos/`
-      );
-      const data = await response.json();
-      setPlaylistVideos(data);
-    };
-    fetchPlaylistVideos();
-  }, []);
-
-  useEffect(() => {
-    const fetchVideos = async () => {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/videos/`
-      );
-      const data = await response.json();
-      setVideos(data);
-    };
-    fetchVideos();
-  }, []);
-
-  const deletePlaylist = async (id) => {
-    await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/playlists/${id}`, {
-      method: "DELETE",
-    });
-    setPlaylists(playlists.filter((playlist) => playlist.id !== id));
-  };
+  const { videos, playlists, playlistsMap, deleteVideo } =
+    useContext(VideoContext);
 
   return (
     <table>
       <thead>
         <tr>
           <th>Playlist ID</th>
+          <th>Playlist Link</th>
           <th>Playlist Title</th>
           <th>Playlist Description</th>
           <th>Video ID</th>
@@ -61,45 +22,38 @@ export default function ManagePlaylist() {
         </tr>
       </thead>
       <tbody>
-        {playlists.map((playlist) => {
-          const matchingPlaylistVideo = playlistVideos.find(
-            (playlistVideo) => playlistVideo.id === playlist.playlists_id
-          );
-          const matchingVideo = videos.find(
-            (video) => video.id === playlist.videos_id
+        {playlistsMap.map((playlistMap) => {
+          const video = videos.find((v) => v.id === playlistMap.videos_id);
+          const playlist = playlists.find(
+            (p) => p.id === playlistMap.playlists_id
           );
 
-          const playlistTitle = matchingPlaylistVideo
-            ? matchingPlaylistVideo.title
-            : null;
-          const playlistDescription = matchingPlaylistVideo
-            ? matchingPlaylistVideo.description
-            : null;
-
-          return (
-            <React.Fragment key={playlist.id}>
-              {matchingVideo && (
-                <tr>
-                  <td>{playlist.playlists_id}</td>
-                  <td>{playlistTitle}</td>
-                  <td>{playlistDescription}</td>
-                  <td>{matchingVideo.id}</td>
-                  <td>{matchingVideo.link}</td>
-                  <td>{matchingVideo.title}</td>
-                  <td>{matchingVideo.description}</td>
-                  <td>{matchingVideo.is_free ? "Yes" : "No"}</td>
-                  <td>
-                    <button
-                      type="button"
-                      onClick={() => deletePlaylist(playlist.id)}
-                    >
-                      X
-                    </button>
-                  </td>
-                </tr>
-              )}
-            </React.Fragment>
-          );
+          if (video && playlist) {
+            return (
+              <tr key={playlistMap.id}>
+                <td>{playlist.id}</td>
+                <td>{playlist.link}</td>
+                <td>{playlist.title}</td>
+                <td>{playlist.description}</td>
+                <td>{video.id}</td>
+                <td>{video.link}</td>
+                <td>{video.title}</td>
+                <td>{video.description}</td>
+                <td>{video.isFree ? "Yes" : "No"}</td>
+                <td>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      deleteVideo(video.id);
+                    }}
+                  >
+                    X
+                  </button>
+                </td>
+              </tr>
+            );
+          }
+          return null;
         })}
       </tbody>
     </table>

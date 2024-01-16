@@ -1,65 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
+import { VideoContext } from "../../../context/VideoContext";
 
 export default function AddPlaylist() {
+  const { playlists, deletePlaylist, addPlaylist } = useContext(VideoContext);
+
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
-  const [playlists, setPlaylist] = useState([]);
 
-  useEffect(() => {
-    const fetchPlaylists = async () => {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/playlists_videos/`
-      );
-      const data = await response.json();
-      setPlaylist(data);
-    };
-
-    fetchPlaylists();
-  }, []);
-
-  const handleSubmit = async () => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/playlists_videos/`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            title,
-            link,
-            description,
-          }),
-        }
-      );
-      if (!response.ok) {
-        console.warn("Serveur response:", await response.text());
-        return;
-      }
-      const data = await response.json();
-      console.info("data", data);
-    } catch (err) {
-      console.error(err.message);
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addPlaylist({ title, link, description })
+      .then(() => {
+        setTitle("");
+        setLink("");
+        setDescription("");
+      })
+      .catch((error) => {
+        console.error("Failed to add playlist.", error);
+      });
   };
 
-  const deletePlaylist = async (id) => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/playlists_videos/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to delete playlist.");
-      }
-
-      setPlaylist(playlists.filter((playlist) => playlist.id !== id));
-    } catch (err) {
-      console.error(err.message);
-    }
+  const handleDelete = (id) => {
+    deletePlaylist(id);
   };
 
   return (
@@ -111,10 +74,7 @@ export default function AddPlaylist() {
           <ul>
             {playlists.map((playlist) => (
               <li key={playlist.id}>
-                <button
-                  type="button"
-                  onClick={() => deletePlaylist(playlist.id)}
-                >
+                <button type="button" onClick={() => handleDelete(playlist.id)}>
                   x
                 </button>
                 ID : {playlist.id} - {playlist.title} - {playlist.link} -{" "}

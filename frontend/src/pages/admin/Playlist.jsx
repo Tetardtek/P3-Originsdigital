@@ -1,8 +1,8 @@
 import React from "react";
 import NavBarAdmin from "../../components/admin/NavBarAdmin";
 import AddPlaylist from "../../components/admin/playlist/AddPlaylist";
-import "../../styles/admin/Playlist.scss";
 import ManagePlaylist from "../../components/admin/playlist/ManagePlaylist";
+import "../../styles/admin/Playlist.scss";
 
 export default function Playlist() {
   return (

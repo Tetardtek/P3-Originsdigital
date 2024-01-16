@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import App from "./App";
 import { AuthProvider } from "./context/AuthContext";
+import { VideoProvider } from "./context/VideoContext";
 import Dashboard from "./pages/admin/Dashboard";
 import Content from "./pages/admin/Content";
 import Playlist from "./pages/admin/Playlist";
@@ -18,20 +19,22 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Router>
-      <AuthProvider>
-        <Routes>
-          <Route path="/admin" element={<Dashboard />} />
-          <Route path="/content" element={<Content />} />
-          <Route path="/playlist" element={<Playlist />} />
-          <Route path="/category" element={<Category />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/videos" element={<Videos />} />
-          <Route path="/playlists" element={<Playlists />} />
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/" element={<App />} />
-        </Routes>
-      </AuthProvider>
+      <VideoProvider>
+        <AuthProvider>
+          <Routes>
+            <Route path="/admin" element={<Dashboard />} />
+            <Route path="/content" element={<Content />} />
+            <Route path="/playlist" element={<Playlist />} />
+            <Route path="/category" element={<Category />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/videos" element={<Videos />} />
+            <Route path="/playlists" element={<Playlists />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<App />} />
+          </Routes>
+        </AuthProvider>
+      </VideoProvider>
     </Router>
   </React.StrictMode>
 );

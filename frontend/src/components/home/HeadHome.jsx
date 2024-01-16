@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
+import { VideoContext } from "../../context/VideoContext";
 
 export default function HeadHome() {
-  const [videos, setVideos] = useState([]);
+  const { videos } = useContext(VideoContext);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const isMobile = () => window.innerWidth <= 768;
@@ -18,12 +19,6 @@ export default function HeadHome() {
     currentIndex,
     currentIndex + (isMobile() ? 1 : 3)
   );
-
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/videos/`)
-      .then((response) => response.json())
-      .then((data) => setVideos(data));
-  }, []);
 
   return (
     <div className="head-home">
