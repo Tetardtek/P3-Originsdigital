@@ -30,11 +30,18 @@ function ResetPassword() {
     }
 
     try {
-      const tokenWithoutDots = token.replace(/-/g, ".");
+      const base64Token = token.replace(/-/g, "+").replace(/_/g, "/");
+      const decodedToken = decodeURIComponent(
+        atob(base64Token)
+          .split("")
+          .map((c) => `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`)
+          .join("")
+      );
+
       const response = await fetch(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/api/reset-password/${encodeURIComponent(tokenWithoutDots)}`,
+        }/api/reset-password/${encodeURIComponent(decodedToken)}`,
         {
           method: "POST",
           headers: {

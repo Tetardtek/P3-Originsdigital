@@ -51,7 +51,6 @@ function AuthProvider({ children }) {
 
     fetchUserData();
   }, []);
-
   const login = async (credentials) => {
     try {
       const loginResponse = await fetch(
@@ -65,43 +64,38 @@ function AuthProvider({ children }) {
         }
       );
 
-      if (loginResponse.ok) {
-        const { token } = await loginResponse.json();
+      const responseData = await loginResponse.json();
 
-        localStorage.setItem("token", token);
+      if (!loginResponse.ok) {
+        throw new Error(responseData.message);
+      }
 
-        try {
-          const decodedPayload = jwtDecode(token);
-          const userDataResponse = await fetch(
-            `${import.meta.env.VITE_BACKEND_URL}/api/users/${
-              decodedPayload.user
-            }`
-          );
+      const { token } = responseData;
 
-          if (userDataResponse.ok) {
-            const userData = await userDataResponse.json();
-            setUser(userData);
-            return "Login successful";
-          }
-          console.error(
-            "Error fetching user data:",
-            userDataResponse.statusText
-          );
-          throw new Error("Error fetching user data");
-        } catch (error) {
-          console.error("Error decoding token or fetching user data:", error);
-          setAuthError(error);
-          throw new Error("Error decoding token or fetching user data");
+      localStorage.setItem("token", token);
+
+      try {
+        const decodedPayload = jwtDecode(token);
+        const userDataResponse = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/users/${decodedPayload.user}`
+        );
+
+        if (userDataResponse.ok) {
+          const userData = await userDataResponse.json();
+          setUser(userData);
+          return "Login successful";
         }
-      } else {
-        console.error("Error during login:", loginResponse.statusText);
-        setAuthError(new Error("Login failed"));
-        throw new Error("Login failed");
+        console.error("Error fetching user data:", userDataResponse.statusText);
+        throw new Error("Error fetching user data");
+      } catch (error) {
+        console.error("Error decoding token or fetching user data:", error);
+        setAuthError(error);
+        throw new Error("Error decoding token or fetching user data");
       }
     } catch (error) {
       console.error("Error during login:", error);
       setAuthError(error);
-      throw new Error("An error occurred during login");
+      throw error;
     }
   };
 
