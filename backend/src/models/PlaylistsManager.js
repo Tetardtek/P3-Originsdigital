@@ -1,16 +1,16 @@
 const AbstractManager = require("./AbstractManager");
 
-class PlaylistVideoManager extends AbstractManager {
+class PlaylistsManager extends AbstractManager {
   constructor() {
-    super({ table: "playlists_videos" });
+    super({ table: "playlists" });
   }
 
   // The C of CRUD - Create operation
   async create(playlist) {
-    const { playlists_id: playlistId, videos_id: videosId } = playlist;
+    const { link, title, description } = playlist;
     const [result] = await this.database.query(
-      `INSERT INTO ${this.table} (playlists_id, videos_id) values (?, ?)`,
-      [playlistId, videosId]
+      `INSERT INTO ${this.table} (link, title, description) values (?, ?, ?)`,
+      [link, title, description]
     );
     return result.insertId;
   }
@@ -45,19 +45,37 @@ class PlaylistVideoManager extends AbstractManager {
   }
 
   // The U of CRUD - Update operation
-  async edit(id, playlist) {
-    const { playlists_id: playlistId, videos_id: videosId } = playlist;
-    const [result] = await this.database.query(
-      `UPDATE ${this.table} SET playlists_id = ?, videos_id = ? WHERE id = ?`,
-      [playlistId, videosId, id]
+  async edit(id, updatedFields) {
+    const allowedFields = ["link", "title", "description"];
+
+    const fieldsToUpdate = Object.keys(updatedFields).filter((field) =>
+      allowedFields.includes(field)
     );
+
+    const updateValues = fieldsToUpdate.map((field) => updatedFields[field]);
+
+    if (fieldsToUpdate.length === 0) {
+      return 0;
+    }
+
+    const [result] = await this.database.query(
+      `UPDATE ${this.table} SET ${fieldsToUpdate
+        .map((field) => `${field} = ?`)
+        .join(", ")} WHERE id = ?`,
+      [...updateValues, id]
+    );
+
     return result.affectedRows;
   }
 
   // The D of CRUD - Delete operation
   async delete(id) {
-    await this.database.query(`DELETE FROM ${this.table} WHERE id = ?`, [id]);
+    const [result] = await this.database.query(
+      `DELETE FROM ${this.table} WHERE id = ?`,
+      [id]
+    );
+    return result.affectedRows;
   }
 }
 
-module.exports = PlaylistVideoManager;
+module.exports = PlaylistsManager;

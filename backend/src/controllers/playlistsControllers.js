@@ -40,11 +40,11 @@ const edit = async (req, res) => {
       return res.status(400).json({ message: "Empty body" });
     }
 
-    const { title, link, description } = req.body;
+    const { link, title, description } = req.body;
 
     const affectedRows = await tables.playlists.edit(playlistId, {
-      title,
       link,
+      title,
       description,
     });
 
@@ -52,8 +52,11 @@ const edit = async (req, res) => {
       return res.status(500).json({ message: "Update fail" });
     }
 
-    const editedplaylist = await tables.playlists.read(playlistId);
-    return res.json({ message: "Success Update", playlist: editedplaylist });
+    const editedPlaylist = await tables.playlists.read(playlistId);
+    return res.json({
+      message: "Success Update",
+      playlist: editedPlaylist,
+    });
   } catch (error) {
     console.error("Error on playlist update", error);
     return res.status(500).json({ message: "Error on playlist update" });
@@ -62,13 +65,20 @@ const edit = async (req, res) => {
 
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
-  const playlist = req.body;
-
   try {
+    const { link, title, description } = req.body;
+
+    const playlist = {
+      link,
+      title,
+      description,
+    };
+
     const insertId = await tables.playlists.create(playlist);
 
-    res.status(201).json({ insertId });
+    res.status(201).json({ message: "Success", id: insertId });
   } catch (err) {
+    console.error("Error on playlist creation", err);
     next(err);
   }
 };

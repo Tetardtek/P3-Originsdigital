@@ -1,62 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
+import { VideoContext } from "../../context/VideoContext";
 
 export default function AddVideo() {
-  const [categories, setCategories] = useState([]);
-  const [link, setLink] = useState("");
+  const { addVideo, playlists, setPlaylists } = useContext(VideoContext);
+
   const [title, setTitle] = useState("");
+  const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
-  const [categoriesId, setCategoriesId] = useState("");
   const [isFree, setIsFree] = useState(false);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/categories/`
-      );
-      const data = await response.json();
-      setCategories(data);
-    };
-
-    fetchCategories();
-  }, []);
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/videos/`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            link,
-            title,
-            description,
-            categories_id: categoriesId,
-            is_free: isFree,
-          }),
-        }
-      );
-      if (!response.ok) {
-        console.warn("Serveur response:", await response.text());
-        return;
-      }
-      const data = await response.json();
-      console.info("data", data);
-    } catch (err) {
-      console.error(err.message);
-    }
+    addVideo({ link, title, description, isFree })
+      .then(() => {
+        setLink("");
+        setTitle("");
+        setDescription("");
+      })
+      .catch((error) => {
+        console.error("Failed to add video.", error);
+      });
   };
 
   return (
     <div className="container-add-video">
       <div className="add-video-form">
         <h2>Add Video</h2>
-        <form onSubmit={handleSubmit}>
+        <form>
           <ul>
             <li>
               <label>
-                Title of video :
+                Title of video:
                 <input
                   type="text"
                   value={title}
@@ -67,7 +41,7 @@ export default function AddVideo() {
             </li>
             <li>
               <label>
-                Link of video :
+                Link of video:
                 <input
                   type="text"
                   value={link}
@@ -78,7 +52,7 @@ export default function AddVideo() {
             </li>
             <li>
               <label>
-                Description of video :
+                Description of video:
                 <input
                   type="text"
                   value={description}
@@ -89,31 +63,32 @@ export default function AddVideo() {
             </li>
             <li>
               <label>
-                Category of video :
-                <select
-                  value={categoriesId}
-                  onChange={(e) => setCategoriesId(e.target.value)}
-                >
-                  <option value="">Select a category</option>
-                  {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </li>
-            <li>
-              <label>
-                Video is free :
+                Video is free:
                 <input
                   type="checkbox"
                   checked={isFree}
                   onChange={(e) => setIsFree(e.target.checked)}
                 />
               </label>
+              <label>
+                Playlist of video:
+                <select
+                  value={playlists.title}
+                  onChange={(e) => setPlaylists(e.target.value)}
+                >
+                  {playlists.map((playlist) => (
+                    <option key={playlist.id} value={playlist.id}>
+                      {playlist.title}
+                    </option>
+                  ))}
+                </select>
+              </label>
             </li>
-            <input type="submit" value="Submit" />
+            <li>
+              <button onClick={handleSubmit} type="submit">
+                Add Video
+              </button>
+            </li>
           </ul>
         </form>
       </div>

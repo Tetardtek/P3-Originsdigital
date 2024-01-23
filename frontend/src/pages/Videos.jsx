@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import NavBar from "../components/NavBar";
-
-/* import content from "./admin/content"; */
+import "../styles/admin/Content.scss";
+import { VideoContext } from "../context/VideoContext";
 
 export default function Content() {
-  const [videos, setVideos] = useState([]);
-
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/videos/`)
-      .then((response) => response.json())
-      .then((data) => setVideos(data));
-  }, []);
+  const { videos } = useContext(VideoContext);
 
   return (
     <>

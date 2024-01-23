@@ -9,9 +9,10 @@ import {
 } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import App from "./App";
+import { VideoProvider } from "./context/VideoContext";
 import Dashboard from "./pages/admin/Dashboard";
 import Content from "./pages/admin/Content";
-import Category from "./pages/admin/Category";
+import Playlist from "./pages/admin/Playlist";
 import Users from "./pages/admin/Users";
 import Videos from "./pages/Videos";
 import Playlists from "./pages/Playlists";
@@ -114,7 +115,9 @@ root.render(
   <React.StrictMode>
     <Router>
       <AuthProvider>
-        <Main />
+        <VideoProvider>
+          <Main />
+        </VideoProvider>
       </AuthProvider>
     </Router>
   </React.StrictMode>

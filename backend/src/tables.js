@@ -4,19 +4,17 @@
 
 // Import the manager modules responsible for handling data operations on the tables
 const UserManager = require("./models/UserManager");
-const VideoManager = require("./models/VideoManager");
+const VideosManager = require("./models/VideosManager");
+const PlaylistsManager = require("./models/PlaylistsManager");
+const PlaylistsMapManager = require("./models/PlaylistsMapManager");
 const CommentManager = require("./models/CommentManager");
-const PlaylistManager = require("./models/PlaylistManager");
-const CategorieManager = require("./models/CategorieManager");
-const PlaylistVideoManager = require("./models/PlaylistVideoManager");
 
 const managers = [
   UserManager,
-  VideoManager,
+  VideosManager,
+  PlaylistsManager,
+  PlaylistsMapManager,
   CommentManager,
-  PlaylistManager,
-  CategorieManager,
-  PlaylistVideoManager,
   // Add other managers here
 ];
 
