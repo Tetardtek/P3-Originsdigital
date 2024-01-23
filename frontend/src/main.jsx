@@ -7,7 +7,6 @@ import { VideoProvider } from "./context/VideoContext";
 import Dashboard from "./pages/admin/Dashboard";
 import Content from "./pages/admin/Content";
 import Playlist from "./pages/admin/Playlist";
-import Category from "./pages/admin/Category";
 import Users from "./pages/admin/Users";
 import Videos from "./pages/Videos";
 import Playlists from "./pages/Playlists";
@@ -30,6 +29,7 @@ root.render(
             <Route path="/users" element={<Users />} />
             <Route path="/videos" element={<Videos />} />
             <Route path="/playlists" element={<Playlists />} />
+            <Route path="/playlist" element={<Playlist />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/register" element={<Register />} />
             <Route path="/settings" element={<Settings />} />
