@@ -23,9 +23,9 @@ const generateResetToken = (user) => {
     expiresIn: "1h",
   });
 
-  const tokenWithoutDots = resetToken.replace(/\./g, "-");
+  const base64Token = Buffer.from(resetToken).toString("base64");
 
-  return tokenWithoutDots;
+  return base64Token;
 };
 
 const sendPasswordResetEmail = async (user, resetToken) => {
@@ -65,7 +65,7 @@ const forgottenPassword = async (req, res) => {
 const resetPassword = async (req, res) => {
   const { password } = req.body;
 
-  const resetToken = decodeURIComponent(req.params.token.replace(/-/g, "."));
+  const resetToken = decodeURIComponent(req.params.token);
 
   try {
     const decodedToken = jwt.verify(resetToken, resetTokenSecret);
