@@ -9,23 +9,15 @@
     "linkname": "Videos",
     "linkurl": "/videos"
   },
+
   {
     "id": 3,
-    "linkname": "Playlists",
-    "linkurl": "/playlists"
-  },
-  {
-    "id": 4,
     "linkname": "LogIn",
     "linkurl": "/login"
   },
+
   {
-    "id": 5,
-    "linkname": "Admin",
-    "linkurl": "/admin"
-  },
-  {
-    "id": 6,
+    "id": 4,
     "linkname": "Register",
     "linkurl": "/register"
   }

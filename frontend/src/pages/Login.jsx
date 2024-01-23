@@ -11,9 +11,10 @@ export default function Login() {
     password: "",
   });
 
-  const { login, loginStatus } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [loginError, setLoginError] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,6 +22,7 @@ export default function Login() {
       ...prevCredentials,
       [name]: value,
     }));
+    setLoginError(null);
   };
 
   const handleLogin = async (e) => {
@@ -30,10 +32,19 @@ export default function Login() {
       const status = await login(credentials);
 
       if (status === "Login successful") {
+        localStorage.setItem("loginSuccess", "true");
         setShowLoginPopup(true);
       }
     } catch (error) {
       console.error("Error during login:", error);
+
+      if (error.message === "Email not found") {
+        setLoginError("Email not found. Please check your email.");
+      } else if (error.message === "Incorrect password") {
+        setLoginError("Incorrect password. Please try again.");
+      } else {
+        setLoginError("Email not found. Please check your email.");
+      }
     }
   };
 
@@ -74,7 +85,7 @@ export default function Login() {
         <p>
           <Link to="/forgot-password">Forgot your password?</Link>
         </p>
-        {loginStatus && <p className="error-message">{loginStatus}</p>}
+        {loginError && <p className="error-message">{loginError}</p>}
         {showLoginPopup && (
           <Popup onClose={handleCloseLoginPopup} confirmButtonText="Close">
             <p>Login successful! Welcome back ✔</p>
