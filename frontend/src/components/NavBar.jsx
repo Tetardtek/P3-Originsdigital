@@ -39,6 +39,7 @@ function NavBar() {
             {item.linkname === "Logout" ? (
               <button
                 type="button"
+                className="logout-button"
                 onClick={() => {
                   logout();
                   closeMenu();

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { useAuth } from "../context/AuthContext";
+import Popup from "../components/Popup";
+import "../styles/Login.scss";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({
@@ -11,6 +13,7 @@ export default function Login() {
 
   const { login, loginStatus } = useAuth();
   const navigate = useNavigate();
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -27,11 +30,16 @@ export default function Login() {
       const status = await login(credentials);
 
       if (status === "Login successful") {
-        navigate("/");
+        setShowLoginPopup(true);
       }
     } catch (error) {
       console.error("Error during login:", error);
     }
+  };
+
+  const handleCloseLoginPopup = () => {
+    setShowLoginPopup(false);
+    navigate("/");
   };
 
   return (
@@ -39,9 +47,9 @@ export default function Login() {
       <NavBar />
       <div className="auth-form">
         <h2>Login</h2>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} className="form-container">
           <label>
-            Email:
+            Mail:
             <input
               type="email"
               name="mail"
@@ -63,7 +71,15 @@ export default function Login() {
         <p>
           Don't have an account? <Link to="/register">Signup here</Link>
         </p>
-        {loginStatus && <p>{loginStatus}</p>}
+        <p>
+          <Link to="/forgot-password">Forgot your password?</Link>
+        </p>
+        {loginStatus && <p className="error-message">{loginStatus}</p>}
+        {showLoginPopup && (
+          <Popup onClose={handleCloseLoginPopup} confirmButtonText="Close">
+            <p>Login successful! Welcome back ✔</p>
+          </Popup>
+        )}
       </div>
     </>
   );

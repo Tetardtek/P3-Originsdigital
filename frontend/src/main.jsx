@@ -13,6 +13,9 @@ import Videos from "./pages/Videos";
 import Playlists from "./pages/Playlists";
 import LogIn from "./pages/Login";
 import Register from "./pages/Signup";
+import Settings from "./pages/Settings";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -24,13 +27,14 @@ root.render(
           <Routes>
             <Route path="/admin" element={<Dashboard />} />
             <Route path="/content" element={<Content />} />
-            <Route path="/playlist" element={<Playlist />} />
-            <Route path="/category" element={<Category />} />
             <Route path="/users" element={<Users />} />
             <Route path="/videos" element={<Videos />} />
             <Route path="/playlists" element={<Playlists />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/" element={<App />} />
           </Routes>
         </AuthProvider>
