@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { VideoContext } from "../../context/VideoContext";
 
 export default function AddVideo() {
-  const { addVideo } = useContext(VideoContext);
+  const { addVideo, playlists, setPlaylists } = useContext(VideoContext);
 
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
@@ -69,6 +69,19 @@ export default function AddVideo() {
                   checked={isFree}
                   onChange={(e) => setIsFree(e.target.checked)}
                 />
+              </label>
+              <label>
+                Playlist of video:
+                <select
+                  value={playlists.title}
+                  onChange={(e) => setPlaylists(e.target.value)}
+                >
+                  {playlists.map((playlist) => (
+                    <option key={playlist.id} value={playlist.id}>
+                      {playlist.title}
+                    </option>
+                  ))}
+                </select>
               </label>
             </li>
             <li>

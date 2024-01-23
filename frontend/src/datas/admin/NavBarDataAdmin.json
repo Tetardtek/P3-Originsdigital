@@ -20,11 +20,6 @@
     "linkurl": "/playlist"
   },
   {
-    "id": 4,
-    "linkname": "Categories",
-    "linkurl": "/category"
-  },
-  {
     "id": 5,
     "linkname": "Users",
     "linkurl": "/users"
