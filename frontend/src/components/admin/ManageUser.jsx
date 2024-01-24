@@ -17,6 +17,25 @@ export default function Users() {
     setUsers(resultUsers);
   };
 
+  const deleteUsers = async (id) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        console.error("Serveur response:", await response.text());
+        return;
+      }
+      setUsers(users.filter((currentUser) => currentUser.id !== id));
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   useEffect(() => {
     fetchUsersData();
   }, []);
@@ -33,6 +52,7 @@ export default function Users() {
         <h3>Birthdate</h3>
         <h3>Logdate</h3>
         <h3>Role</h3>
+        <h3>Delete</h3>
       </div>
       {users?.map((currentUser) => {
         return (
@@ -45,6 +65,9 @@ export default function Users() {
             <p>{currentUser.birthdate}</p>
             <p>{currentUser.logdate}</p>
             <p>{currentUser.roles_id}</p>
+            <button type="button" onClick={() => deleteUsers(currentUser.id)}>
+              Delete
+            </button>
           </div>
         );
       })}
