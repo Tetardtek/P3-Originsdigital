@@ -23,5 +23,16 @@
     "id": 5,
     "linkname": "Users",
     "linkurl": "/users"
+  },
+  {
+    "id": 6,
+    "linkname": "Settings",
+    "linkurl": "/settings"
+  },
+  {
+    "id": 7,
+    "linkname": "Logout",
+    "linkurl": "/",
+    "action": "logout"
   }
 ]

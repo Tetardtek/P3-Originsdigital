@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBarData from "../datas/NavBarData.json";
 import NavBarDataConnected from "../datas/NavBarDataConnected.json";
+import NavBarDataAdmin from "../datas/admin/NavBarDataAdmin.json";
 import { useAuth } from "../context/AuthContext";
 import "../styles/Navbar.scss";
 import logo from "../assets/images/logo.png";
@@ -10,7 +11,6 @@ function NavBar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = React.useState(false);
-  const navbardata = user ? NavBarDataConnected : NavBarData;
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -19,6 +19,15 @@ function NavBar() {
   const closeMenu = () => {
     setShowMenu(false);
   };
+
+  let navbardata;
+  if (user?.role === "3") {
+    navbardata = NavBarDataAdmin;
+  } else if (user) {
+    navbardata = NavBarDataConnected;
+  } else {
+    navbardata = NavBarData;
+  }
 
   return (
     <nav>
