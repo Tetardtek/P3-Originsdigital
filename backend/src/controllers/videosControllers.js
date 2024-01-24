@@ -19,7 +19,7 @@ const read = async (req, res, next) => {
 
     const video = await tables.videos.read(id);
 
-    if (field && video && video[field]) {
+    if (field && video && Array.isArray(video[field])) {
       res.json({ [field]: video[field] });
     } else if (video) {
       res.json(video);
@@ -30,7 +30,6 @@ const read = async (req, res, next) => {
     next(err);
   }
 };
-
 // The E of BREAD - Edit (Update) operation
 const edit = async (req, res) => {
   const videoId = req.params.id;

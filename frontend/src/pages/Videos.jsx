@@ -28,7 +28,7 @@ export default function Content() {
                     alt="Logo YouTube"
                     height="30"
                   />
-                </a>{" "}
+                </a>
                 <p>{video.description}</p>
                 <br />
               </div>
