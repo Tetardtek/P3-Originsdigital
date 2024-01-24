@@ -129,6 +129,31 @@ function VideoProvider({ children }) {
     }
   };
 
+  const updateVideo = async (id, video) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/videos/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(video),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to update video. ${JSON.stringify(video)}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error.message);
+      throw error;
+    }
+  };
+
   const value = useMemo(
     () => ({
       videos,
@@ -138,6 +163,7 @@ function VideoProvider({ children }) {
       deletePlaylist,
       addVideo,
       addPlaylist,
+      updateVideo,
     }),
     [videos, playlists, playlistsMap]
   );

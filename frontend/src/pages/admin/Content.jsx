@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import NavBar from "../../components/NavBar";
 import { VideoContext } from "../../context/VideoContext";
 import "../../styles/admin/Content.scss";
+import EditVideo from "../../components/admin/EditVideo";
 
 export default function Content() {
   const { videos, deleteVideo } = useContext(VideoContext);
@@ -27,6 +28,7 @@ export default function Content() {
                 <br />
                 <p>Video ID : {video.id}</p>
                 <br />
+                <EditVideo video={video} /> <br />
                 <button type="button" onClick={() => deleteVideo(video.id)}>
                   Delete
                 </button>
