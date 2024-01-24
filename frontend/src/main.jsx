@@ -42,7 +42,7 @@ PrivateRoute.defaultProps = {
 };
 
 function Main() {
-  const { user, setUser } = useAuth();
+  const { user, setUser, loading: authLoading } = useAuth();
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
@@ -58,6 +58,9 @@ function Main() {
   const closePopup = () => {
     setShowPopup(false);
   };
+  if (authLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
