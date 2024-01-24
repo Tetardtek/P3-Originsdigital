@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { useAuth } from "../context/AuthContext";
+import Popup from "../components/Popup";
+import "../styles/Login.scss";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({
@@ -9,8 +11,10 @@ export default function Login() {
     password: "",
   });
 
-  const { login, loginStatus } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const [loginError, setLoginError] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -18,6 +22,7 @@ export default function Login() {
       ...prevCredentials,
       [name]: value,
     }));
+    setLoginError(null);
   };
 
   const handleLogin = async (e) => {
@@ -27,11 +32,25 @@ export default function Login() {
       const status = await login(credentials);
 
       if (status === "Login successful") {
-        navigate("/");
+        localStorage.setItem("loginSuccess", "true");
+        setShowLoginPopup(true);
       }
     } catch (error) {
       console.error("Error during login:", error);
+
+      if (error.message === "Email not found") {
+        setLoginError("Email not found. Please check your email.");
+      } else if (error.message === "Incorrect password") {
+        setLoginError("Incorrect password. Please try again.");
+      } else {
+        setLoginError("Email not found. Please check your email.");
+      }
     }
+  };
+
+  const handleCloseLoginPopup = () => {
+    setShowLoginPopup(false);
+    navigate("/");
   };
 
   return (
@@ -39,9 +58,9 @@ export default function Login() {
       <NavBar />
       <div className="auth-form">
         <h2>Login</h2>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} className="form-container">
           <label>
-            Email:
+            Mail:
             <input
               type="email"
               name="mail"
@@ -63,7 +82,15 @@ export default function Login() {
         <p>
           Don't have an account? <Link to="/register">Signup here</Link>
         </p>
-        {loginStatus && <p>{loginStatus}</p>}
+        <p>
+          <Link to="/forgot-password">Forgot your password?</Link>
+        </p>
+        {loginError && <p className="error-message">{loginError}</p>}
+        {showLoginPopup && (
+          <Popup onClose={handleCloseLoginPopup} confirmButtonText="Close">
+            <p>Login successful! Welcome back ✔</p>
+          </Popup>
+        )}
       </div>
     </>
   );

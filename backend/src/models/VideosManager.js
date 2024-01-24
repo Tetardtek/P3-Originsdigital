@@ -1,19 +1,17 @@
 const AbstractManager = require("./AbstractManager");
 
-class CategorieManager extends AbstractManager {
+class VideosManager extends AbstractManager {
   constructor() {
-    super({ table: "categories" });
+    super({ table: "videos" });
   }
 
   // The C of CRUD - Create operation
-  async create(categorie) {
-    const { name } = categorie;
+  async create(video) {
+    const { link, title, description, is_free: isFree } = video;
     const [result] = await this.database.query(
-      `INSER INTO ${this.table} (name) VALUES (?)`,
-      [name]
+      `INSERT INTO ${this.table} (link, title, description, is_free) VALUES (?, ?, ?, ?)`,
+      [link, title, description, isFree]
     );
-
-    // Return the ID of the newly inserted categorie
     return result.insertId;
   }
 
@@ -31,33 +29,42 @@ class CategorieManager extends AbstractManager {
 
       return rows[0][field];
     }
-
     const [rows] = await this.database.query(
       `SELECT * FROM ${this.table} WHERE id = ?`,
       [id]
     );
-
     if (rows.length === 0) {
       return null;
     }
-
     return rows[0];
   }
 
   async readAll() {
     const [rows] = await this.database.query(`SELECT * FROM ${this.table}`);
-
     return rows;
   }
 
   // The U of CRUD - Update operation
-  async edit(id, categorie) {
-    const { name } = categorie;
+  async edit(id, updatedFields) {
+    const allowedFields = ["link", "title", "description", "is_free"];
 
-    const [result] = await this.database.query(
-      `UPDATE ${this.table} SET name = ? WHERE id = ?`,
-      [name, id]
+    const fieldsToUpdate = Object.keys(updatedFields).filter((field) =>
+      allowedFields.includes(field)
     );
+
+    const updateValues = fieldsToUpdate.map((field) => updatedFields[field]);
+
+    if (fieldsToUpdate.length === 0) {
+      return 0;
+    }
+
+    const updateQuery = `UPDATE ${this.table} SET ${fieldsToUpdate
+      .map((field) => `${field} = ?`)
+      .join(", ")} WHERE id = ?`;
+
+    updateValues.push(id);
+
+    const [result] = await this.database.query(updateQuery, updateValues);
 
     return result.affectedRows;
   }
@@ -68,4 +75,4 @@ class CategorieManager extends AbstractManager {
   }
 }
 
-module.exports = CategorieManager;
+module.exports = VideosManager;

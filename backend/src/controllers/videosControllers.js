@@ -40,28 +40,37 @@ const edit = async (req, res) => {
       return res.status(400).json({ message: "Empty body" });
     }
 
-    const {
-      link,
-      title,
-      description,
-      categories_id: categoriesId,
-      is_free: isFree,
-    } = req.body;
+    const { link, title, description, is_free: isFree } = req.body;
 
-    const affectedRows = await tables.videos.edit(videoId, {
-      link,
-      title,
-      description,
-      categories_id: categoriesId,
-      is_free: isFree,
-    });
+    const video = await tables.videos.read(videoId);
+
+    if (!video) {
+      return res.status(404).json({ message: "Video not found" });
+    }
+
+    const updatedFields = {};
+
+    if (link !== undefined) {
+      updatedFields.link = link;
+    }
+    if (title !== undefined) {
+      updatedFields.title = title;
+    }
+    if (description !== undefined) {
+      updatedFields.description = description;
+    }
+    if (isFree !== undefined) {
+      updatedFields.is_free = isFree;
+    }
+
+    const affectedRows = await tables.videos.edit(videoId, updatedFields);
 
     if (affectedRows === 0) {
       return res.status(500).json({ message: "Update fail" });
     }
 
-    const editedvideo = await tables.videos.read(videoId);
-    return res.json({ message: "Success Update", video: editedvideo });
+    const editedVideo = await tables.videos.read(videoId);
+    return res.json({ message: "Success Update", video: editedVideo });
   } catch (error) {
     console.error("Error on video update", error);
     return res.status(500).json({ message: "Error on video update" });
@@ -70,13 +79,21 @@ const edit = async (req, res) => {
 
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
-  const video = req.body;
-
   try {
+    const { link, title, description, is_free: isFree } = req.body;
+
+    const video = {
+      link,
+      title,
+      description,
+      is_free: isFree,
+    };
+
     const insertId = await tables.videos.create(video);
 
-    res.status(201).json({ insertId });
+    res.status(201).json({ message: "Success", id: insertId });
   } catch (err) {
+    console.error("Error on video creation", err);
     next(err);
   }
 };

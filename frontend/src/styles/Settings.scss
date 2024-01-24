@@ -1,0 +1,72 @@
+@import "./variables.scss";
+
+.big-setting-container {
+  background-color: $color1;
+  width: 100vw;
+}
+
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  background-color: $color1;
+  max-width: 400px;
+  box-sizing: border-box;
+  margin: auto !important;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .settings-list-container {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      margin-bottom: 10px;
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+
+      input {
+        padding: 10px;
+        font-size: 16px;
+      }
+    }
+
+    button {
+      padding: 12px;
+      background-color: $color4;
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+      border: none;
+      border-radius: 4px;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: darken($color4, 10%);
+      }
+    }
+
+    .delete-button {
+      background-color: red;
+      margin-top: 10px;
+    }
+  }
+
+  .error-input,
+  .error-message {
+    border: 1px solid red;
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 4px;
+    color: red;
+  }
+
+  .success-message {
+    margin-top: 10px;
+    color: rgb(0, 255, 0);
+  }
+}

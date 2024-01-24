@@ -1,0 +1,50 @@
+@import "../variables.scss";
+
+.playlist-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 15px;
+  margin-top: 50px;
+  border: 1px solid;
+  border-radius: 5px;
+  justify-content: center;
+  .playlist-list-container {
+    .container-add-playlist {
+      background-color: $color2;
+      border: 1px solid;
+      border-radius: 5px;
+      .add-playlist-form {
+        h2 {
+          text-align: center;
+        }
+        ul {
+          list-style: none;
+        }
+      }
+    }
+  }
+}
+
+.playlist-manage-container {
+  background-color: $color2;
+  table {
+    width: 100%;
+    border: 1px solid;
+    border-radius: 5px;
+    th {
+      border: 1px solid;
+      border-radius: 5px;
+      padding: 5px;
+    }
+    td {
+      border: 1px solid;
+      border-radius: 5px;
+      padding: 5px;
+      text-align: center;
+    }
+  }
+}

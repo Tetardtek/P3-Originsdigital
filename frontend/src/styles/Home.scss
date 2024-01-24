@@ -1,0 +1,117 @@
+@import "../styles/variables.scss";
+.home {
+  h1 {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    color: $color1;
+    background-color: $color4;
+    font-size: 2rem;
+  }
+}
+
+.videos-home {
+  background-color: $color4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  align-content: stretch;
+}
+
+.videos-card-home {
+  background-color: $color2;
+  display: flex;
+  justify-content: center;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 1rem;
+  width: 100%;
+
+  img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 0.5rem;
+  }
+
+  div {
+    background-color: $color3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+
+  .active,
+  .inactive {
+    width: 28%;
+
+    @media screen and (max-width: 961px) {
+      &:nth-of-type(1) {
+        display: none;
+      }
+    }
+    @media screen and (max-width: 450px) {
+      &:nth-of-type(3) {
+        display: none;
+      }
+    }
+  }
+}
+
+.carousel {
+  color: $color1;
+  background-color: $color4;
+}
+
+.carousel:hover {
+  color: $color4;
+  background-color: $color1;
+}
+
+.partners-ctn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: stretch;
+
+  .section3-home {
+    background-color: $color2;
+    display: flex;
+    justify-content: center;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 1rem;
+    width: 100%;
+
+    .article-ctn {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      justify-content: center;
+      margin: 1rem;
+      padding: 1rem;
+      gap: 2rem;
+
+      article {
+        background-color: $color3;
+        border: 1px solid;
+        border-radius: 5px;
+        width: 100%;
+
+        h2 {
+          text-align: center;
+        }
+
+        div {
+          text-align: center;
+          padding: 1rem;
+        }
+      }
+    }
+  }
+}

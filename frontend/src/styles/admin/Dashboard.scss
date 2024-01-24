@@ -1,0 +1,66 @@
+@import "../variables.scss";
+
+div.container-dashboard {
+  background-color: $color4;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: stretch;
+  .container-add-video {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    background-color: $color1;
+    .add-video-form {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      border: 1px solid;
+      border-radius: 5px;
+      width: 20%;
+      padding: 0;
+      margin: 1rem;
+      h2 {
+        margin: 0;
+        background-color: $color4;
+        color: $color1;
+        text-align: center;
+      }
+      form > ul {
+        height: 100%;
+        width: 100%;
+        list-style-type: none;
+        padding: 0;
+        margin: 2rem;
+      }
+    }
+  }
+}
+
+.video-preview {
+  background-color: $color2;
+  display: flex;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 1rem;
+  margin: 0.5rem;
+
+  img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 0.5rem;
+  }
+
+  div {
+    background-color: $color3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+}

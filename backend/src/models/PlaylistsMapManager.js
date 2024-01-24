@@ -1,16 +1,16 @@
 const AbstractManager = require("./AbstractManager");
 
-class PlaylistManager extends AbstractManager {
+class PlaylistsMapManager extends AbstractManager {
   constructor() {
-    super({ table: "playlists" });
+    super({ table: "playlists_maps" });
   }
 
   // The C of CRUD - Create operation
-  async create(playlist) {
-    const { link, title, description, categories_id: categoriesId } = playlist;
+  async create(playlistsMap) {
+    const { playlists_id: playlistsId, videos_id: videosId } = playlistsMap;
     const [result] = await this.database.query(
-      `INSERT INTO ${this.table} (link, title, description, categories_id) values (?, ?, ?, ?)`,
-      [link, title, description, categoriesId]
+      `INSERT INTO ${this.table} (playlists_id, videos_id) VALUES (?, ?)`,
+      [playlistsId, videosId]
     );
     return result.insertId;
   }
@@ -45,12 +45,27 @@ class PlaylistManager extends AbstractManager {
   }
 
   // The U of CRUD - Update operation
-  async edit(id, playlist) {
-    const { link, title, description, categories_id: categoriesId } = playlist;
-    const [result] = await this.database.query(
-      `UPDATE ${this.table} SET link = ?, title = ?, description = ?, categoriesId = ? WHERE id = ?`,
-      [link, title, description, categoriesId, id]
+  async edit(id, updatedFields) {
+    const allowedFields = ["playlists_id", "videos_id"];
+
+    const fieldsToUpdate = Object.keys(updatedFields).filter((field) =>
+      allowedFields.includes(field)
     );
+
+    const updateValues = fieldsToUpdate.map((field) => updatedFields[field]);
+
+    if (fieldsToUpdate.length === 0) {
+      return 0;
+    }
+
+    const updateQuery = `UPDATE ${this.table} SET ${fieldsToUpdate
+      .map((field) => `${field} = ?`)
+      .join(", ")} WHERE id = ?`;
+
+    updateValues.push(id);
+
+    const [result] = await this.database.query(updateQuery, updateValues);
+
     return result.affectedRows;
   }
 
@@ -60,4 +75,4 @@ class PlaylistManager extends AbstractManager {
   }
 }
 
-module.exports = PlaylistManager;
+module.exports = PlaylistsMapManager;

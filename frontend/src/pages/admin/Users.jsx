@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import NavBarAdmin from "../../components/admin/NavBarAdmin";
+import NavBar from "../../components/NavBar";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -30,14 +30,14 @@ export default function Users() {
 
   return (
     <>
-      <NavBarAdmin />
+      <NavBar />
       <main>
         <h1>Origin's Digital users Panel</h1>
 
         <div className="users">
           {users.map((user) => (
             <div className="user" key={user.id}>
-              <h3>{user.pseudoname}</h3>
+              <h3>{user.nickname}</h3>
               <p>
                 Firstname : {user.firstname}
                 <br />

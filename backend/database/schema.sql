@@ -1,73 +1,65 @@
-DROP TABLE IF EXISTS contents;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS playlists_maps;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS playlists;
 DROP TABLE IF EXISTS videos;
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS playlists;
-DROP TABLE IF EXISTS comments;
-DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS roles;
+
+
 CREATE TABLE roles (
-id INT NOT NULL AUTO_INCREMENT,
-name VARCHAR(15),
-PRIMARY KEY (`id`)
-);
-
-CREATE TABLE categories (
-id INT NOT NULL AUTO_INCREMENT,
-name VARCHAR(50) NOT NULL,
-PRIMARY KEY (`id`)
-);
-
-CREATE TABLE comments (
-id INT NOT NULL AUTO_INCREMENT,
-content VARCHAR(200) NOT NULL,
-date DATE NOT NULL,
-PRIMARY KEY (`id`)
-);
-
-CREATE TABLE playlists (
-id INT NOT NULL AUTO_INCREMENT,
-link VARCHAR(250) NOT NULL,
-title VARCHAR(100) NOT NULL,
-description VARCHAR(300) NOT NULL,
-categories_id INT NOT NULL,
-PRIMARY KEY (`id`),
-FOREIGN KEY (categories_id) REFERENCES categories(id)
+id INT AUTO_INCREMENT PRIMARY KEY,
+role VARCHAR(15) NOT NULL
 );
 
 CREATE TABLE users (
-id INT NOT NULL AUTO_INCREMENT,
-firstname VARCHAR(30) DEFAULT NULL,
-lastname VARCHAR(30) DEFAULT NULL,
-pseudoname VARCHAR(30)  NOT NULL,
-mail VARCHAR(90),
+id INT AUTO_INCREMENT PRIMARY KEY,
+firstname VARCHAR(30) NOT NULL,
+lastname VARCHAR(30) NOT NULL,
+nickname VARCHAR(30) NOT NULL,
+mail VARCHAR(90) NOT NULL,
 birthdate DATE NOT NULL,
 logdate DATE NOT NULL,
-password VARCHAR(200),
+password VARCHAR(200) NOT NULL,
 roles_id INT,
-PRIMARY KEY (`id`),
 FOREIGN KEY (roles_id) REFERENCES roles(id)
 );
 
 CREATE TABLE videos (
-id INT NOT NULL AUTO_INCREMENT,
+id INT AUTO_INCREMENT PRIMARY KEY,
 link VARCHAR(250) NOT NULL,
 title VARCHAR(100) NOT NULL,
-description VARCHAR(300) NOT NULL,
-categories_id INT NOT NULL,
-is_free BOOLEAN DEFAULT false,
-PRIMARY KEY (`id`),
-FOREIGN KEY (categories_id) REFERENCES categories(id)
+description VARCHAR(300),
+is_free BOOLEAN DEFAULT false NOT NULL
 );
 
-CREATE TABLE contents (
-id INT NOT NULL AUTO_INCREMENT,
-users_id INT,
-videos_id INT,
-comments_id INT,
-playlists_id INT,
-PRIMARY KEY (`id`),
+CREATE TABLE playlists (
+id INT AUTO_INCREMENT PRIMARY KEY,
+link VARCHAR(250) NOT NULL,
+title VARCHAR(100) NOT NULL,
+description VARCHAR(300) NOT NULL
+);
+
+CREATE TABLE categories (
+id INT AUTO_INCREMENT PRIMARY KEY,
+title VARCHAR(50) NOT NULL,
+description VARCHAR(300)
+);
+
+CREATE TABLE playlists_maps (
+id INT AUTO_INCREMENT PRIMARY KEY,
+playlists_id INT NOT NULL,
+videos_id INT NOT NULL,
+FOREIGN KEY (playlists_id) REFERENCES playlists(id),
+FOREIGN KEY (videos_id) REFERENCES videos(id) ON DELETE CASCADE
+);
+
+CREATE TABLE comments (
+id INT AUTO_INCREMENT PRIMARY KEY,
+users_id INT NOT NULL,
+videos_id INT NOT NULL,
+postDate DATE NOT NULL,
+content VARCHAR(200) NOT NULL,
 FOREIGN KEY (users_id) REFERENCES users(id),
-FOREIGN KEY (videos_id) REFERENCES videos(id),
-FOREIGN KEY (comments_id) REFERENCES comments(id),
-FOREIGN KEY (playlists_id) REFERENCES playlists(id)
+FOREIGN KEY (videos_id) REFERENCES videos(id) ON DELETE CASCADE
 );

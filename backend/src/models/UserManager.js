@@ -7,17 +7,17 @@ class UserManager extends AbstractManager {
 
   // The C of CRUD - Create operation
   async create(user) {
-    const { firstname, lastname, pseudoname, mail, birthdate, password } = user;
+    const { firstname, lastname, nickname, mail, birthdate, password } = user;
 
     const rolesId = 1;
 
     const logdate = new Date().toISOString().slice(0, 19).replace("T", " ");
     const [result] = await this.database.query(
-      `INSERT INTO ${this.table} (firstname, lastname, pseudoname, mail, birthdate, logdate, password, roles_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO ${this.table} (firstname, lastname, nickname, mail, birthdate, logdate, password, roles_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         firstname,
         lastname,
-        pseudoname,
+        nickname,
         mail,
         birthdate,
         logdate,
@@ -75,13 +75,32 @@ class UserManager extends AbstractManager {
   }
 
   // The U of CRUD - Update operation
-  async edit(id, user) {
-    const { firstname, lastname, mail, password } = user;
+  async edit(id, updatedFields) {
+    const allowedFields = [
+      "firstname",
+      "lastname",
+      "mail",
+      "password",
+      "nickname",
+    ];
 
-    const [result] = await this.database.query(
-      `UPDATE ${this.table} SET firstname = ?, lastname = ?, mail = ?, password = ? WHERE id = ?`,
-      [firstname, lastname, mail, password, id]
+    const fieldsToUpdate = Object.keys(updatedFields).filter((field) =>
+      allowedFields.includes(field)
     );
+
+    const updateValues = fieldsToUpdate.map((field) => updatedFields[field]);
+
+    if (fieldsToUpdate.length === 0) {
+      return 0;
+    }
+
+    const updateQuery = `UPDATE ${this.table} SET ${fieldsToUpdate
+      .map((field) => `${field} = ?`)
+      .join(", ")} WHERE id = ?`;
+
+    updateValues.push(id);
+
+    const [result] = await this.database.query(updateQuery, updateValues);
 
     return result.affectedRows;
   }

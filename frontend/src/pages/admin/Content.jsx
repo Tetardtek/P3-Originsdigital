@@ -1,38 +1,14 @@
-import React, { useState, useEffect } from "react";
-import NavBarAdmin from "../../components/admin/NavBarAdmin";
-import "../../styles/admin/content.scss";
+import React, { useContext } from "react";
+import NavBar from "../../components/NavBar";
+import { VideoContext } from "../../context/VideoContext";
+import "../../styles/admin/Content.scss";
 
 export default function Content() {
-  const [videos, setVideos] = useState([]);
-
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/videos/`)
-      .then((response) => response.json())
-      .then((data) => setVideos(data));
-  }, []);
-
-  const deleteVideos = async (id) => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/videos/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to delete video.");
-      }
-
-      setVideos(videos.filter((video) => video.id !== id));
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
+  const { videos, deleteVideo } = useContext(VideoContext);
 
   return (
     <>
-      <NavBarAdmin />
+      <NavBar />
       <main>
         <div className="videos">
           <h1>Videos Panel</h1>
@@ -49,7 +25,9 @@ export default function Content() {
                 </a>{" "}
                 <p>{video.description}</p>
                 <br />
-                <button type="button" onClick={() => deleteVideos(video.id)}>
+                <p>Video ID : {video.id}</p>
+                <br />
+                <button type="button" onClick={() => deleteVideo(video.id)}>
                   Delete
                 </button>
               </div>
