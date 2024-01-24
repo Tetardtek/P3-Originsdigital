@@ -1,5 +1,5 @@
 import React from "react";
-import NavBarAdmin from "../../components/admin/NavBarAdmin";
+import NavBar from "../../components/NavBar";
 import AddPlaylist from "../../components/admin/playlist/AddPlaylist";
 import ManagePlaylist from "../../components/admin/playlist/ManagePlaylist";
 import "../../styles/admin/Playlist.scss";
@@ -7,7 +7,7 @@ import "../../styles/admin/Playlist.scss";
 export default function Playlist() {
   return (
     <>
-      <NavBarAdmin />
+      <NavBar />
       <main>
         <h1>Origin's Digital playlist Panel</h1>
         <div className="playlist-container">
