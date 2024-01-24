@@ -8,10 +8,11 @@
 .settings-container {
   display: flex;
   flex-direction: column;
-  background-color: $color1;
-  max-width: 400px;
-  box-sizing: border-box;
-  margin: auto !important;
+  background-color: $color2;
+  max-width: 800px;
+  margin: 4rem auto !important;
+  padding: 30px;
+  border-radius: 5px;
 
   h2 {
     text-align: center;
@@ -27,7 +28,7 @@
       font-size: 16px;
       display: flex;
       flex-direction: column;
-
+      text-align: center;
       input {
         padding: 10px;
         font-size: 16px;
