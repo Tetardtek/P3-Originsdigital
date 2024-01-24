@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import NavBarAdmin from "../../components/admin/NavBarAdmin";
+import NavBar from "../../components/NavBar";
 import { VideoContext } from "../../context/VideoContext";
 import "../../styles/admin/Content.scss";
 
@@ -8,7 +8,7 @@ export default function Content() {
 
   return (
     <>
-      <NavBarAdmin />
+      <NavBar />
       <main>
         <div className="videos">
           <h1>Videos Panel</h1>

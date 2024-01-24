@@ -19,9 +19,7 @@ export default function App() {
       ) : (
         <NavBar />
       )}
-      <div>
-        <Home />
-      </div>
+      <Home />
     </>
   );
 }
