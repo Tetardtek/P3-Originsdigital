@@ -6,7 +6,7 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import App from "./App";
 import Dashboard from "./pages/admin/Dashboard";
 import Content from "./pages/admin/Content";
-import Category from "./pages/admin/Category";
+import Playlist from "./pages/admin/Playlist";
 import Users from "./pages/admin/Users";
 import Videos from "./pages/Videos";
 import Playlists from "./pages/Playlists";
@@ -81,10 +81,10 @@ function Main() {
           }
         />
         <Route
-          path="/category/*"
+          path="/playlist/*"
           element={
             <PrivateRoute
-              element={<Category />}
+              element={<Playlist />}
               requiresAuth
               allowedRoles={["3"]}
             />
