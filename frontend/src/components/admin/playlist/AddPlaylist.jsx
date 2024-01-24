@@ -74,11 +74,11 @@ export default function AddPlaylist() {
           <ul>
             {playlists.map((playlist) => (
               <li key={playlist.id}>
+                ID : {playlist.id} - {playlist.title} - {playlist.link} -{" "}
+                {playlist.description}{" "}
                 <button type="button" onClick={() => handleDelete(playlist.id)}>
                   x
                 </button>
-                ID : {playlist.id} - {playlist.title} - {playlist.link} -{" "}
-                {playlist.description}{" "}
               </li>
             ))}
           </ul>

@@ -34,7 +34,7 @@ function NavBar() {
       <div className="logo-container">
         <img src={logo} alt="Your Logo" className="logo" />
       </div>
-      <h1 className="title">Origin's Digital</h1>
+      <h1 className="title">ORIGIN'S DIGITAL</h1>
       <button
         className={`burger-menu ${showMenu ? "open" : ""}`}
         type="button"
