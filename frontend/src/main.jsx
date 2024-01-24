@@ -17,6 +17,7 @@ import Settings from "./pages/Settings";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Popup from "./components/Popup";
+import BackToTopButton from "./components/BackToTopButton";
 
 function PrivateRoute({ element, requiresAuth, allowedRoles }) {
   const { user } = useAuth();
@@ -139,6 +140,7 @@ function Main() {
           <p>Successful login! Welcome to our website!</p>
         </Popup>
       )}
+      <BackToTopButton />
     </>
   );
 }
