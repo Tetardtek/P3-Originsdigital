@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import ReactDOM from "react-dom/client";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import App from "./App";
 import { VideoProvider } from "./context/VideoContext";
@@ -23,22 +18,30 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Popup from "./components/Popup";
 
-function PrivateRoute({ element, requiresAuth, ...props }) {
+function PrivateRoute({ element, requiresAuth, allowedRoles }) {
   const { user } = useAuth();
 
-  if (requiresAuth && !user) {
+  if (requiresAuth && (!user || !allowedRoles.includes(user.role))) {
     return <Navigate to="/login" />;
   }
 
-  if (!requiresAuth && user) {
-    return <Navigate to="/" />;
-  }
-
-  return React.cloneElement(element, props);
+  return element;
 }
 
+PrivateRoute.propTypes = {
+  element: PropTypes.node,
+  requiresAuth: PropTypes.bool,
+  allowedRoles: PropTypes.arrayOf(PropTypes.string),
+};
+
+PrivateRoute.defaultProps = {
+  element: null,
+  requiresAuth: false,
+  allowedRoles: [],
+};
+
 function Main() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
@@ -47,8 +50,9 @@ function Main() {
     if (user && loginSuccess) {
       setShowPopup(true);
       localStorage.removeItem("loginSuccess");
+      setUser((prevUser) => ({ ...prevUser }));
     }
-  }, [user]);
+  }, [user, setUser]);
 
   const closePopup = () => {
     setShowPopup(false);
@@ -59,33 +63,69 @@ function Main() {
       <Routes>
         <Route
           path="/admin/*"
-          element={<PrivateRoute element={<Dashboard />} requiresAuth />}
+          element={
+            <PrivateRoute
+              element={<Dashboard />}
+              requiresAuth
+              allowedRoles={["3"]}
+            />
+          }
         />
         <Route
           path="/content/*"
-          element={<PrivateRoute element={<Content />} requiresAuth />}
+          element={
+            <PrivateRoute
+              element={<Content />}
+              requiresAuth
+              allowedRoles={["3"]}
+            />
+          }
         />
         <Route
-          path="/category/*"
-          element={<PrivateRoute element={<Category />} requiresAuth />}
+          path="/playlist/*"
+          element={
+            <PrivateRoute
+              element={<Playlist />}
+              requiresAuth
+              allowedRoles={["3"]}
+            />
+          }
         />
         <Route
           path="/users/*"
-          element={<PrivateRoute element={<Users />} requiresAuth />}
+          element={
+            <PrivateRoute
+              element={<Users />}
+              requiresAuth
+              allowedRoles={["3"]}
+            />
+          }
         />
         <Route path="/videos" element={<Videos />} />
         <Route
           path="/playlists"
-          element={<PrivateRoute element={<Playlists />} requiresAuth />}
+          element={
+            <PrivateRoute
+              element={<Playlists />}
+              requiresAuth
+              allowedRoles={["1", "3"]}
+            />
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <PrivateRoute
+              element={<Settings />}
+              requiresAuth
+              allowedRoles={["1", "3"]}
+            />
+          }
         />
         <Route path="/login" element={user ? <Navigate to="/" /> : <LogIn />} />
         <Route
           path="/register"
           element={user ? <Navigate to="/" /> : <Register />}
-        />
-        <Route
-          path="/settings"
-          element={<PrivateRoute element={<Settings />} requiresAuth />}
         />
         <Route
           path="/forgot-password"
@@ -94,7 +134,6 @@ function Main() {
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/" element={<App />} />
       </Routes>
-
       {showPopup && (
         <Popup onClose={closePopup} confirmButtonText="Fermer">
           <p>Successful login! Welcome to our website!</p>
@@ -104,21 +143,16 @@ function Main() {
   );
 }
 
-PrivateRoute.propTypes = {
-  element: PropTypes.element.isRequired,
-  requiresAuth: PropTypes.bool.isRequired,
-};
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <Router>
+    <BrowserRouter>
       <AuthProvider>
         <VideoProvider>
           <Main />
         </VideoProvider>
       </AuthProvider>
-    </Router>
+    </BrowserRouter>
   </React.StrictMode>
 );
