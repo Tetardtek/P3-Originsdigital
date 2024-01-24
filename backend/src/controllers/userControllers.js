@@ -112,7 +112,7 @@ const login = async (req, res) => {
       message: "Login successful",
       user: {
         ...user,
-        pseudoname: user.pseudoname,
+        nickname: user.nickname,
         role: user.roles_id.toString(),
       },
       token,
@@ -169,7 +169,7 @@ const edit = async (req, res) => {
       lastname,
       mail,
       newPassword,
-      pseudoname,
+      nickname,
     } = req.body;
 
     const user = await tables.users.read(userId);
@@ -201,8 +201,8 @@ const edit = async (req, res) => {
       updatedFields.lastname = lastname;
     }
 
-    if (pseudoname !== undefined) {
-      updatedFields.pseudoname = pseudoname;
+    if (nickname !== undefined) {
+      updatedFields.nickname = nickname;
     }
 
     if (mail !== undefined) {
@@ -235,7 +235,7 @@ const edit = async (req, res) => {
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
   try {
-    const { firstname, lastname, pseudoname, mail, birthdate, password } =
+    const { firstname, lastname, nickname, mail, birthdate, password } =
       req.body;
 
     const existingUser = await tables.users.getByMail(mail);
@@ -247,7 +247,7 @@ const add = async (req, res, next) => {
     const user = {
       firstname,
       lastname,
-      pseudoname,
+      nickname,
       mail,
       birthdate,
       password: hashedPassword,

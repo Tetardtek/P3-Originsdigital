@@ -37,7 +37,7 @@ export default function Users() {
         <div className="users">
           {users.map((user) => (
             <div className="user" key={user.id}>
-              <h3>{user.pseudoname}</h3>
+              <h3>{user.nickname}</h3>
               <p>
                 Firstname : {user.firstname}
                 <br />
