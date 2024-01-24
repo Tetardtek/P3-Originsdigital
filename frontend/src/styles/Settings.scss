@@ -8,11 +8,12 @@
 .settings-container {
   display: flex;
   flex-direction: column;
-  background-color: $color2;
+  background-color: $color3;
   max-width: 800px;
   margin: 4rem auto !important;
   padding: 30px;
   border-radius: 5px;
+  box-shadow: 0 12px 24px rgba($color4, 1);
 
   h2 {
     text-align: center;
