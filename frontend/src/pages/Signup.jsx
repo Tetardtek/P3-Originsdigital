@@ -8,7 +8,7 @@ function Signup() {
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
-    pseudoname: "",
+    nickname: "",
     birthdate: "",
     mail: "",
     password: "",
@@ -18,7 +18,7 @@ function Signup() {
   const [errors, setErrors] = useState({
     firstname: "",
     lastname: "",
-    pseudoname: "",
+    nickname: "",
     birthdate: "",
     email: "",
     password: "",
@@ -52,7 +52,7 @@ function Signup() {
     const requiredFields = [
       "firstname",
       "lastname",
-      "pseudoname",
+      "nickname",
       "birthdate",
       "mail",
       "password",
@@ -182,13 +182,13 @@ function Signup() {
             Nickname:
             <input
               type="text"
-              name="pseudoname"
-              value={user.pseudoname}
+              name="nickname"
+              value={user.nickname}
               onChange={handleInputChange}
             />
           </label>
-          {errors.pseudoname && (
-            <p className="error-message">{errors.pseudoname}</p>
+          {errors.nickname && (
+            <p className="error-message">{errors.nickname}</p>
           )}
 
           <label>

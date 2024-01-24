@@ -13,7 +13,7 @@ function Settings() {
     confirmNewPassword: "",
     firstname: user?.firstname || "",
     lastname: user?.lastname || "",
-    pseudoname: user?.pseudoname || "",
+    nickname: user?.nickname || "",
     email: user?.mail || "",
   });
 
@@ -30,7 +30,7 @@ function Settings() {
       confirmNewPassword: "",
       firstname: user?.firstname || "",
       lastname: user?.lastname || "",
-      pseudoname: user?.pseudoname || "",
+      nickname: user?.nickname || "",
       email: user?.mail || "",
     });
     setErrors({});
@@ -50,7 +50,7 @@ function Settings() {
 
     try {
       const updatedFields = {};
-      const requiredFields = ["firstname", "lastname", "pseudoname"];
+      const requiredFields = ["firstname", "lastname", "nickname"];
       let hasErrors = false;
 
       if (formData.currentPassword.trim()) {
@@ -189,20 +189,18 @@ function Settings() {
           )}
 
           <label
-            className={`settings-label ${
-              errors.pseudoname ? "error-input" : ""
-            }`}
+            className={`settings-label ${errors.nickname ? "error-input" : ""}`}
           >
-            Pseudoname:
+            nickname:
             <input
               type="text"
-              name="pseudoname"
-              value={formData.pseudoname}
+              name="nickname"
+              value={formData.nickname}
               onChange={handleChange}
             />
           </label>
-          {errors.pseudoname && (
-            <p className="error-message">{errors.pseudoname}</p>
+          {errors.nickname && (
+            <p className="error-message">{errors.nickname}</p>
           )}
 
           <label
