@@ -3,6 +3,8 @@ import "../../styles/User.scss";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
+  const [filter, setFilter] = useState({ nickname: "" });
+
   const fetchUsersData = async () => {
     const fetchUsers = await fetch(
       `${import.meta.env.VITE_BACKEND_URL}/api/users`,
@@ -36,6 +38,22 @@ export default function Users() {
     }
   };
 
+  const handleFilterChange = (e, field) => {
+    setFilter({
+      ...filter,
+      [field]: e.target.value,
+    });
+  };
+
+  const filteredUsers = users.filter((user) => {
+    return Object.keys(filter).every((field) => {
+      if (filter[field] === "") return true;
+      return String(user[field])
+        .toLowerCase()
+        .includes(filter[field].toLowerCase());
+    });
+  });
+
   useEffect(() => {
     fetchUsersData();
   }, []);
@@ -43,6 +61,13 @@ export default function Users() {
   return (
     <section className="List-users">
       <h2>List of registered users</h2>
+      <input
+        className="filter-users"
+        type="text"
+        placeholder="Filter by Nickname"
+        value={filter.nickname}
+        onChange={(e) => handleFilterChange(e, "nickname")}
+      />
       <div className="title-users">
         <h3>Id</h3>
         <h3>Firstname</h3>
@@ -54,7 +79,7 @@ export default function Users() {
         <h3>Role</h3>
         <h3>Delete</h3>
       </div>
-      {users?.map((currentUser) => {
+      {filteredUsers?.map((currentUser) => {
         return (
           <div className="body-users" key={currentUser.id}>
             <p>{currentUser.id}</p>
