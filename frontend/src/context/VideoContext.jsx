@@ -8,6 +8,13 @@ function VideoProvider({ children }) {
   const [playlists, setPlaylists] = useState([]);
   const [playlistsMap, setPlaylistsMap] = useState([]);
 
+  const getFilteredVideos = (loggedIn) => {
+    if (loggedIn) {
+      return videos;
+    }
+    return videos.filter((video) => video.is_free);
+  };
+
   useEffect(() => {
     const fetchData = async (url, setData) => {
       try {
@@ -16,6 +23,8 @@ function VideoProvider({ children }) {
         if (response.ok) {
           const data = await response.json();
           setData(data);
+        } else if (response.status === 401) {
+          setData([]);
         } else {
           console.error(
             `Error fetching data from ${url}: ${response.statusText}`
@@ -138,6 +147,7 @@ function VideoProvider({ children }) {
       deletePlaylist,
       addVideo,
       addPlaylist,
+      getFilteredVideos,
     }),
     [videos, playlists, playlistsMap]
   );

@@ -2,9 +2,15 @@ import React, { useContext } from "react";
 import NavBar from "../components/NavBar";
 import "../styles/admin/Content.scss";
 import { VideoContext } from "../context/VideoContext";
+import { useAuth } from "../context/AuthContext";
 
 export default function Content() {
   const { videos } = useContext(VideoContext);
+  const { user } = useAuth();
+
+  const filteredVideos = videos.filter((video) =>
+    user ? true : video.is_free
+  );
 
   return (
     <>
@@ -13,7 +19,7 @@ export default function Content() {
         <div className="videos">
           <h1>Origin's Digital videos </h1>
           <div className="videos-card">
-            {videos.map((video) => (
+            {filteredVideos.map((video) => (
               <div key={video.id}>
                 <h3>{video.title}</h3>
                 <a href={video.link} target="_blank" rel="noopener noreferrer">

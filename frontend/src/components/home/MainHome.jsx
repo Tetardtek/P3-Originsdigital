@@ -1,8 +1,10 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { VideoContext } from "../../context/VideoContext";
+import { useAuth } from "../../context/AuthContext";
 
 export default function MainHome() {
   const { videos } = useContext(VideoContext);
+  const { user } = useAuth();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextSlide = () => {
@@ -13,7 +15,11 @@ export default function MainHome() {
     setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
   };
 
-  const visibleVideos = videos.slice(currentIndex, currentIndex + 3);
+  const filteredVideos = videos.filter((video) =>
+    user ? true : video.is_free
+  );
+
+  const visibleVideos = filteredVideos.slice(currentIndex, currentIndex + 3);
 
   return (
     <div className="main-home">
