@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const secretKey = process.env.APP_SECRET;
 
 const verifyToken = (req, res, next) => {
-  const token = req.header("x-auth-token");
+  const token = req.headers.authorization.split("Bearer ")[1];
 
   if (!token) {
     return res.status(401).json({ message: "No token, authorization denied" });
