@@ -1,36 +1,41 @@
 @import "../styles/variables.scss";
+
 .home {
   h1 {
     display: flex;
-    text-align: center;
+    align-items: center;
     justify-content: center;
-    color: $color1;
-    background-color: $color4;
-    font-size: 2rem;
+    color: #fff;
+    background-color: $color3;
+    font-size: 1.8rem;
+    padding: 1rem;
+    margin: 6rem 0;
+    width: 100%;
   }
 }
 
 .videos-home {
-  background-color: $color4;
+  background-color: $color1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  flex-wrap: wrap;
-  align-content: stretch;
 }
 
 .videos-card-home {
   background-color: $color2;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   border: 1px solid;
   border-radius: 5px;
-  padding: 1rem;
-  width: 100%;
+  margin: 1rem;
+  max-width: 100%;
+  box-shadow: 0 12px 24px rgba($color4, 1);
 
   img {
-    width: 120px;
-    height: 120px;
+    width: 3rem;
+    height: auto;
+    border-radius: 5px;
     margin-bottom: 0.5rem;
   }
 
@@ -43,12 +48,20 @@
     border-radius: 5px;
     padding: 1rem;
     margin: 0.5rem;
+    width: 100%;
+
+    p {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
 
   .active,
   .inactive {
-    width: 28%;
-
+    width: 20%;
+    height: 15rem;
     @media screen and (max-width: 961px) {
       &:nth-of-type(1) {
         display: none;
@@ -63,13 +76,30 @@
 }
 
 .carousel {
+  background: $color4;
+  height: 100%;
   color: $color1;
-  background-color: $color4;
-}
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 
-.carousel:hover {
-  color: $color4;
-  background-color: $color1;
+  &:hover {
+    background: $color1;
+    color: $color4;
+  }
+
+  &.prev::before {
+    content: "\\2190";
+    margin-right: 0.5rem;
+  }
+
+  &.next::before {
+    content: "\\2192";
+    margin-left: 0.5rem;
+  }
 }
 
 .partners-ctn {
@@ -78,29 +108,27 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  align-content: stretch;
+  background-color: $color1;
+  padding: auto;
 
   .section3-home {
-    background-color: $color2;
+    background-color: $color3;
     display: flex;
-    justify-content: center;
-    border: 1px solid;
-    border-radius: 5px;
-    padding: 1rem;
+    justify-content: space-between;
+    border-radius: 5px 5px 0 0;
     width: 100%;
+    margin: 5rem 0 0 0;
 
     .article-ctn {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      justify-content: center;
-      margin: 1rem;
-      padding: 1rem;
-      gap: 2rem;
+      display: flex;
+      width: 100%;
 
       article {
-        background-color: $color3;
+        background-color: $color4;
         border: 1px solid;
         border-radius: 5px;
+        height: auto;
+        margin: 0.5rem;
         width: 100%;
 
         h2 {
@@ -110,6 +138,12 @@
         div {
           text-align: center;
           padding: 1rem;
+
+          img {
+            max-width: 100%;
+            height: 0.5%;
+            border-radius: 5px;
+          }
         }
       }
     }

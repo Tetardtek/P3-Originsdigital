@@ -191,7 +191,7 @@ function Settings() {
           <label
             className={`settings-label ${errors.nickname ? "error-input" : ""}`}
           >
-            nickname:
+            Nickname:
             <input
               type="text"
               name="nickname"
