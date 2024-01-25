@@ -63,7 +63,7 @@ function Signup() {
       if (!user[field].trim()) {
         setErrors((prevErrors) => ({
           ...prevErrors,
-          [field]: "Ce champ est requis",
+          [field]: "This field is required",
         }));
         hasErrors = true;
       }

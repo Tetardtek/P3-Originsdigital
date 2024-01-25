@@ -9,6 +9,7 @@ export default function Dashboard() {
     <>
       <NavBar />
       <main>
+        <h1>Admin Panel</h1>
         <div className="container-dashboard">
           <AddPlaylist />
           <AddVideo />
