@@ -17,6 +17,7 @@ import Settings from "./pages/Settings";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Popup from "./components/Popup";
+import BackToTopButton from "./components/BackToTopButton";
 
 function PrivateRoute({ element, requiresAuth, allowedRoles }) {
   const { user } = useAuth();
@@ -41,7 +42,7 @@ PrivateRoute.defaultProps = {
 };
 
 function Main() {
-  const { user, setUser } = useAuth();
+  const { user, setUser, loading: authLoading } = useAuth();
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
@@ -57,6 +58,9 @@ function Main() {
   const closePopup = () => {
     setShowPopup(false);
   };
+  if (authLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -139,6 +143,7 @@ function Main() {
           <p>Successful login! Welcome to our website!</p>
         </Popup>
       )}
+      <BackToTopButton />
     </>
   );
 }

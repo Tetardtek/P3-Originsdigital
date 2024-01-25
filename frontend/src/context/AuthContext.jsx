@@ -110,6 +110,7 @@ function AuthProvider({ children }) {
     localStorage.removeItem("token");
     setUser(null);
     setRedirectUrl("/");
+    window.location.reload();
   };
 
   const editUser = async (updatedFields) => {
