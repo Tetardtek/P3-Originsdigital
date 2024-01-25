@@ -8,7 +8,7 @@ export default function Dashboard() {
     <>
       <NavBar />
       <main>
-        <h1>Origin's Digital Admin Panel</h1>
+        <h1>Admin Panel</h1>
         <div className="container-dashboard">
           <AddVideo />
         </div>
