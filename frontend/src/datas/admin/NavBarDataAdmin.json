@@ -6,22 +6,22 @@
   },
   {
     "id": 2,
-    "linkname": "Dashboard",
+    "linkname": "Dashboard-Admin",
     "linkurl": "/admin"
   },
   {
     "id": 3,
-    "linkname": "All videos",
+    "linkname": "Edit-Videos",
     "linkurl": "/content"
   },
   {
     "id": 4,
-    "linkname": "Playlist",
+    "linkname": "Manage-Playlists",
     "linkurl": "/playlist"
   },
   {
     "id": 5,
-    "linkname": "Users",
+    "linkname": "Manage-Users",
     "linkurl": "/users"
   },
   {
