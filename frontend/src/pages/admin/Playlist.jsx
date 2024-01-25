@@ -9,7 +9,7 @@ export default function Playlist() {
     <>
       <NavBar />
       <main>
-        <h1>Origin's Digital playlist Panel</h1>
+        <h1>Playlist Panel</h1>
         <div className="playlist-container">
           <AddPlaylist />
           <div className="playlist-manage-container">

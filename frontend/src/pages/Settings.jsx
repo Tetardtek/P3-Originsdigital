@@ -61,7 +61,7 @@ function Settings() {
         if (!formData[field].trim()) {
           setErrors((prevErrors) => ({
             ...prevErrors,
-            [field]: "Ce champ est requis",
+            [field]: "This field is required",
           }));
           hasErrors = true;
         } else {
@@ -72,15 +72,15 @@ function Settings() {
       if (formData.newPassword.trim() !== formData.confirmNewPassword.trim()) {
         setErrors((prevErrors) => ({
           ...prevErrors,
-          newPassword: "Les mots de passe ne correspondent pas",
-          confirmNewPassword: "Les mots de passe ne correspondent pas",
+          newPassword: "The passwords do not match",
+          confirmNewPassword: "The passwords do not match",
         }));
         hasErrors = true;
       } else if (formData.newPassword.trim() !== "") {
         if (formData.newPassword.trim().length < 6) {
           setErrors((prevErrors) => ({
             ...prevErrors,
-            newPassword: "Le mot de passe doit comporter au moins 6 caractères",
+            newPassword: "The password must contain at least 6 characters",
           }));
           hasErrors = true;
         }
@@ -105,7 +105,7 @@ function Settings() {
         confirmNewPassword: "",
       }));
 
-      setSuccess("Changement validé ✔");
+      setSuccess("Change validated ✔");
       setErrors({});
       setShowPopup(true);
     } catch (errorCaught) {
@@ -113,10 +113,10 @@ function Settings() {
       if (errorCaught.message === "Invalid current password") {
         setErrors((prevErrors) => ({
           ...prevErrors,
-          currentPassword: "Mot de passe actuel incorrect",
+          currentPassword: "Incorrect current password",
         }));
       } else {
-        setErrors({ general: "Le mot de passe actuel n'est pas valide" });
+        setErrors({ general: "The current password is invalid" });
       }
     }
   }
@@ -136,9 +136,9 @@ function Settings() {
 
       setShowDeletePopup(true);
     } catch (error) {
-      console.error("Erreur lors de la suppression du compte :", error);
+      console.error("Error when deleting account :", error);
       setErrors({
-        general: "Une erreur s'est produite lors de la suppression du compte",
+        general: "An error occurred when deleting the account",
       });
     }
   };
