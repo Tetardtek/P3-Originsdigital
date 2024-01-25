@@ -26,9 +26,10 @@ export default function Content() {
                 </a>{" "}
                 <p>{video.description}</p>
                 <br />
+                <p>Is Free : {video.is_free ? "Yes" : "No"}</p>
                 <p>Video ID : {video.id}</p>
                 <br />
-                <EditVideo video={video} /> <br />
+                <EditVideo video={video} />
                 <button type="button" onClick={() => deleteVideo(video.id)}>
                   Delete
                 </button>
