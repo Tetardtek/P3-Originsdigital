@@ -1,8 +1,12 @@
-@import "../styles/variables.scss";
+@import "./variables.scss";
 
 .List-users {
   margin: 20px;
-  font-family: Arial, sans-serif;
+  background-color: $color2;
+  input {
+    border-radius: 4px;
+    text-align: center;
+  }
 
   h2 {
     text-align: center;
@@ -16,6 +20,7 @@
 
   .title-users,
   .body-users {
+    background-color: red;
     display: grid;
     grid-template-columns: repeat(9, 1fr);
     gap: 0.5rem;
@@ -25,11 +30,11 @@
 
   .title-users {
     font-weight: bold;
-    background-color: #f2f2f2;
+    background-color: $color3;
   }
 
   .body-users {
-    background-color: #ffffff;
+    background-color: $color2;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
