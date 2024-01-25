@@ -29,13 +29,16 @@ class VideosManager extends AbstractManager {
 
       return rows[0][field];
     }
+
     const [rows] = await this.database.query(
       `SELECT * FROM ${this.table} WHERE id = ?`,
       [id]
     );
+
     if (rows.length === 0) {
       return null;
     }
+
     return rows[0];
   }
 
@@ -44,10 +47,8 @@ class VideosManager extends AbstractManager {
     return rows;
   }
 
-  // The U of CRUD - Update operation
   async edit(id, updatedFields) {
     const allowedFields = ["link", "title", "description", "is_free"];
-
     const fieldsToUpdate = Object.keys(updatedFields).filter((field) =>
       allowedFields.includes(field)
     );
