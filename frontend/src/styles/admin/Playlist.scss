@@ -101,6 +101,36 @@
   }
 }
 
+.playlist-list-container {
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      background-color: $color2;
+      border-radius: 5px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+
+      button {
+        background-color: #e74c3c;
+        color: #fff;
+        border-radius: 5px;
+        padding: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #c0392b;
+        }
+      }
+    }
+  }
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

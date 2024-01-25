@@ -11,11 +11,15 @@ function Playlists() {
     setSelectedPlaylist(e.target.value);
   };
 
-  const filteredVideos = selectedPlaylist
+  const filteredVideoIds = selectedPlaylist
     ? playlistsMap
         .filter((map) => map.playlists_id === parseInt(selectedPlaylist, 10))
-        .map((map) => videos.find((video) => video.id === map.videos_id))
-    : videos;
+        .map((map) => map.videos_id)
+    : videos.map((video) => video.id);
+
+  const filteredVideos = videos.filter((video) =>
+    filteredVideoIds.includes(video.id)
+  );
 
   return (
     <>
