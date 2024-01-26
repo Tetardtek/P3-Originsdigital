@@ -6,31 +6,41 @@
   },
   {
     "id": 2,
-    "linkname": "Dashboard",
+    "linkname": "Dashboard-Admin",
     "linkurl": "/admin"
   },
   {
     "id": 3,
-    "linkname": "All videos",
-    "linkurl": "/content"
+    "linkname": "Videos",
+    "linkurl": "/videos"
   },
   {
     "id": 4,
-    "linkname": "Playlist",
-    "linkurl": "/playlist"
+    "linkname": "Edit-Videos",
+    "linkurl": "/content"
   },
   {
     "id": 5,
-    "linkname": "Users",
-    "linkurl": "/users"
+    "linkname": "Paylists",
+    "linkurl": "/playlists"
   },
   {
     "id": 6,
+    "linkname": "Manage-Playlists",
+    "linkurl": "/playlist"
+  },
+  {
+    "id": 7,
     "linkname": "Settings",
     "linkurl": "/settings"
   },
   {
-    "id": 7,
+    "id": 8,
+    "linkname": "Manage-Users",
+    "linkurl": "/users"
+  },
+  {
+    "id": 9,
     "linkname": "Logout",
     "linkurl": "/",
     "action": "logout"

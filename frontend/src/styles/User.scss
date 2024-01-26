@@ -1,0 +1,47 @@
+@import "./variables.scss";
+
+.List-users {
+  margin: 20px;
+  background-color: $color2;
+  input {
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .filter-users {
+    margin: 1rem;
+  }
+
+  .title-users,
+  .body-users {
+    background-color: red;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 0.5rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .title-users {
+    font-weight: bold;
+    background-color: $color3;
+  }
+
+  .body-users {
+    background-color: $color2;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 1rem;
+
+    p {
+      margin: 5px 0;
+    }
+  }
+}

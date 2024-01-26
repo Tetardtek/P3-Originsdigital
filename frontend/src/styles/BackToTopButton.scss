@@ -1,0 +1,29 @@
+.back-to-top-button {
+  display: flex;
+  justify-content: center;
+
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #0000008c;
+  color: #ffffff;
+  font-size: 2rem;
+  border: none;
+  border-radius: 50%;
+  padding: 15px;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s,
+    visibility 0.3s;
+
+  &:hover {
+    background-color: #39393aa9;
+  }
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+}

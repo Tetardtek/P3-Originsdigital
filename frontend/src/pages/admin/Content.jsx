@@ -2,9 +2,11 @@ import React, { useContext } from "react";
 import NavBar from "../../components/NavBar";
 import { VideoContext } from "../../context/VideoContext";
 import "../../styles/admin/Content.scss";
+import EditVideo from "../../components/admin/EditVideo";
 
 export default function Content() {
-  const { videos, deleteVideo } = useContext(VideoContext);
+  const { videos, deleteVideo, playlists, playlistsMap } =
+    useContext(VideoContext);
 
   return (
     <>
@@ -13,25 +15,41 @@ export default function Content() {
         <div className="videos">
           <h1>Videos Panel</h1>
           <div className="videos-card">
-            {videos.map((video) => (
-              <div key={video.id}>
-                <h3>{video.title}</h3>
-                <a href={video.link} target="_blank" rel="noopener noreferrer">
-                  <img
-                    src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg"
-                    alt="Logo YouTube"
-                    height="30"
-                  />
-                </a>{" "}
-                <p>{video.description}</p>
-                <br />
-                <p>Video ID : {video.id}</p>
-                <br />
-                <button type="button" onClick={() => deleteVideo(video.id)}>
-                  Delete
-                </button>
-              </div>
-            ))}
+            {videos.map((video) => {
+              const playlistMap = playlistsMap.find(
+                (pm) => pm.videos_id === video.id
+              );
+              const playlist = playlists.find(
+                (p) => p.id === playlistMap.playlists_id
+              );
+
+              return (
+                <div key={video.id}>
+                  <h3>{video.title}</h3>
+                  <p>Playlist : {playlist.title}</p>
+                  <a
+                    href={video.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg"
+                      alt="Logo YouTube"
+                      height="30"
+                    />
+                  </a>{" "}
+                  <p>{video.description}</p>
+                  <p>
+                    Video ID : {video.id} <br />
+                    Free video : {video.is_free ? "Yes" : "No"}{" "}
+                  </p>
+                  <EditVideo video={video} />
+                  <button type="button" onClick={() => deleteVideo(video.id)}>
+                    Delete
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </div>
       </main>

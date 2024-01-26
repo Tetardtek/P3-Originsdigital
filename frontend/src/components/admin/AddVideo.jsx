@@ -1,32 +1,92 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { VideoContext } from "../../context/VideoContext";
 
 export default function AddVideo() {
-  const { addVideo, playlists, setPlaylists } = useContext(VideoContext);
+  const { addVideo, playlists, addPlaylist, setPlaylists, updateVideos } =
+    useContext(VideoContext);
 
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
   const [isFree, setIsFree] = useState(false);
+  const [playlistName, setPlaylistName] = useState("");
+  const [selectedPlaylistId, setSelectedPlaylistId] = useState("");
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const fetchPlaylists = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/playlists`
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setPlaylists(data);
+        } else {
+          console.error(`Error fetching playlists: ${response.statusText}`);
+        }
+      } catch (error) {
+        console.error(`Error fetching playlists: ${error}`);
+      }
+    };
+
+    fetchPlaylists();
+  }, [setPlaylists]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    addVideo({ link, title, description, isFree })
-      .then(() => {
-        setLink("");
-        setTitle("");
-        setDescription("");
-      })
-      .catch((error) => {
-        console.error("Failed to add video.", error);
-      });
+
+    try {
+      if (selectedPlaylistId) {
+        await addVideo({
+          link,
+          title,
+          description,
+          isFree,
+          playlistId: selectedPlaylistId,
+        });
+      } else if (playlistName.trim() !== "") {
+        const newPlaylist = await addPlaylist({
+          title: playlistName,
+          description: `Description for ${playlistName}`,
+        });
+
+        setPlaylists([...playlists, newPlaylist]);
+
+        const updatedPlaylists = [...playlists, newPlaylist];
+        const addedPlaylistId = updatedPlaylists.find(
+          (p) => p.title === newPlaylist.title
+        )?.id;
+
+        await addVideo({
+          link,
+          title,
+          description,
+          isFree,
+          playlistId: addedPlaylistId,
+        });
+      } else {
+        await addVideo({ link, title, description, isFree });
+      }
+
+      setLink("");
+      setTitle("");
+      setDescription("");
+      setIsFree(false);
+      setPlaylistName("");
+      setSelectedPlaylistId("");
+
+      updateVideos();
+    } catch (error) {
+      console.error("Error adding video or playlist:", error);
+    }
   };
 
   return (
     <div className="container-add-video">
       <div className="add-video-form">
         <h2>Add Video</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <ul>
             <li>
               <label>
@@ -70,12 +130,15 @@ export default function AddVideo() {
                   onChange={(e) => setIsFree(e.target.checked)}
                 />
               </label>
+            </li>
+            <li>
               <label>
-                Playlist of video:
+                Playlist:
                 <select
-                  value={playlists.title}
-                  onChange={(e) => setPlaylists(e.target.value)}
+                  value={selectedPlaylistId}
+                  onChange={(e) => setSelectedPlaylistId(e.target.value)}
                 >
+                  <option value="">Select Playlist</option>
                   {playlists.map((playlist) => (
                     <option key={playlist.id} value={playlist.id}>
                       {playlist.title}
@@ -85,9 +148,7 @@ export default function AddVideo() {
               </label>
             </li>
             <li>
-              <button onClick={handleSubmit} type="submit">
-                Add Video
-              </button>
+              <button type="submit">Add Video</button>
             </li>
           </ul>
         </form>
@@ -106,7 +167,7 @@ export default function AddVideo() {
           <br />
         </div>
       </div>
-      <p>Is Free : {isFree ? "Yes" : "No"}</p>
+      <p>Is Free: {isFree ? "Yes" : "No"}</p>
     </div>
   );
 }

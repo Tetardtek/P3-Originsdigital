@@ -16,6 +16,8 @@ function VideoProvider({ children }) {
         if (response.ok) {
           const data = await response.json();
           setData(data);
+        } else if (response.status === 401) {
+          setData([]);
         } else {
           console.error(
             `Error fetching data from ${url}: ${response.statusText}`
@@ -37,6 +39,75 @@ function VideoProvider({ children }) {
     );
   }, []);
 
+  const updateVideo = async (id, video) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/videos/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(video),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to update video. ${JSON.stringify(video)}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error.message);
+      throw error;
+    }
+  };
+
+  const updateVideos = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/videos`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setVideos(data);
+      } else {
+        console.error(`Error fetching videos: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error(`Error fetching videos: ${error}`);
+    }
+  };
+
+  const updatePlaylistMap = async (id, playlistMap) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/playlists_maps/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(playlistMap),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to update playlist map. ${JSON.stringify(playlistMap)}`
+        );
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error.message);
+      throw error;
+    }
+  };
+
   const deleteVideo = async (id) => {
     try {
       const response = await fetch(
@@ -50,28 +121,7 @@ function VideoProvider({ children }) {
         throw new Error(`Failed to delete video. ${id}`);
       }
 
-      setVideos(videos.filter((video) => video.id !== id));
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
-
-  const deletePlaylist = async (playlistId) => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/playlists/${playlistId}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(
-          `Impossible to delete playlist ${playlistId} ! Video(s) still linked to it.`
-        );
-      }
-
-      setPlaylists(playlists.filter((playlist) => playlist.id !== playlistId));
+      await updateVideos();
     } catch (error) {
       console.error(error.message);
     }
@@ -97,11 +147,73 @@ function VideoProvider({ children }) {
         throw new Error(`Failed to add video. ${JSON.stringify(video)}`);
       }
 
-      const data = await response.json();
-      setVideos([...videos, data]);
+      const addedVideo = await response.json();
+
+      if (video.playlistId) {
+        const responseMap = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/playlists_maps`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              playlists_id: video.playlistId,
+              videos_id: addedVideo.id,
+            }),
+          }
+        );
+
+        if (!responseMap.ok) {
+          throw new Error(
+            `Failed to associate video with playlist. ${JSON.stringify(video)}`
+          );
+        }
+      }
+
+      setVideos([...videos, addedVideo]);
+      return addedVideo;
     } catch (error) {
       console.error(error.message);
       throw error;
+    }
+  };
+
+  const updatePlaylists = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/playlists`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setPlaylists(data);
+      } else {
+        console.error(`Error fetching playlists: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error(`Error fetching playlists: ${error}`);
+    }
+  };
+
+  const deletePlaylist = async (playlistId) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/playlists/${playlistId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `Impossible to delete playlist ${playlistId}! Video(s) still linked to it.`
+        );
+      }
+
+      await updatePlaylists();
+    } catch (error) {
+      console.error(error.message);
     }
   };
 
@@ -122,11 +234,18 @@ function VideoProvider({ children }) {
         throw new Error(`Failed to add playlist. ${JSON.stringify(playlist)}`);
       }
 
+      await updatePlaylists();
+
       const data = await response.json();
-      setPlaylists([...playlists, data]);
+      return data;
     } catch (error) {
       console.error(error.message);
+      throw error;
     }
+  };
+
+  const setPlaylistsData = (data) => {
+    setPlaylists(data);
   };
 
   const value = useMemo(
@@ -138,10 +257,14 @@ function VideoProvider({ children }) {
       deletePlaylist,
       addVideo,
       addPlaylist,
+      updateVideo,
+      updateVideos,
+      updatePlaylists,
+      updatePlaylistMap,
+      setPlaylists: setPlaylistsData,
     }),
     [videos, playlists, playlistsMap]
   );
-
   return (
     <VideoContext.Provider value={value}>{children}</VideoContext.Provider>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import NavBar from "../../components/NavBar";
-import AddPlaylist from "../../components/admin/playlist/AddPlaylist";
 import ManagePlaylist from "../../components/admin/playlist/ManagePlaylist";
+import PlaylistList from "../../components/admin/playlist/PlaylistList";
 import "../../styles/admin/Playlist.scss";
 
 export default function Playlist() {
@@ -9,10 +9,10 @@ export default function Playlist() {
     <>
       <NavBar />
       <main>
-        <h1>Origin's Digital playlist Panel</h1>
+        <h1>Playlist Panel</h1>
         <div className="playlist-container">
-          <AddPlaylist />
           <div className="playlist-manage-container">
+            <PlaylistList />
             <ManagePlaylist />
           </div>
         </div>

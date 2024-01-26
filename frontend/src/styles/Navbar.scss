@@ -29,6 +29,7 @@ nav {
     text-align: center;
     color: $color1;
     flex-grow: 1;
+    font-size: 4vw;
   }
 
   .right-section {
@@ -40,7 +41,7 @@ nav {
   .cross-menu {
     display: block;
     cursor: pointer;
-    font-size: 5vw;
+    font-size: 3vw;
     border: none;
     background: none;
     color: $color1;
@@ -79,7 +80,7 @@ nav {
     .logout-button {
       padding: 12px;
       background-color: $color4;
-      color: white;
+      color: rgb(255, 0, 0);
       cursor: pointer;
       font-size: 18px;
       border: none;

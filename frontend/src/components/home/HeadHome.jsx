@@ -1,8 +1,10 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { VideoContext } from "../../context/VideoContext";
+import { useAuth } from "../../context/AuthContext";
 
 export default function HeadHome() {
   const { videos } = useContext(VideoContext);
+  const { user } = useAuth();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const isMobile = () => window.innerWidth <= 768;
@@ -15,7 +17,11 @@ export default function HeadHome() {
     setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
   };
 
-  const visibleVideos = videos.slice(
+  const filteredVideos = videos.filter((video) =>
+    user ? true : video.is_free
+  );
+
+  const visibleVideos = filteredVideos.slice(
     currentIndex,
     currentIndex + (isMobile() ? 1 : 3)
   );
