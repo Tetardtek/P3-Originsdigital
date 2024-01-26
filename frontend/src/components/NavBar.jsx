@@ -31,10 +31,12 @@ function NavBar() {
 
   return (
     <nav>
-      <div className="logo-container">
+      <Link to="/" className="logo-container">
         <img src={logo} alt="Your Logo" className="logo" />
-      </div>
-      <h1 className="title">ORIGIN'S DIGITAL</h1>
+      </Link>
+      <Link to="/" className="title">
+        ORIGIN'S DIGITAL
+      </Link>
       <button
         className={`burger-menu ${showMenu ? "open" : ""}`}
         type="button"
