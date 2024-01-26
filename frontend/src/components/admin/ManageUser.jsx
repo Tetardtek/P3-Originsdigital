@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/User.scss";
+import "../../styles/admin/User.scss";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -73,7 +73,7 @@ export default function Users() {
         <h3>Firstname</h3>
         <h3>Lastname</h3>
         <h3>Nickname</h3>
-        <h3>mail</h3>
+        <h3>Mail</h3>
         <h3>Birthdate</h3>
         <h3>Logdate</h3>
         <h3>Role</h3>

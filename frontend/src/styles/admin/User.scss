@@ -1,0 +1,64 @@
+@import "../variables.scss";
+
+.List-users {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: $color3;
+
+  h2 {
+    font-size: 24px;
+    text-align: center;
+    margin-top: auto;
+  }
+
+  .filter-users {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 99%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  .title-users {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    font-weight: bold;
+    background-color: $color2;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+
+    h3 {
+      text-align: center;
+    }
+  }
+
+  .body-users {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    p {
+      text-align: center;
+    }
+
+    button {
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: #c82333;
+      }
+    }
+  }
+}

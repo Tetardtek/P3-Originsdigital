@@ -53,8 +53,11 @@
     }
 
     .delete-button {
-      background-color: red;
+      background-color: #dc3545;
       margin-top: 10px;
+      &:hover {
+        background-color: #c82333 !important;
+      }
     }
   }
 
