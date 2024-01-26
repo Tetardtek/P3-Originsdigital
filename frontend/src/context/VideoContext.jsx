@@ -81,6 +81,33 @@ function VideoProvider({ children }) {
     }
   };
 
+  const updatePlaylistMap = async (id, playlistMap) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/playlists_maps/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(playlistMap),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to update playlist map. ${JSON.stringify(playlistMap)}`
+        );
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error.message);
+      throw error;
+    }
+  };
+
   const deleteVideo = async (id) => {
     try {
       const response = await fetch(
@@ -233,6 +260,7 @@ function VideoProvider({ children }) {
       updateVideo,
       updateVideos,
       updatePlaylists,
+      updatePlaylistMap,
       setPlaylists: setPlaylistsData,
     }),
     [videos, playlists, playlistsMap]

@@ -11,26 +11,36 @@
   },
   {
     "id": 3,
+    "linkname": "Videos",
+    "linkurl": "/videos"
+  },
+  {
+    "id": 4,
     "linkname": "Edit-Videos",
     "linkurl": "/content"
   },
   {
-    "id": 4,
+    "id": 5,
+    "linkname": "Paylists",
+    "linkurl": "/playlists"
+  },
+  {
+    "id": 6,
     "linkname": "Manage-Playlists",
     "linkurl": "/playlist"
   },
   {
-    "id": 5,
-    "linkname": "Manage-Users",
-    "linkurl": "/users"
-  },
-  {
-    "id": 6,
+    "id": 7,
     "linkname": "Settings",
     "linkurl": "/settings"
   },
   {
-    "id": 7,
+    "id": 8,
+    "linkname": "Manage-Users",
+    "linkurl": "/users"
+  },
+  {
+    "id": 9,
     "linkname": "Logout",
     "linkurl": "/",
     "action": "logout"

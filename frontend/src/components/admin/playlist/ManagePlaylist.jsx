@@ -39,7 +39,7 @@ export default function ManagePlaylist() {
                 <td>{video.link}</td>
                 <td>{video.title}</td>
                 <td>{video.description}</td>
-                <td>{video.isFree ? "Yes" : "No"}</td>
+                <td>{video.is_free ? "Yes" : "No"}</td>
                 <td>
                   <button
                     type="button"

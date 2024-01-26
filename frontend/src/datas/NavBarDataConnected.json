@@ -16,13 +16,13 @@
   },
   {
     "id": 4,
-    "linkname": "Logout",
-    "linkurl": "/",
-    "action": "logout"
+    "linkname": "Settings",
+    "linkurl": "/settings"
   },
   {
     "id": 5,
-    "linkname": "Settings",
-    "linkurl": "/settings"
+    "linkname": "Logout",
+    "linkurl": "/",
+    "action": "logout"
   }
 ]
