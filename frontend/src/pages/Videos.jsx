@@ -17,7 +17,7 @@ export default function Content() {
       <NavBar />
       <main>
         <div className="videos">
-          <h1>Videos </h1>
+          <h1>VIDEOS </h1>
           <div className="videos-card">
             {filteredVideos.map((video) => (
               <div key={video.id}>

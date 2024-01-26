@@ -47,7 +47,7 @@ export default function ManagePlaylist() {
                       deleteVideo(video.id);
                     }}
                   >
-                    X
+                    Delete
                   </button>
                 </td>
               </tr>
