@@ -3,12 +3,16 @@ import PropTypes from "prop-types";
 import { VideoContext } from "../../context/VideoContext";
 
 function EditVideo({ video, onVideoUpdated }) {
-  const { updateVideo } = useContext(VideoContext);
+  const { updateVideo, updatePlaylistMap, playlists, playlistsMap } =
+    useContext(VideoContext);
   const [title, setTitle] = useState(video.title);
   const [description, setDescription] = useState(video.description);
   const [link, setLink] = useState(video.link);
   const [isFree, setIsFree] = useState(video.is_free);
-  const [formVisible, setFormVisible] = useState(false); // Add formVisible state
+  const [formVisible, setFormVisible] = useState(false);
+
+  const playlistMap = playlistsMap.find((pm) => pm.videos_id === video.id);
+  const [playlistId, setPlaylistId] = useState(playlistMap.playlists_id);
 
   const handleSubmit = async () => {
     const updatedVideo = await updateVideo(video.id, {
@@ -17,6 +21,10 @@ function EditVideo({ video, onVideoUpdated }) {
       link,
       is_free: isFree,
     });
+
+    if (playlistId !== playlistMap.playlists_id) {
+      await updatePlaylistMap(playlistMap.id, { playlists_id: playlistId });
+    }
 
     onVideoUpdated(updatedVideo);
   };
@@ -32,6 +40,18 @@ function EditVideo({ video, onVideoUpdated }) {
       </button>
       {formVisible && (
         <form onSubmit={handleSubmit}>
+          <br />
+          Edit playlist :
+          <select
+            value={playlistId}
+            onChange={(e) => setPlaylistId(e.target.value)}
+          >
+            {playlists.map((playlist) => (
+              <option key={playlist.id} value={playlist.id}>
+                {playlist.title}
+              </option>
+            ))}
+          </select>
           Edit title :
           <input
             type="text"
