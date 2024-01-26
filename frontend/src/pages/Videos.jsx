@@ -23,11 +23,7 @@ export default function Content() {
               <div key={video.id}>
                 <h3>{video.title}</h3>
                 <a href={video.link} target="_blank" rel="noopener noreferrer">
-                  <img
-                    src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg"
-                    alt="Logo YouTube"
-                    height="30"
-                  />
+                  <img src={video.minia} alt={video.title} height="30" />
                 </a>
                 <p>{video.description}</p>
                 <br />

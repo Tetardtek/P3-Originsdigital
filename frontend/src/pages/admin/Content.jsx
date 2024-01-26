@@ -32,11 +32,7 @@ export default function Content() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img
-                      src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg"
-                      alt="Logo YouTube"
-                      height="30"
-                    />
+                    <img src={video.minia} alt={video.title} height="150" />
                   </a>{" "}
                   <p>{video.description}</p>
                   <p>

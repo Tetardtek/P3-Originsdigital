@@ -7,6 +7,7 @@ export default function AddVideo() {
 
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
+  const [minia, setMinia] = useState("");
   const [description, setDescription] = useState("");
   const [isFree, setIsFree] = useState(false);
   const [playlistName, setPlaylistName] = useState("");
@@ -40,6 +41,7 @@ export default function AddVideo() {
       if (selectedPlaylistId) {
         await addVideo({
           link,
+          minia,
           title,
           description,
           isFree,
@@ -60,16 +62,18 @@ export default function AddVideo() {
 
         await addVideo({
           link,
+          minia,
           title,
           description,
           isFree,
           playlistId: addedPlaylistId,
         });
       } else {
-        await addVideo({ link, title, description, isFree });
+        await addVideo({ link, minia, title, description, isFree });
       }
 
       setLink("");
+      setMinia("");
       setTitle("");
       setDescription("");
       setIsFree(false);
@@ -107,6 +111,17 @@ export default function AddVideo() {
                   value={link}
                   onChange={(e) => setLink(e.target.value)}
                   placeholder="https://www.youtube.com/watch?v="
+                />
+              </label>
+            </li>
+            <li>
+              <label>
+                Minia of video:
+                <input
+                  type="text"
+                  value={link}
+                  onChange={(e) => setLink(e.target.value)}
+                  placeholder="https://www.youtube.com/embed/"
                 />
               </label>
             </li>

@@ -6,6 +6,7 @@ function EditVideo({ video, onVideoUpdated }) {
   const { updateVideo, updatePlaylistMap, playlists, playlistsMap } =
     useContext(VideoContext);
   const [title, setTitle] = useState(video.title);
+  const [minia, setMinia] = useState(video.minia);
   const [description, setDescription] = useState(video.description);
   const [link, setLink] = useState(video.link);
   const [isFree, setIsFree] = useState(video.is_free);
@@ -17,6 +18,7 @@ function EditVideo({ video, onVideoUpdated }) {
   const handleSubmit = async () => {
     const updatedVideo = await updateVideo(video.id, {
       title,
+      minia,
       description,
       link,
       is_free: isFree,
@@ -66,6 +68,13 @@ function EditVideo({ video, onVideoUpdated }) {
             onChange={(e) => setDescription(e.target.value)}
           />{" "}
           <br />
+          Edit minia :
+          <input
+            type="text"
+            value={minia}
+            onChange={(e) => setMinia(e.target.value)}
+          />{" "}
+          <br />
           Edit link :
           <input
             type="text"
@@ -93,6 +102,7 @@ EditVideo.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     link: PropTypes.string.isRequired,
+    minia: PropTypes.string.isRequired,
     is_free: PropTypes.number.isRequired,
   }).isRequired,
   onVideoUpdated: PropTypes.func,
