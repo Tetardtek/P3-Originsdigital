@@ -39,7 +39,7 @@ const edit = async (req, res) => {
       return res.status(400).json({ message: "Empty body" });
     }
 
-    const { link, title, description, is_free: isFree } = req.body;
+    const { link, minia, title, description, is_free: isFree } = req.body;
 
     const video = await tables.videos.read(videoId);
 
@@ -51,6 +51,9 @@ const edit = async (req, res) => {
 
     if (link !== undefined) {
       updatedFields.link = link;
+    }
+    if (minia !== undefined) {
+      updatedFields.minia = minia;
     }
     if (title !== undefined) {
       updatedFields.title = title;
@@ -79,10 +82,11 @@ const edit = async (req, res) => {
 // The A of BREAD - Add (Create) operation
 const add = async (req, res, next) => {
   try {
-    const { link, title, description, is_free: isFree } = req.body;
+    const { link, minia, title, description, is_free: isFree } = req.body;
 
     const video = {
       link,
+      minia,
       title,
       description,
       is_free: isFree,
