@@ -42,7 +42,7 @@ export default function HeadHome() {
               >
                 <h3>{video.title}</h3>
                 <a href={video.link} target="_blank" rel="noopener noreferrer">
-                  <img src={video.minia} alt={video.title} />
+                  <img src={video.minia} alt={video.title} height="150" />
                 </a>{" "}
                 <p>{video.description}</p>
               </div>

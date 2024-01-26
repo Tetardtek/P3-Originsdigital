@@ -119,8 +119,8 @@ export default function AddVideo() {
                 Minia of video:
                 <input
                   type="text"
-                  value={link}
-                  onChange={(e) => setLink(e.target.value)}
+                  value={minia}
+                  onChange={(e) => setMinia(e.target.value)}
                   placeholder="https://www.youtube.com/embed/"
                 />
               </label>
@@ -175,7 +175,7 @@ export default function AddVideo() {
             <img
               src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg"
               alt="Logo YouTube"
-              height="30"
+              height="150"
             />
           </a>{" "}
           <p>{description}</p>

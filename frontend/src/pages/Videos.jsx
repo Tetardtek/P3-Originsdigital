@@ -23,7 +23,7 @@ export default function Content() {
               <div key={video.id}>
                 <h3>{video.title}</h3>
                 <a href={video.link} target="_blank" rel="noopener noreferrer">
-                  <img src={video.minia} alt={video.title} height="30" />
+                  <img src={video.minia} alt={video.title} height="150" />
                 </a>
                 <p>{video.description}</p>
                 <br />
