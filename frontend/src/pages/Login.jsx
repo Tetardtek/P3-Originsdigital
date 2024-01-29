@@ -80,10 +80,15 @@ export default function Login() {
           <button type="submit">Login</button>
         </form>
         <p>
-          Don't have an account? <Link to="/register">Signup here</Link>
+          Don't have an account?
+          <Link to="/register" className="signup-link">
+            Signup here
+          </Link>
         </p>
         <p>
-          <Link to="/forgot-password">Forgot your password?</Link>
+          <Link to="/forgot-password" className="forgot-password-link">
+            Forgot your password?
+          </Link>
         </p>
         {loginError && <p className="error-message">{loginError}</p>}
         {showLoginPopup && (

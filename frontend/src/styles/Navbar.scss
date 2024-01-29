@@ -28,7 +28,6 @@ nav {
   .title {
     text-align: center;
     color: $color1;
-    flex-grow: 1;
     font-size: 4vw;
     text-decoration: none;
   }
@@ -85,7 +84,7 @@ nav {
       cursor: pointer;
       font-size: 18px;
       border: none;
-      border-radius: 4px;
+      border-radius: 5px;
       margin-top: 20px;
       transition: background-color 0.3s;
 
@@ -106,7 +105,7 @@ nav {
     display: flex;
     flex-direction: column;
     position: absolute;
-    border-radius: 0.5rem;
+    border-radius: 5px 0 5px 5px;
     background-color: $color4;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1;

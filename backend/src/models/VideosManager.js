@@ -7,10 +7,10 @@ class VideosManager extends AbstractManager {
 
   // The C of CRUD - Create operation
   async create(video) {
-    const { link, title, description, is_free: isFree } = video;
+    const { link, minia, title, description, is_free: isFree } = video;
     const [result] = await this.database.query(
-      `INSERT INTO ${this.table} (link, title, description, is_free) VALUES (?, ?, ?, ?)`,
-      [link, title, description, isFree]
+      `INSERT INTO ${this.table} (link, minia, title, description, is_free) VALUES (?, ?, ?, ?, ?)`,
+      [link, minia, title, description, isFree]
     );
     return result.insertId;
   }
@@ -48,7 +48,7 @@ class VideosManager extends AbstractManager {
   }
 
   async edit(id, updatedFields) {
-    const allowedFields = ["link", "title", "description", "is_free"];
+    const allowedFields = ["link", "minia", "title", "description", "is_free"];
     const fieldsToUpdate = Object.keys(updatedFields).filter((field) =>
       allowedFields.includes(field)
     );

@@ -17,7 +17,7 @@ export default function PlaylistList() {
             ID: {playlist.id} - {playlist.title} - {playlist.link} -{" "}
             {playlist.description}{" "}
             <button type="button" onClick={() => handleDelete(playlist.id)}>
-              x
+              Delete
             </button>
           </li>
         ))}
